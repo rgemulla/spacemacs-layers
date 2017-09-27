@@ -4,8 +4,6 @@
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
-;; Integrates Emacs' vc into Spacemacs.
-;;
 ;;; Code:
 
 ;; functions for flashing a region; only flashes when package eval-sexp-fu is

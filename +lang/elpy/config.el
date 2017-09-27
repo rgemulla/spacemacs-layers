@@ -4,8 +4,6 @@
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
-;; Integrates Emacs' vc into Spacemacs.
-;;
 ;;; Code:
 
 (defcustom elpy/shell-display-buffer-after-send nil

@@ -1,1 +1,3 @@
 README coming up.
+
+For now, try ~SPC g v~.
