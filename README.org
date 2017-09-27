@@ -1,0 +1,13 @@
+* rgemulla/spacemacs-layers
+This repository contains a some custom of [[http:spacemacs.org][Spacemacs ]]layers that I found useful.
+
+** Installation
+Copy the desired layer(s) into the private layers directory of Spacemacs
+(defaults to ~~/.spacemacs.d/private~). Then add them to
+~dotspacemacs-configuration-layers~ in the~.spacemacs~ file.
+** Provided layers
+- ~umlauts~ ([[file:+intl/umlauts/README.org][README]]): Make better use of umlauts when using a German keyboard layout
+- ~vc~ ([[file:+source-control/vc/README.org][README]]): Integrate Emacs version control into Spacemacs.
+- ~web-search~ ([[file:+web-services/web-search/README.org][README]]): Quick access to web search and Google translate (using an
+  alternative approach than the one form the ~search-engine~ layer shipped with
+  Spacemacs).
