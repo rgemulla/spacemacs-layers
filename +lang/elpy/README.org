@@ -1,0 +1,4 @@
+README coming up.
+
+For now, have a look at ~config.el~ to get an idea of how to configure this
+layer. Major mode bindings are provided.

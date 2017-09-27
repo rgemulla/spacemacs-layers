@@ -12,7 +12,7 @@
 	'(engine-mode
     google-translate))
 
-(defun rgmacs/init-engine-mode ()
+(defun web-search/init-engine-mode ()
   (use-package engine-mode
     :config
     ;; todo: adapt engine bind key for evil
@@ -58,7 +58,7 @@
             command))))
     ))
 
-(defun rgmacs/pre-init-google-translate ()
+(defun web-search/pre-init-google-translate ()
   (spacemacs|use-package-add-hook google-translate
     :post-init
     (setq google-translate-pop-up-buffer-set-focus t)
