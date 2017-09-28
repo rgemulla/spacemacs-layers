@@ -71,34 +71,38 @@ detecting a prompt at the end of the buffer."
 ;; modified version of python-shell-send-string-no-output (in that it now also
 ;; sends output)
 (defmacro elpy/with-maybe-echo-output (body)
-  `(if (not elpy/shell-echo-output)
-       (progn ,body)
-     (let ((process (elpy/python-shell-ensure-running))
-           (comint-preoutput-filter-functions
-            '(elpy/shell-output-filter))
-           (python-shell-output-filter-in-progress t)
-           (inhibit-quit t))
-       (or
-        (with-local-quit
-          (progn ,body)
-          (sit-for eval-sexp-fu-flash-duration)
-          (while python-shell-output-filter-in-progress
-            ;; `elpy/shell-output-filter' takes care of setting
-            ;; `python-shell-output-filter-in-progress' to NIL after it
-            ;; detects end of output.
-            (accept-process-output process))
-          (prog1
-              (progn
-                ;; this is delayed so that the flash overlay stays visible
-                (run-at-time "1 millisec" nil
-                             (lambda (s)
-                               (let (message-log-max) ;; no need to log in messages
-                                 (message "%s" s)))
-                             (string-trim python-shell-output-filter-buffer))
-                python-shell-output-filter-buffer)
-            (setq python-shell-output-filter-buffer nil)))
-        (with-current-buffer (process-buffer process)
-          (comint-interrupt-subjob))))))
+  `(let* ((process (elpy/python-shell-ensure-running))
+          (shell-visible (or elpy/shell-display-buffer-after-send
+                             (get-buffer-window (process-buffer process)))))
+     (if (cond
+          ((null elpy/shell-echo-output) t)
+          ((eq elpy/shell-echo-output 'when-shell-not-visible) shell-visible))
+         (progn ,body)
+       (let ((comint-preoutput-filter-functions
+              '(elpy/shell-output-filter))
+             (python-shell-output-filter-in-progress t)
+             (inhibit-quit t))
+         (or
+          (with-local-quit
+            (progn ,body)
+            (sit-for eval-sexp-fu-flash-duration)
+            (while python-shell-output-filter-in-progress
+              ;; `elpy/shell-output-filter' takes care of setting
+              ;; `python-shell-output-filter-in-progress' to NIL after it
+              ;; detects end of output.
+              (accept-process-output process))
+            (prog1
+                (progn
+                  ;; this is delayed so that the flash overlay stays visible
+                  (run-at-time "1 millisec" nil
+                               (lambda (s)
+                                 (let (message-log-max) ;; no need to log in messages
+                                   (message "%s" s)))
+                               (string-trim python-shell-output-filter-buffer))
+                  python-shell-output-filter-buffer)
+              (setq python-shell-output-filter-buffer nil)))
+          (with-current-buffer (process-buffer process)
+            (comint-interrupt-subjob)))))))
 
 (defun elpy/shell-send-current-statement-and-step ()
   "Send current statement to Python shell."
@@ -457,3 +461,12 @@ t when called interactively."
 (defun elpy/shell-send-current-buffer-and-step-and-go ()
   (interactive)
   (elpy/send-with-step-go 'elpy/shell-send-current-buffer-and-step t t))
+
+(defun elpy-shell-switch-to-shell-in-current-window ()
+  (interactive)
+  (setq elpy--shell-last-py-buffer (buffer-name))
+  (switch-to-buffer (process-buffer (elpy-shell-get-or-create-process))))
+
+(defun elpy-shell-switch-to-buffer-in-current-window ()
+  (interactive)
+  (switch-to-buffer elpy--shell-last-py-buffer))

@@ -69,6 +69,7 @@
     (spacemacs/declare-prefix-for-mode 'python-mode "ms" "eval-and-step")
     (spacemacs/set-leader-keys-for-major-mode 'python-mode
       "i" 'elpy-shell-switch-to-shell
+      "I" 'elpy-shell-switch-to-shell-in-current-window
       "h" 'elpy-doc
       "go" 'elpy-occur-definitions
       "gg" 'elpy-goto-definition
@@ -95,7 +96,8 @@
       "sB" 'elpy/shell-send-current-buffer-and-step-and-go)
 
     (spacemacs/set-leader-keys-for-major-mode 'inferior-python-mode
-      "i" 'elpy-shell-switch-to-buffer)
+      "i" 'elpy-shell-switch-to-buffer
+      "I" 'elpy-shell-switch-to-buffer-in-current-window)
 
     ;; disable smartscan-mode to make M-p and M-n select previous/next statement in python shell
     (with-eval-after-load 'smartscan
