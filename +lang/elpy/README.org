@@ -18,8 +18,6 @@ function, ~d~ for group (sequence of top-level statements not separeted by a
 blank line), ~r~ for region, and ~b~ for buffer. For example:
 
 | Key binding | Command                                                                                                       |
-| <l>         | <l>                                                                                                           |
-| /           | <                                                                                                             |
 |-------------+---------------------------------------------------------------------------------------------------------------|
 | ~, e f~     | Evaluates current function and keeps the point where it is                                                    |
 | ~, e F~     | Evaluates current function, keeps the point where it is, and switches focus to the Python shell               |
