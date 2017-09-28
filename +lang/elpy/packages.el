@@ -9,21 +9,17 @@
 (defconst elpy-packages
   '(python
     elpy
-    jedi
-    ein))
+    jedi))
 
 (defun elpy/init-elpy () ) ;; done below
 
 (defun elpy/init-jedi () ) ;; done below
-
-(defun elpy/init-ein () ) ;; done below
 
 (defun elpy/init-python ()
   (use-package python
     :defer t
     :ensure elpy
     :ensure jedi ; for autocompletion
-    :ensure ein ;; the notebook
     :mode (("\\.py\\'" . python-mode)
            ("\\.ipy\\'" . python-mode))
     :init
@@ -107,16 +103,4 @@
     (with-eval-after-load 'smartscan
       (add-hook 'inferior-python-mode-hook
                 '(lambda () (smartscan-mode -1))))
-
-    ;; customize ein
-    (add-hook 'ein:notebook-multilang-mode
-              '(lambda ()
-                 (define-key ein:notebook-multilang-mode-map
-                   (kbd "C-<enter>") 'ein:worksheet-execute-cell)
-                 (define-key ein:notebook-multilang-mode-map
-                   (kbd "C-<return>") 'ein:worksheet-execute-cell)
-                 (define-key ein:notebook-multilang-mode-map
-                   (kbd "<tab>") 'ein:completer-complete)
-                 (define-key ein:notebook-multilang-mode-map
-                   (kbd "C-<tab>") 'ein:completer-complete)))
     ))
