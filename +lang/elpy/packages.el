@@ -64,9 +64,10 @@
                  (define-key elpy-mode-map (kbd "C-c C-b") 'elpy/shell-send-current-buffer-and-step)))
 
     ;; general major-mode key bindings
-    (spacemacs/declare-prefix-for-mode 'python-mode "mg" "find-symbol")
-    (spacemacs/declare-prefix-for-mode 'python-mode "me" "eval")
-    (spacemacs/declare-prefix-for-mode 'python-mode "ms" "eval-and-step")
+    (spacemacs/declare-prefix-for-mode 'python-mode "mg" "goto")
+    (spacemacs/declare-prefix-for-mode 'python-mode "me" "send to REPL")
+    (spacemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL and step")
+    (spacemacs/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
     (spacemacs/set-leader-keys-for-major-mode 'python-mode
       "i" 'elpy-shell-switch-to-shell
       "I" 'elpy-shell-switch-to-shell-in-current-window
@@ -93,7 +94,10 @@
       "sr" 'elpy/shell-send-current-region-or-buffer-and-step
       "sR" 'elpy/shell-send-current-region-or-buffer-and-step-and-go
       "sb" 'elpy/shell-send-current-buffer-and-step
-      "sB" 'elpy/shell-send-current-buffer-and-step-and-go)
+      "sB" 'elpy/shell-send-current-buffer-and-step-and-go
+      "Va" 'pyvenv-activate
+      "Vd" 'pyvenv-deactivate
+      "Vw" 'pyvenv-workon)
 
     (spacemacs/set-leader-keys-for-major-mode 'inferior-python-mode
       "i" 'elpy-shell-switch-to-buffer
