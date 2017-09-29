@@ -9,7 +9,8 @@
 ;; functions for flashing a region; only flashes when package eval-sexp-fu is
 ;; loaded and its minor mode enabled
 (defun elpy/flash-region (begin end)
-  (when (bound-and-true-p eval-sexp-fu-flash-mode)
+  (when (and (bound-and-true-p eval-sexp-fu-flash-mode)
+             (not (eq begin end)))
     (multiple-value-bind (bounds hi unhi eflash) (eval-sexp-fu-flash (cons begin end))
       (eval-sexp-fu-flash-doit (lambda () t) hi unhi))))
 
@@ -18,7 +19,13 @@
   (eq (string-match-p "^\\s-*$" (thing-at-point 'line)) 0))
 
 (defun elpy/current-line-comment-p ()
-  (eq (string-match-p "^\\s-*#" (thing-at-point 'line)) 0))
+  (string-match-p "^\\s-*#" (thing-at-point 'line)))
+
+(defun elpy/current-line-else-p ()
+  (string-match-p "^\\s-*el\\(?:se:\\|if[^\w]\\)" (thing-at-point 'line)))
+
+(defun elpy/current-line-indented-p ()
+  (eq (string-match-p "^\\s-+[^\\s-]+" (thing-at-point 'line)) 0))
 
 (defun elpy/skip-empty-and-comment-lines (&optional backwards)
   (if backwards
@@ -104,16 +111,84 @@ detecting a prompt at the end of the buffer."
           (with-current-buffer (process-buffer process)
             (comint-interrupt-subjob)))))))
 
+(defun elpy/nav--beginning-of-current-statement ()
+  """Moves the point to the beginning of the current or next Python statement.
+
+     If the current line starts with a statement, behaves exactly
+     like python-nav-beginning of statement. If the point is on
+     an empty or comment line, skips forward to the first line
+     holding a statement. If the line is an else/elif clause,
+     goes backward to the beginning of the corresponding if
+     clause.
+  """
+  (elpy/skip-empty-and-comment-lines)
+  (python-nav-beginning-of-statement)
+  (let ((p))
+    (while (and (not (eq p (point)))
+                (elpy/current-line-else-p))
+      (elpy-nav-backward-block)
+      (setq p (point)))))
+
+;; internal; point needs to be exactly at the beginning of the statement
+(defun elpy/nav--end-of-current-statement ()
+  """Moves the point to the end of the current Python statement.
+
+     Assumes that the point is at the beginning of a
+     statement (e.g., after calling
+     elpy/nav--beginning-of-current-statement). Correctly handles
+     if/elif/else statements.
+  """
+  (let ((indent (current-column))
+        (continue t)
+        (p))
+    (while (and (not (eq p (point)))
+                continue)
+      ;; check if there is a another block at the same indentation level
+      (setq p (point))
+      (elpy-nav-forward-block)
+
+      ;; if not, go to the end of the block and done
+      (if (eq p (point))
+          (progn
+            (python-nav-end-of-block)
+            (setq continue nil))
+        ;; otherwise check if its an else/elif clause
+        (unless (elpy/current-line-else-p)
+          (forward-line -1)
+          (elpy/skip-empty-and-comment-lines t)
+          (setq continue nil)))))
+  (end-of-line))
+
 (defun elpy/shell-send-current-statement-and-step ()
-  "Send current statement to Python shell."
+  """Send current or next statement to Python shell and step.
+
+   If the current line starts with a statement, send this
+   statement. If the point is on an empty or comment line, send
+   the next statement below point. Correctly handles if/else/elif
+   statements.
+  """
   (interactive)
   (elpy/python-shell-ensure-running)
-  (let ((beg (python-nav-beginning-of-statement))
-        (end (python-nav-end-of-statement)))
-    (elpy/flash-region beg end)
-    (elpy-shell-get-or-create-process)
-    (elpy/with-maybe-echo
-     (python-shell-send-string (buffer-substring beg end))))
+  (let ((beg (progn (elpy/nav--beginning-of-current-statement)
+                    (save-excursion
+                      (beginning-of-line)
+                      (point))))
+        (end (progn (elpy/nav--end-of-current-statement) (point))))
+    (unless (eq beg end)
+      (elpy/flash-region beg end)
+      (elpy-shell-get-or-create-process)
+      (let ((buffer (current-buffer))
+            (s))
+        ;; remove spurious indentation
+        (with-temp-buffer
+          (insert (with-current-buffer buffer (buffer-substring beg end)))
+          (goto-char (point-min))
+          (while (elpy/current-line-indented-p)
+            (python-indent-shift-left (point-min) (point-max)))
+          (setq s (buffer-string)))
+        ;; and send
+        (elpy/with-maybe-echo
+         (python-shell-send-string s)))))
   (python-nav-forward-statement))
 
 (defun elpy/shell-send-current-region-or-buffer-and-step ()
@@ -136,38 +211,32 @@ detecting a prompt at the end of the buffer."
    (python-shell-send-buffer))
   (goto-char (point-max)))
 
-(defun elpy/python-nav-beginning-of-block ()
-  "Like python-nav-beginning-of-block, but handles top-level
-if-elif-else statements correctly."
-  (while (progn
-           (python-nav-beginning-of-block)
-           (if (string-match-p "\\`el\\(?:se:\\|if[^\w]\\)" (thing-at-point 'line))
-               (forward-line -1)
-             nil)))
-  (beginning-of-line))
+(defun elpy/nav--beginning-of-current-defun ()
+  """Move the point to the beginning of the current or next function or top-level statement.
 
-(defun elpy/python-nav-end-of-block ()
-  "Like python-nav-end-of-block, but handles top-level
-if-elif-else statements correctly."
-  (while (progn
-           (python-nav-end-of-statement)
-           (python-nav-end-of-block)
-           (let ((p (point)))
-             (forward-line)
-             (elpy/skip-empty-and-comment-lines)
-             (if (string-match-p "\\`el\\(?:se:\\|if[^\w]\\)" (thing-at-point 'line))
-                 t
-               (goto-char p)
-               nil))))
-  (end-of-line))
+  If the point is within a function or top-level statement, move
+  to its beginning. Otherwise, move to the beginning of the next
+  top-level statement.
+  """
+  (interactive)
+  (elpy/nav--beginning-of-current-statement)
+  (let ((p))
+    (while (and (not (eq p (point)))
+                (elpy/current-line-indented-p))
+      (forward-line -1)
+      (elpy/skip-empty-and-comment-lines t)
+      (elpy/nav--beginning-of-current-statement))))
 
 (defun elpy/shell-send-current-defun-and-step ()
-  "Send the function (or top-level statement) containing the next
-codeline at or after point to Python shell."
+  """Send the current function or top-level statement to the Python shell and step.
+
+   If the point is within a function or top-level statement, send
+   this one. Otherwise, send the next one below point.
+  """
   (interactive)
   (elpy/python-shell-ensure-running)
-  (let* ((beg (progn (elpy/python-nav-beginning-of-block) (point)))
-         (end (progn (elpy/python-nav-end-of-block) (point))))
+  (let* ((beg (progn (elpy/nav--beginning-of-current-defun) (point)))
+         (end (progn (elpy/nav--end-of-current-statement) (point))))
     (elpy/flash-region beg end)
     (if (string-match-p "\\`[^\n]*\\'" (buffer-substring beg end))
         ;; single line
@@ -179,22 +248,26 @@ codeline at or after point to Python shell."
       (python-nav-forward-statement))))
 
 (defun elpy/shell-send-current-group-and-step ()
-  "Send the group of top-level statements (group = no empty lines
- in between) containing the next codeline at or after point to
- Python shell"
+  """Send the current or next group of top-level statements to the Python shell and step.
+
+   A sequence of top-level statements is a group if they are not
+   separated by empty lines. (Empty lines within each top-level
+   statement are ignored though.)
+
+   If the point is within a top-level statement, send the group
+   around this statement. Otherwise, go to the top-level
+   statement below point and send the group around this
+   statement.
+   """
   (interactive)
   (elpy/python-shell-ensure-running)
-  (let* ((ini (progn
-                (elpy/skip-empty-and-comment-lines)
-                (end-of-line)
-                (point)))
-         (beg (progn
-                ;; go back to start of group
-                (beginning-of-line)
-                (elpy/python-nav-beginning-of-block)
-                (while (not (or (elpy/current-line-empty-p) (eq (point) (point-min))))
+  (let* ((beg (progn
+                ;; go to start of group
+                (elpy/nav--beginning-of-current-defun)
+                (while (not (or (elpy/current-line-empty-p)
+                                (eq (point) (point-min))))
                   (unless (elpy/current-line-comment-p)
-                    (elpy/python-nav-beginning-of-block))
+                    (elpy/nav--beginning-of-current-defun))
                   (forward-line -1)
                   (beginning-of-line))
                 (when (elpy/current-line-empty-p)
@@ -203,31 +276,28 @@ codeline at or after point to Python shell."
                 (point)))
          (end (progn
                 ;; go forward to end of group
-                (goto-char ini)
-                (end-of-line)
-                (elpy/python-nav-end-of-block)
-                (let ((last-point -1))
-                  (while (not (or (elpy/current-line-empty-p)
-                                  (<= (point) last-point)))
-                    (setq last-point (point))
+                (elpy/nav--end-of-current-statement)
+                (let ((p))
+                  (while (not (eq p (point)))
+                    (setq p (point))
                     (forward-line)
-                    (if (not (or (elpy/current-line-empty-p) (elpy/current-line-comment-p)))
-                        (elpy/python-nav-end-of-block))
-                    (end-of-line)))
-                (when (elpy/current-line-empty-p)
-                  (forward-line -1)
-                  (end-of-line))
+                    (if (elpy/current-line-empty-p)
+                        (goto-char p)
+                      (elpy/nav--end-of-current-statement))))
                 (point))))
-    (elpy/flash-region beg end)
-    ;; send the region and jump to next statement
-    (if (string-match-p "\\`[^\n]*\\'" (buffer-substring beg end))
-        ;; single line
-        (elpy/shell-send-current-statement-and-step)
-      ;; multiple lines
-      (elpy/with-maybe-echo
-       (python-shell-send-region beg end))
-      (setq mark-active nil)
-      (python-nav-forward-statement))))
+    (if (> end beg)
+        (progn
+          (elpy/flash-region beg end)
+          ;; send the region and jump to next statement
+          (if (string-match-p "\\`[^\n]*\\'" (buffer-substring beg end))
+              ;; single line
+              (elpy/shell-send-current-statement-and-step)
+            ;; multiple lines
+            (elpy/with-maybe-echo
+             (python-shell-send-region beg end))
+            (python-nav-forward-statement)))
+      (goto-char beg))
+    (setq mark-active nil)))
 
 ;; functions to inject output text into the Python shell
 (defun elpy/insert-and-font-lock (string face &optional no-font-lock)
@@ -470,3 +540,15 @@ t when called interactively."
 (defun elpy-shell-switch-to-buffer-in-current-window ()
   (interactive)
   (switch-to-buffer elpy--shell-last-py-buffer))
+
+(defun elpy/insert-codecell-above ()
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (insert "# <codecell>\n")))
+
+(defun elpy/insert-markdowncell-above ()
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (insert "# <markdowncell>\n")))

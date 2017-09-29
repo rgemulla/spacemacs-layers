@@ -64,6 +64,7 @@
     (spacemacs/declare-prefix-for-mode 'python-mode "me" "send to REPL")
     (spacemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL and step")
     (spacemacs/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
+    (spacemacs/declare-prefix-for-mode 'python-mode "mn" "notebook")
     (spacemacs/set-leader-keys-for-major-mode 'python-mode
       "i" 'elpy-shell-switch-to-shell
       "I" 'elpy-shell-switch-to-shell-in-current-window
@@ -93,7 +94,9 @@
       "sB" 'elpy/shell-send-current-buffer-and-step-and-go
       "Va" 'pyvenv-activate
       "Vd" 'pyvenv-deactivate
-      "Vw" 'pyvenv-workon)
+      "Vw" 'pyvenv-workon
+      "nc" 'elpy/insert-codecell-above
+      "nm" 'elpy/insert-markdowncell-above)
 
     (spacemacs/set-leader-keys-for-major-mode 'inferior-python-mode
       "i" 'elpy-shell-switch-to-buffer
