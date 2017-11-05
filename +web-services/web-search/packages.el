@@ -9,8 +9,7 @@
 ;;; Code:
 
 (defconst web-search-packages
-	'(engine-mode
-    google-translate))
+	'(engine-mode))
 
 (defun web-search/init-engine-mode ()
   (use-package engine-mode
@@ -56,17 +55,4 @@
           (spacemacs/set-leader-keys
             (concat web-search-prefix (char-to-string key))
             command))))
-    ))
-
-(defun web-search/pre-init-google-translate ()
-  (spacemacs|use-package-add-hook google-translate
-    :post-init
-    (setq google-translate-pop-up-buffer-set-focus t)
-
-    (spacemacs/declare-prefix web-search-prefix "web search")
-    (spacemacs/set-leader-keys
-      (concat web-search-prefix "t")
-      'google-translate-smooth-translate)
-    (require 'google-translate-smooth-ui)
-    (setq google-translate-translation-directions-alist '(("en" . "de") ("de" . "en"))) ;; use C-n / C-p to switch
     ))

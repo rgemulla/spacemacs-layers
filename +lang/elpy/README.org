@@ -58,7 +58,7 @@ E.g., =, g g= navigates to the definition of the symbol at point.
   expression, output the value of that expression in the shell (instead of
   nothing, as in ~python~ and ~elpy~). Note that this is also the default
   behaviour in Jupyter notebooks.
-- Detects top-level if-elif-else statements correctly.
+- Handles if-elif-else statements correctly.
 ** Known issues
 - Multi-line strings are not yet detected correctly when the point is in-between
   and an evaluation command is run.

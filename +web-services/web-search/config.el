@@ -6,4 +6,4 @@
 ;;
 ;;; Code:
 
-(defvar web-search-prefix "sw")
+(defvar web-search-prefix "xg")

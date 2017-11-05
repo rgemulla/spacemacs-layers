@@ -6,8 +6,7 @@
 ;;
 ;;; Commentary:
 ;;
-;; Use öäÖÄ for []{} in normal/motion/visual state (like on a US keyboard). Also
-;; add a toggle (~SPC t ä~ = ~SPC t ]) to toggle this switch globally.
+;; Use öäÖÄü to type []{}\\. Toggle via (~SPC t ä~ = ~SPC t ]~).
 ;;
 ;;; Code:
 
