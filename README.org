@@ -6,8 +6,10 @@ Copy the desired layer(s) into the private layers directory of Spacemacs
 (defaults to =~/.spacemacs.d/private=). Then add them to
 ~dotspacemacs-configuration-layers~ in the =.spacemacs= file.
 ** Provided layers
-- [[file:+lang/elpy][elpy]]: work with Python in a style similar to [[http:ess.r-project.org][ESS]] (alternative to ~python~
+- [[file:+lang/elpy][elpy]]: Work with Python in a style similar to [[http:ess.r-project.org][ESS]] (alternative to ~python~
   layer of Spacemacs).
+- [[file:+lang/latexp/][latexp]]: Additions/improvements for ~latex~ layer of Spacemacs.
+- [[file:+emacs/orgp/][orgp]]: Additions/improvements for ~org~ layer of Spacemacs.
 - [[file:+intl/umlauts/][umlauts]]: Make better use of umlauts when using a German keyboard layout.
 - [[file:+source-control/vc/][vc]]: Integrate Emacs version control into Spacemacs.
 - [[file:+web-services/web-search/][web-search]]: Quick access to web search and Google translate (alternative to
