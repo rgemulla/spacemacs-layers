@@ -98,10 +98,6 @@
                             (propertize time 'face 'org-date))
                   path)
                 ))))))
-
-    ;; exporting src blocks
-    ;; use SPC u ,bt instead and set :tangle file
-    ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode "eb" 'orgp/org-export-src-block)
   ))
 
 (defun orgp/init-calfw ()

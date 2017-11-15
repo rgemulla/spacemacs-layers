@@ -1,3 +1,4 @@
-README coming up.
-
-For now, try ~SPC x g~.
+* web-search layer
+Quick access to web search and Google translate (alternative to ~search-engine~
+  layer of Spacemacs).
+- Binds a number of web-serach engines under prefix =SPC xg=.

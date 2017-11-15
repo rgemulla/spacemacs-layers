@@ -1,3 +1,4 @@
-README coming up.
-
-For now, try ~SPC g v~.
+* vc layer
+Integrates Emacs version control into Spacemacs.
+- Maps all the keybindings of Emacs' version control under prefix =SPC gv=
+- Evilifies ~vc-dir-mode~ buffers

@@ -1,0 +1,30 @@
+* latexp layer
+Additions/improvements for ~latex~ layer of Spacemacs.
+- Functionality to quickly toggle between =$...$= and =\[...\]= math delimiters
+- Functionality to disable prompts for a LaTeX command; e.g., use
+  #+BEGIN_SRC elisp
+  (latexp/TeX-disable-prompt-for-command "View")
+  #+END_SRC
+  to make ~auctex~ always select the default viewer
+- Additional keybindings
+
+** Keybindings
+All commands that insert environments modify the current environment when
+prefixed with =SPC u=.
+| =,ge= / =,gE= | goto next/previous compilation error                  |
+| =,em=         | toggle  between =$...$= and =\[...\]= math delimiters |
+| =,e=          | environment prefix                                    |
+| =,e]=         | close current environment                             |
+| =,ee=         | insert an environment                                 |
+| =,ea=         | insert an =align*= environment                        |
+| =,eA=         | insert an =align= environment                         |
+| =,ec=         | insert a =center= environment                         |
+| =,ef=         | insert a =frame= environment                          |
+| =,eF=         | insert a =figure= environment                         |
+| =,ei=         | insert an =itemize= environment                       |
+| =,eI=         | insert an =enumerate= environment                     |
+| =,eq=         | insert an =equation*= environment                     |
+| =,eQ=         | insert an =equation= environment                      |
+| =,er=         | insert an =array= environment                         |
+| =,et=         | insert an =tabular= environment                       |
+| =,eT=         | insert an =table= environment                         |

@@ -2,63 +2,60 @@
 A [[http:spacemacs.org][Spacemacs ]]layer that allows to work with Python in style similar to [[http:ess.r-project.org][ESS]]. The
 layer is based on [[https:github.com/jorgenschaefer/elpy][elpy]] and is an alternative to the ~python~ layer of Spacemacs.
 
-** Features
-*** Flexible evaluation
-Provides a number of functions to send a Python statement, function definition
-or top-level statement, a group of Python statements, a region, or a buffer to
-the Python shell.
+Most of the functionality originally provided by this layer has meanwhile been
+integrated into ~elpy~ (but not yet documented). This layer now mainly sets
+things up an adds suitable keybindings.
+
+** Flexible evaluation
+Provides keybindings to send a Python statement, function definition, a class
+definition, a top-level statement, a group of Python statements, a region, or a
+buffer to the Python shell.
 
 Each evaluation function has four variants, one for each combination of: whether
-or not the point should move after sending and whether or not the Python shell
-should be focused after sending.
+or not the point should move after sending ("step"), and whether or not the
+Python shell should be focused after sending ("go").
 
-In ~evil-mode~, these commands are bound to prefix =, e= (send and keep point)
-and prefix =, s= (send and step). The suffixes are =e= for statement, =f= for
-function, =d= for group (sequence of top-level statements not separeted by a
-blank line), =r= for region, and =b= for buffer. For example:
+These commands are bound to prefix =,e= (send and keep point) and prefix =,s=
+(send and step). The suffixes are =e= for statement, =f= for function, =c= for
+class, =s= for top-level statement, =d= for group (sequence of top-level
+statements not separated by a blank line), =r= for region, and =b= for buffer.
+Capital suffix letters focus on the Python shell after sending.
 
-| Key binding | Command                                                                                                       |
-|-------------+---------------------------------------------------------------------------------------------------------------|
-| =, e f=     | Evaluates current function and keeps the point where it is                                                    |
-| =, e F=     | Evaluates current function, keeps the point where it is, and switches focus to the Python shell               |
-| =, s f=     | Evaluates current function and moves point to first subsequent statement                                      |
-| =, s F=     | Evaluates current function, moves point to first subsequent statement, and switches focus to the Python shell |
-*** Flash statements evaluated
+For example:
+| =,ef=       | Evaluate current function and keep the point where it is                                                      |
+| =,eF=       | Evaluate current function, keep the point where it is, and switch focus to the Python shell                   |
+| =,sf=       | Evaluate current function and move point to first subsequent statement                                        |
+| =,sF=       | Evaluate current function, move point to first subsequent statement, and switch focus to the Python shell     |
+** Flash evaluated statements
 When package [[https:www.emacswiki.org/emacs/EvalSexpFu][eval-sexp-fu]] is loaded and ~eval-sexp-fu-flash-mode~ is active,
 briefly flashes the statements sent to the shell when running an evaluation
-command.
-*** Echoing of shell inputs
-By default, neither the python nor elpy packages show the inputs sent to the
-Python shell in the shell itself; only outputs can be seen. This (perhaps
-confusing) behaviour can be modified in this layer.
-
+command (just like Spacemacs does in ~emacs-lisp-mode~).
+** Echoing of shell inputs
 Whenever an input is sent to the Python shell, this layer by default echos this
 statement in the shell (i.e., it looks as if it was actually typed into the
 shell). This behaviour can be turned on and off via the custom variable
-~elpy/shell-echo-input~ (toggle =SPC t P i=) and further customized via
-~elpy/shell-echo-input-cont-prompt~ (whether to show continuation prompts for
+~elpy-shell-echo-input~ (toggle =,ti=) and further customized via
+~elpy-shell-echo-input-cont-prompt~ (whether to show continuation prompts for
 multi-line inputs) and
-~elpy/shell-echo-input-lines-head~/~elpy/shell-echo-input-lines-head~ (how much
+~elpy.shell-echo-input-lines-head~/~elpy-shell-echo-input-lines-head~ (how much
 to cut when input is long).
-*** Echoing of shell outputs
+** Echoing of shell outputs
 Whenever a statement is sent to the shell, its output can be shown in the echo
-area (in addition to being visible in the shell). This behaviour can be
-controlled via ~elpy/shell-echo-output~. Possible choices are ~nil~ (never),
-~when-shell-not-visible~ (default), or ~t~ (always).
+area (in addition to being visible in the shell). This behavior can be
+controlled via ~elpy-shell-echo-output~ (toggle =,to=). Possible choices are
+~nil~ (never), ~when-shell-not-visible~ (default), or ~t~ (always).
 
 Output echoing is particularly useful if you set the custom variable
-~elpy/shell-display-buffer-after-send~ (toggle =SPC t P d=) to ~nil~ (the
-default value). Then, no window is needed to display the shell (thereby saving
-screen real estate) but the outputs can still be seen in the echo area.
-*** Major mode bindings
+~elpy-shell-display-buffer-after-send~ (toggle =,td=) to ~nil~ (the default
+value). Then, no window is needed to display the shell (thereby saving screen
+real estate) but the outputs can still be seen in the echo area.
+** Major mode bindings
 Provides major mode bindings that are as faithful to Spacemacs as possible.
-E.g., =, g g= navigates to the definition of the symbol at point.
-*** Bugfixes/improvements of python and elpy packages
+E.g., =,gg= navigates to the definition of the symbol at point.
+** Bugfixes/improvements of python and elpy packages
+These changes are also integreted into ~elpy~ by now.
 - When a multiline statement is sent to the shell and the last statement is an
   expression, output the value of that expression in the shell (instead of
   nothing, as in ~python~ and ~elpy~). Note that this is also the default
   behaviour in Jupyter notebooks.
 - Handles if-elif-else statements correctly.
-** Known issues
-- Multi-line strings are not yet detected correctly when the point is in-between
-  and an evaluation command is run.

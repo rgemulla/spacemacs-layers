@@ -1,0 +1,67 @@
+* orgp layer
+Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
+- Integrated packages
+  - [[https://github.com/kiwanami/emacs-calfw][calfw]] calendar framework
+  - [[https://github.com/Malabarba/org-agenda-property][org-agenda-property]] to display properties in the agenda buffer
+  - [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] to quickly search through org files (works with both ~helm~
+    and ~ivy~ layer)
+- Show associated timestamp of a headline in the breadcrumb
+- Various customizations for the agenda view
+  - Functionality to apply custom faces for each tag in the agenda view
+  - Functionality to add a pagebreak before each new data in the agenda view
+  - Functionality to disable mouse-over faces in the agenda view
+  - Custom comparator to sort agenda items such that full-day events come first,
+    then events with a timestamp, then the TODO items
+- Functionality to export a single src block to a file
+- Add support for ~callto~ links
+- Additional keybindings
+  - Quickly reveal things around point
+  - Access to ~org-babel~
+
+** Keybindings
+In the keybindings given below, =,= refers to the major mode leader key.
+| *navigation* | =SPC aofr= / =,fr= | goto last refiled entry                                              |
+|              | =SPC aofc= / =,fc= | goto last captured entry                                             |
+|              | =SPC aofa= / =,fa= | search through agenda files with ~helm-org-rifle~                    |
+|              | =SPC aofA= / =,fA= | search through agenda and archive files with ~helm-org-rifle~        |
+|              | =,js=              | search through current buffer with ~helm-org-rifle~                  |
+| *visiblity*  | =,vc=              | reveal the children of the current entry                             |
+|              | =,ve=              | reveal the body of the current entry                                 |
+|              | =,vo=              | fold all top-level headlines                                         |
+|              | =,vr=              | reveal the current entry, its parents, and the next sibling headline |
+|              | =,vR=              | reveal the current entry, its parents, and all its siblings          |
+| *org-babel*  | =,b=               | prefix to access all org-babel commands                              |
+|              | =,bT=              | export the current org src block to file                             |
+| *Other*      | =,TI=              | toggle org-indent mode                                               |
+
+** Customizations for agenda view
+Disabled by default. Example usage:
+#+BEGIN_SRC elisp
+;; hook to change appearance of agenda view
+(defun my/org-agenda-finalize-hook ()
+  (save-excursion
+    ;; color agenda items by their tag (faces need to be defined somewhere)
+    (orgp/org-agenda-color-by-tag "personal" 'my/org-agenda-calendar-event-personal-face)
+    (orgp/org-agenda-color-by-tag "work" 'my/org-agenda-calendar-event-anniversary-face)
+
+    ;; add a pagebreak before every new day
+    (orgp/org-agenda-pagebreak-before-new-date)
+
+    ;; don't change the face on mouse-over
+    (orgp/org-agenda-modify-mouse-face)))
+
+;; enable the above hook
+(add-hook 'org-agenda-finalize-hook 'my/org-agenda-finalize-hook t)
+
+;; show page breaks as horizontal lines
+(add-hook 'org-agenda-mode-hook 'turn-on-page-break-lines-mode)
+
+;; sort agenda items such that full-day events come first, then events with a
+;; timestamp, then the TODO items
+(setq org-agenda-cmp-user-defined 'orgp/org-agenda-cmp-todos-up)
+(setq  org-agenda-sorting-strategy
+       '((agenda user-defined-up time-up priority-down category-keep)
+         (todo deadline-up)
+         (tags ts-down priority-down alpha-up)
+         (search ts-down priority-down alpha-up)))
+#+END_SRC

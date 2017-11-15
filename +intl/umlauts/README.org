@@ -1,3 +1,19 @@
-README coming up.
+* umlauts layer
+Make better use of umlauts when using a German keyboard layout.
 
-For now, see ~config.el~.
+The German keyboard layout is inconvenient for programming and navigation in
+Spacemacs because the =[]{}\= keys are at located inconveniently. At the
+location of these keys in the (much more suitable) American layout, the German
+keyboard layout has the umlauts =öäÖÄü=. Fortunately, these umlauts are
+relatively rare in German words, they are useless when working in a
+different language, and they are not bound by Spacemacs.
+
+This layer provides a minor mode that remaps =öäÖÄü= to =[]{}\=. When the mode
+is active, umlauts can still be typed by also pressing the control key (e.g.,
+=C-ö= produces character =ö=).
+
+The umlauts minor mode can be toggled via =SPC tä= or =SPC t]=.
+
+Layer configuration variables:
+| =umlauts-remap-when-not-mapped= | Remap =öäÖÄ= to =[]{}= whereever they are unbound (default: =t=)                             |
+| =umlauts-remap-initally=        | Globally enable the umlauts minor mode to remap =öäÖÄü= to =[]{}\= everywhere (default: =nil=) |
