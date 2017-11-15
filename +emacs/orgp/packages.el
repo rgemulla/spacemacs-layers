@@ -12,6 +12,7 @@
     calfw
     calfw-org
     org-agenda-property
+    helm
     helm-org-rifle ;; (helm layer does not need to be used)
     ))
 
@@ -50,16 +51,16 @@
     (org-link-set-parameters
      "callto"
      :follow
-     #'(lambda (number)
-         (if (eq window-system 'w32)
-             (call-process
-              shell-file-name nil nil nil shell-command-switch
-              (concat
-               "start callto://"
-               (replace-regexp-in-string
-                "^\\+" "00"
-                (replace-regexp-in-string "\\s-" "-" number))))
-           (message "I do not know how to open callto links."))))
+     (lambda (number)
+       (if (eq window-system 'w32)
+           (call-process
+            shell-file-name nil nil nil shell-command-switch
+            (concat
+             "start callto://"
+             (replace-regexp-in-string
+              "^\\+" "00"
+              (replace-regexp-in-string "\\s-" "-" number))))
+         (message "I do not know how to open callto links."))))
 
     ;; make the breadcrumb information shown by org-eldoc when on an org-headline
     ;; also show timestamp information
@@ -99,7 +100,8 @@
                 ))))))
 
     ;; exporting src blocks
-    (spacemacs/set-leader-keys-for-major-mode 'org-mode "eb" 'orgp/org-export-src-block)
+    ;; use SPC u ,bt instead and set :tangle file
+    ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode "eb" 'orgp/org-export-src-block)
   ))
 
 (defun orgp/init-calfw ()
@@ -135,7 +137,7 @@
     (setq org-agenda-property-column 0)))
 
 ;; rifle through org files
-(defun rgmacs/init-helm-org-rifle ()
+(defun orgp/init-helm-org-rifle ()
   (use-package helm-org-rifle
     :defer t
     :after helm
@@ -151,7 +153,13 @@
       "js" 'helm-org-rifle-current-buffer)
     ))
 
-(if (not (configuration-layer/layer-used-p 'helm))
+(unless (configuration-layer/layer-used-p 'helm)
   ;; needed to define some variables so that the advices of Spacemacs for helm
   ;; functions don't make trouble
-  (load (concat (configuration-layer/get-layer-path 'helm) "config.el")))
+  (load (concat (configuration-layer/get-layer-path 'helm) "config.el"))
+
+  ;; and explicitly initializing this gives us the Spacemacs keybindings (e.g.,
+  ;; C-J and C-K to move down/up in helm)
+  (defun orgp/init-helm ()
+    (use-package helm
+      :defer t)))

@@ -125,6 +125,12 @@
       (forward-line -1)
       (LaTeX-indent-line)))))
 
+(defun latexp/LaTeX-remove-math-and-mark ()
+  (interactive)
+  (if (texmathp)
+      (error "NYI")
+    (user-error "Point not in math mode")))
+
 (defun latexp/TeX-disable-prompt-for-command (cmd)
   "Disable prompt for viewer program for CMD in TeX.
 

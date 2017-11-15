@@ -84,27 +84,33 @@ Needs to be run as last (or at least late) hook."
           (apply 'delete-region remove)
           (insert description)))))
 
-(defun orgp/org-export-src-block ()
-  "Save the content of the current src block to a file"
+(defun orgp/org-babel-tangle-block ()
+  "Tangle the current block.
+
+  When no tangle file is set for the current block, ask for file
+  name with sensible defaults."
   (interactive)
   (let ((block-info (org-babel-get-src-block-info)))
     (if block-info
-        (let* ((language (nth 0 block-info))
-               (body (nth 1 block-info))
-               (name (nth 4 block-info))
-               (default-file-name (concat
-                                   (or name
-                                       (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
-                                       "export")
-                                   "."
-                                   (or
-                                    (cdr (assoc language org-babel-tangle-lang-exts))
-                                    language
-                                    "block")))
-               (file-name (read-file-name "Export to" nil nil nil default-file-name)))
-          (with-temp-file file-name
-            (insert body "\n"))
-          (message "Block exported to %s" file-name))
+        (let ((file-name (cdr (assoc :tangle (nth 2 block-info)))))
+          (when (string-equal file-name "no")
+            (let* ((language (nth 0 block-info))
+                   (name (nth 4 block-info))
+                   (default-file-name
+                     (concat
+                      (or name
+                          (file-name-sans-extension
+                           (file-name-nondirectory (buffer-file-name)))
+                          "export")
+                      "."
+                      (or
+                       (cdr (assoc language org-babel-tangle-lang-exts))
+                       language
+                       "block"))))
+              (setq file-name
+                    (read-file-name "Export to" nil nil nil default-file-name))))
+          (org-babel-tangle '(4) file-name)
+          (message "Tangled current block to file %s" file-name))
       (user-error "Not in a block"))))
 
 (defun orgp/helm-org-rifle-agenda-files-with-archives ()
