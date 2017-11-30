@@ -41,4 +41,17 @@
     (with-eval-after-load 'latex
       (add-to-list 'LaTeX-indent-environment-list '("figure"))
       (add-to-list 'LaTeX-indent-environment-list '("tikzpicture")))
+
+    ;; basic vim-style navigation in reftex toc buffers (rebinds k to x, and x
+    ;; to X)
+    (with-eval-after-load 'reftex-toc
+      ;; so we only map the most important keys (e.g., want to keep space)
+      (define-key reftex-toc-mode-map "j" 'reftex-toc-next)
+      (define-key reftex-toc-mode-map (kbd "C-j") 'reftex-toc-next-heading)
+      (define-key reftex-toc-mode-map "k" 'reftex-toc-previous)
+      (define-key reftex-toc-mode-map (kbd "C-k") 'reftex-toc-previous-heading)
+      (define-key reftex-toc-mode-map (kbd "C-d") 'evil-scroll-down)
+      (define-key reftex-toc-mode-map (kbd "C-u") 'evil-scroll-up)
+      (define-key reftex-toc-mode-map "x" 'reftex-toc-quit-and-kill)
+      (define-key reftex-toc-mode-map "X" 'reftex-toc-external))
     ))
