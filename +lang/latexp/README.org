@@ -6,31 +6,34 @@ Additions/improvements for ~latex~ layer of Spacemacs.
   (latexp/TeX-disable-prompt-for-command "View")
   #+END_SRC
   to make ~auctex~ always select the default viewer
-- Basic VIM-style navigation in =reftex-toc-mode=
+- Basic VIM-style navigation in =reftex-toc-mode= and =reftex-select-label-mode=
 - Additional keybindings
 
 ** Keybindings
 All commands that insert environments modify the current environment when
 prefixed with =SPC u=.
-| *latex*        | =,ge= / =,gE= | goto next/previous compilation error                  |
-|                | =,em=         | toggle  between =$...$= and =\[...\]= math delimiters |
-|                | =,e=          | environment prefix                                    |
-|                | =,e]=         | close current environment                             |
-|                | =,ee=         | insert an environment                                 |
-|                | =,ea=         | insert an =align*= environment                        |
-|                | =,eA=         | insert an =align= environment                         |
-|                | =,ec=         | insert a =center= environment                         |
-|                | =,ef=         | insert a =frame= environment                          |
-|                | =,eF=         | insert a =figure= environment                         |
-|                | =,ei=         | insert an =itemize= environment                       |
-|                | =,eI=         | insert an =enumerate= environment                     |
-|                | =,eq=         | insert an =equation*= environment                     |
-|                | =,eQ=         | insert an =equation= environment                      |
-|                | =,er=         | insert an =array= environment                         |
-|                | =,et=         | insert an =tabular= environment                       |
-|                | =,eT=         | insert an =table= environment                         |
-| *reftex-toc*   | =j= / =k=     | next/previous                                         |
-| (new/changed   | =C-j= / =C-k= | next/previous headline                                |
-| bindings only) | =C-d= / =C-u= | scroll up/down                                        |
-|                | =x=           | quit and kill toc buffer (rebound from =k=)           |
-|                | =X=           | reftex-toc-external (rebound from =x=)                |
+| *latex*               | =,ge= / =,gE= | goto next/previous compilation error                  |
+|                       | =,em=         | toggle  between =$...$= and =\[...\]= math delimiters |
+|                       | =,e=          | environment prefix                                    |
+|                       | =,e]=         | close current environment                             |
+|                       | =,ee=         | insert an environment                                 |
+|                       | =,ea=         | insert an =align*= environment                        |
+|                       | =,eA=         | insert an =align= environment                         |
+|                       | =,ec=         | insert a =center= environment                         |
+|                       | =,ef=         | insert a =frame= environment                          |
+|                       | =,eF=         | insert a =figure= environment                         |
+|                       | =,ei=         | insert an =itemize= environment                       |
+|                       | =,eI=         | insert an =enumerate= environment                     |
+|                       | =,eq=         | insert an =equation*= environment                     |
+|                       | =,eQ=         | insert an =equation= environment                      |
+|                       | =,er=         | insert an =array= environment                         |
+|                       | =,et=         | insert an =tabular= environment                       |
+|                       | =,eT=         | insert an =table= environment                         |
+| *reftex-toc*          | =j= / =k=     | next/previous                                         |
+| (new/changed          | =C-j= / =C-k= | next/previous headline                                |
+| bindings only)        | =C-d= / =C-u= | scroll up/down                                        |
+|                       | =x=           | quit and kill toc buffer (rebound from =k=)           |
+|                       | =X=           | reftex-toc-external (rebound from =x=)                |
+| *reftex-select-label* | =j= / =k=     | next/previous                                         |
+| (new/changed          | =C-j= / =C-k= | next/previous headline                                |
+| bindings only)        | =C-d= / =C-u= | scroll up/down                                        |

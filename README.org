@@ -1,4 +1,4 @@
-* rgemulla/spacemacs-layers
+ rgemulla/spacemacs-layers
 This repository contains some custom [[http:spacemacs.org][Spacemacs]] layers.
 
 ** Installation
@@ -12,6 +12,5 @@ Copy the desired layer(s) into the private layers directory of Spacemacs
 - [[file:+lang/latexp/][latexp]]: Additions/improvements for ~latex~ layer of Spacemacs.
 - [[file:+emacs/orgp/][orgp]]: Additions/improvements for ~org~ layer of Spacemacs.
 - [[file:+intl/umlauts/][umlauts]]: Make better use of umlauts when using a German keyboard layout.
-- [[file:+source-control/vc/][vc]]: Integrate Emacs version control into Spacemacs.
 - [[file:+web-services/web-search/][web-search]]: Quick access to web search and Google translate (alternative to
   ~search-engine~ layer of Spacemacs).

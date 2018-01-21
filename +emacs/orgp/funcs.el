@@ -38,13 +38,15 @@ Only calendar events with a time-of-day are recolored."
   (goto-char (point-min))
   (while (< (point) (point-max))
     (let ((tags (get-text-property (point) 'tags)))
-      (when (and tags (member tag tags)
-                 (or (eq (face-at-point t) 'org-agenda-calendar-event)
-                     (eq (face-at-point t) 'org-agenda-calendar-sexp)
-                     (and (get-text-property (point) 'time-of-day)
-                          (member (face-at-point t) '(org-scheduled default)))))
-        (add-face-text-property (point) (+ 1 (point)) face)))
-    (forward-char)))
+      (if (and tags (member tag tags)
+               (or (memq (face-at-point t) '(org-agenda-calendar-event org-agenda-calendar-sexp))
+                   (and (get-text-property (point) 'time-of-day)
+                        (member (face-at-point t) '(org-scheduled default)))))
+          (progn
+            (add-face-text-property (point) (+ 1 (point)) face)
+            (forward-char))
+        ;; exploit that entries always start at beginning of line to quickly skip all other lines
+        (forward-line)))))
 
 (defun orgp/org-agenda-pagebreak-before-new-date ()
   "Add a pagebreak before each new date in the agenda view."
@@ -66,10 +68,12 @@ Needs to be run as last (or at least late) hook."
   (save-excursion
     (goto-char (point-min))
     (while (< (point) (point-max))
-      (when (get-text-property (point) 'mouse-face)
-        (remove-text-properties (point) (+ 1 (point)) '(mouse-face t))
-        (add-text-properties (point) (+ 1 (point)) (list 'mouse-face (face-at-point t))))
-      (forward-char))))
+      (if (get-text-property (point) 'mouse-face)
+          (progn
+            (remove-text-properties (point) (+ 1 (point)) '(mouse-face t))
+            (add-text-properties (point) (+ 1 (point)) (list 'mouse-face (face-at-point t)))
+            (forward-char))
+        (forward-line)))))
 
 ;; link handling
 (defun orgp/org-remove-link ()

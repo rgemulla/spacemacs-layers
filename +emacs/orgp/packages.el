@@ -18,11 +18,13 @@
 
 (defun orgp/pre-init-org ()
   (spacemacs|use-package-add-hook org
-    :post-config
+    :post-init
     ;; quick jump to refile/capture locations
     (spacemacs/declare-prefix "aof" "files")
     (spacemacs/set-leader-keys "aofr" 'org-refile-goto-last-stored)
     (spacemacs/set-leader-keys "aofc" 'org-capture-goto-last-stored)
+
+    :post-config
     (spacemacs/declare-prefix-for-mode 'org-mode "mf" "files")
     (spacemacs/set-leader-keys-for-major-mode 'org-mode "fr" 'org-refile-goto-last-stored)
     (spacemacs/set-leader-keys-for-major-mode 'org-mode "fc" 'org-capture-goto-last-stored)
@@ -44,8 +46,9 @@
       )
 
     ;; add C-<return> binding to agenda to select entry and close other window
-    (define-key org-agenda-mode-map (kbd "C-<return>") 'orgp/org-agenda-switch-to-delete-other-window)
-    (define-key org-agenda-mode-map (kbd "C-<enter>") 'orgp/org-agenda-switch-to-delete-other-window)
+    (with-eval-after-load 'org-agenda
+      (define-key org-agenda-mode-map (kbd "C-<return>") 'orgp/org-agenda-switch-to-delete-other-window)
+      (define-key org-agenda-mode-map (kbd "C-<enter>") 'orgp/org-agenda-switch-to-delete-other-window))
 
     ;; handle callto links
     (org-link-set-parameters
@@ -91,7 +94,7 @@
                   ))
                 (if time
                     (concat path
-                            (make-string (- (frame-width)
+                            (make-string (- (frame-width) 1
                                             (length path) (length time-prefix) (length time))
                                          ? )
                             time-prefix
@@ -121,7 +124,9 @@
 (defun orgp/init-calfw-org ()
   (use-package calfw-org
     :after calfw
-    :defer t))
+    :defer t
+    :commands cfw:open-org-calendar
+    ))
 
 ;; shows locations in agenda
 (defun orgp/init-org-agenda-property ()
@@ -136,7 +141,6 @@
 (defun orgp/init-helm-org-rifle ()
   (use-package helm-org-rifle
     :defer t
-    :after helm
     :init
     ;; show full headline path when rifling
     (setq helm-org-rifle-show-path t)
@@ -145,6 +149,7 @@
     (spacemacs/set-leader-keys
       "aofa" 'helm-org-rifle-agenda-files
       "aofA" 'orgp/helm-org-rifle-agenda-files-with-archives)
+
     (spacemacs/set-leader-keys-for-major-mode 'org-mode
       "js" 'helm-org-rifle-current-buffer)
     ))
@@ -154,8 +159,12 @@
   ;; functions don't make trouble
   (load (concat (configuration-layer/get-layer-path 'helm) "config.el"))
 
-  ;; and explicitly initializing this gives us the Spacemacs keybindings (e.g.,
-  ;; C-J and C-K to move down/up in helm)
+  ;; avoid helm to overwrite ivy's minibuffer history bindings
+  (setq helm-minibuffer-history-key nil)
+
+  ;; the Spacemacs keybindings (e.g., C-j and C-k to move down/up in helm) come
+  ;; from with-eval-after-load's from spacemacs-completion. So no need to do
+  ;; anything here.
   (defun orgp/init-helm ()
     (use-package helm
       :defer t)))

@@ -44,3 +44,6 @@
 (spacemacs/set-leader-keys "F." 'spacemacs/frame-transient-state/body)
 (spacemacs/set-leader-keys "F+" 'frames/frame-enlarge-and-split-horizontally)
 (spacemacs/set-leader-keys "F-" 'frames/frame-shrink-and-delete-horizontally)
+
+(spacemacs/set-leader-keys "Fm" 'toggle-frame-maximized)
+(spacemacs/set-leader-keys "Fz" 'suspend-frame)

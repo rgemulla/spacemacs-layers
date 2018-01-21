@@ -54,4 +54,13 @@
       (define-key reftex-toc-mode-map (kbd "C-u") 'evil-scroll-up)
       (define-key reftex-toc-mode-map "x" 'reftex-toc-quit-and-kill)
       (define-key reftex-toc-mode-map "X" 'reftex-toc-external))
-    ))
+
+    ;; and in reftex-select-label buffers
+    (with-eval-after-load 'reftex-sel
+      (define-key reftex-select-label-mode-map "j" 'reftex-select-next)
+      (define-key reftex-select-label-mode-map (kbd "C-j") 'reftex-select-next-heading)
+      (define-key reftex-select-label-mode-map "k" 'reftex-select-previous)
+      (define-key reftex-select-label-mode-map (kbd "C-k") 'reftex-select-previous-heading)
+      (define-key reftex-select-label-mode-map (kbd "C-d") 'evil-scroll-down)
+      (define-key reftex-select-label-mode-map (kbd "C-u") 'evil-scroll-up))
+  ))
