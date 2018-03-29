@@ -10,6 +10,8 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
   - Functionality to apply custom faces for each tag in the agenda view
   - Functionality to add a pagebreak before each new data in the agenda view
   - Functionality to disable mouse-over faces in the agenda view
+  - Functionality to hide time grid lines that overlap with an appointment (see
+    layer variable =orgp/org-agenda-time-grid-hide-when-appointment=)
   - Custom comparator to sort agenda items such that full-day events come first,
     then events with a timestamp, then the TODO items
 - Functionality to export a single src block to a file

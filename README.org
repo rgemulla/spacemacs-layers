@@ -1,4 +1,4 @@
- rgemulla/spacemacs-layers
+* rgemulla/spacemacs-layers
 This repository contains some custom [[http:spacemacs.org][Spacemacs]] layers.
 
 ** Installation
