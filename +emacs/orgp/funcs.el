@@ -41,7 +41,8 @@ Only calendar events with a time-of-day are recolored."
       (if (and tags (member tag tags)
                (or (memq (face-at-point t) '(org-agenda-calendar-event org-agenda-calendar-sexp))
                    (and (get-text-property (point) 'time-of-day)
-                        (member (face-at-point t) '(org-scheduled default)))))
+                        (member (face-at-point t) '(org-scheduled default)))
+                   (equal (get-text-property (point) 'type) "block")))
           (progn
             (add-face-text-property (point) (+ 1 (point)) face)
             (forward-char))
@@ -120,3 +121,48 @@ Needs to be run as last (or at least late) hook."
 (defun orgp/helm-org-rifle-agenda-files-with-archives ()
   (interactive)
   (helm-org-rifle-files (org-agenda-files nil t)))
+
+;; https://emacs.stackexchange.com/questions/35865/org-agenda-remove-time-grid-lines-that-are-in-an-appointment
+(defun orgp/org-time-to-minutes (time)
+  "Convert an HHMM time to minutes"
+  (+ (* (/ time 100) 60) (% time 100)))
+
+;; https://emacs.stackexchange.com/questions/35865/org-agenda-remove-time-grid-lines-that-are-in-an-appointment
+(defun orpg/org-time-from-minutes (minutes)
+  "Convert a number of minutes to an HHMM time"
+  (+ (* (/ minutes 60) 100) (% minutes 60)))
+
+;; Based on: https://emacs.stackexchange.com/questions/35865/org-agenda-remove-time-grid-lines-that-are-in-an-appointment
+(defun orgp//org-agenda-grid-tweakify (orig-fun list ndays todayp)
+  "Remove time grid lines in org agenda when there is an overlapping appointment"
+  (if (member 'remove-match (car org-agenda-time-grid))
+      (flet ((extract-window
+              (line)
+              (let ((start (get-text-property 1 'time-of-day line))
+                    (dur (get-text-property 1 'duration line)))
+                (cond
+                 ((and start dur)
+                  (cons start
+                        (orpg/org-time-from-minutes
+                         (truncate
+                          (+ dur (orgp/org-time-to-minutes start))))))
+                 (start start)
+                 (t nil)))))
+        (let* ((windows (delq nil (mapcar 'extract-window list)))
+               (org-agenda-time-grid
+                (list
+                 (car org-agenda-time-grid)
+                 (remove-if
+                  (lambda (time)
+                    (find-if (lambda (w)
+                               (if (numberp w)
+                                   (equal w time)
+                                 (and (>= time (car w))
+                                      (< time (cdr w)))))
+                             windows))
+                  (cadr org-agenda-time-grid) )
+                 (caddr org-agenda-time-grid)
+                 (cadddr org-agenda-time-grid)
+                 )))
+          (apply orig-fun (list list ndays todayp))))
+    (apply orig-fun (list list ndays todayp))))

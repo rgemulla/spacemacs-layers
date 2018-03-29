@@ -1,4 +1,4 @@
 (configuration-layer/declare-layers
  '(
-   latex
+   (latex :variables latex-enable-folding t)
  ))

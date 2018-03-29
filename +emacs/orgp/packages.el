@@ -101,6 +101,21 @@
                             (propertize time 'face 'org-date))
                   path)
                 ))))))
+
+    (when orgp/org-agenda-time-grid-hide-when-appointment
+      (advice-add 'org-agenda-add-time-grid-maybe :around #'orgp//org-agenda-grid-tweakify))
+
+    (with-eval-after-load 'ob-shell
+      (defadvice org-babel-sh-evaluate (around set-shell activate)
+        "Add header argument :file-coding that sets the buffer-file-coding-system."
+        (let ((file-coding-param (cdr (assoc :file-coding params))))
+          (if file-coding-param
+              (let ((file-coding (intern file-coding-param))
+                    (default-file-coding (default-value 'buffer-file-coding-system)))
+                (setq-default buffer-file-coding-system file-coding)
+                ad-do-it
+                (setq-default buffer-file-coding-system default-file-coding))
+            ad-do-it))))
   ))
 
 (defun orgp/init-calfw ()
@@ -167,4 +182,6 @@
   ;; anything here.
   (defun orgp/init-helm ()
     (use-package helm
-      :defer t)))
+      :defer t)
+    (defun spacemacs-layouts/post-init-helm ()) ;; don't do that
+    ))

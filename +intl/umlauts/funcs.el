@@ -53,9 +53,9 @@ If NOT-UE is nil, also remap ü to \\."
 (defun umlauts//remap-char (char)
   "Map CHAR from öäÖÄü to []{}\\, otherwise return CHAR."
   (pcase char
-    ('?ö ?[)
+    ('?ö ?\[)
     ('?Ö ?{)
-    ('?ä ?])
+    ('?ä ?\])
     ('?Ä ?})
     ('?a ?\ )
     (_ char)))

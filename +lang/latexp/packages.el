@@ -35,7 +35,9 @@
       "et" 'latexp/LaTeX-tabular
       "eT" 'latexp/LaTeX-table
       "ge" 'TeX-next-error
-      "gE" 'TeX-previous-error)
+      "gE" 'TeX-previous-error
+      "in" 'latexp/insert-note
+      )
 
     ;; disable fill in some environments
     (with-eval-after-load 'latex

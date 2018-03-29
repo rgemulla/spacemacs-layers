@@ -6,6 +6,9 @@
 ;;
 ;;; Code:
 
+(defvar orgp/org-agenda-time-grid-hide-when-appointment t
+  "Hide time grid lines in org-agenda when there is an overlapping appointment")
+
 (with-eval-after-load 'which-key
   (spacemacs|add-toggle org-indent-mode
     :mode org-indent-mode
