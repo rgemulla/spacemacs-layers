@@ -136,19 +136,19 @@ Needs to be run as last (or at least late) hook."
 (defun orgp//org-agenda-grid-tweakify (orig-fun list ndays todayp)
   "Remove time grid lines in org agenda when there is an overlapping appointment"
   (if (member 'remove-match (car org-agenda-time-grid))
-      (flet ((extract-window
-              (line)
-              (let ((start (get-text-property 1 'time-of-day line))
-                    (dur (get-text-property 1 'duration line)))
-                (cond
-                 ((and start dur)
-                  (cons start
-                        (orpg/org-time-from-minutes
-                         (truncate
-                          (+ dur (orgp/org-time-to-minutes start))))))
-                 (start start)
-                 (t nil)))))
-        (let* ((windows (delq nil (mapcar 'extract-window list)))
+      (cl-flet ((extract-window
+                 (line)
+                 (let ((start (get-text-property 1 'time-of-day line))
+                       (dur (get-text-property 1 'duration line)))
+                   (cond
+                    ((and start dur)
+                     (cons start
+                           (orpg/org-time-from-minutes
+                            (truncate
+                             (+ dur (orgp/org-time-to-minutes start))))))
+                    (start start)
+                    (t nil)))))
+        (let* ((windows (delq nil (mapcar #'extract-window list)))
                (org-agenda-time-grid
                 (list
                  (car org-agenda-time-grid)
@@ -166,3 +166,19 @@ Needs to be run as last (or at least late) hook."
                  )))
           (apply orig-fun (list list ndays todayp))))
     (apply orig-fun (list list ndays todayp))))
+
+;; stderr is always redirected (may want option)
+;; TODO some header arguments (esp. vars and sessions) are ignored right now
+;; TODO may be nice to say whether to use script or execute one by one (session)
+;; TODO should really be an ob-bat.el file
+(defun org-babel-execute:bat (body params)
+	"Execute a block of bat commands with Babel."
+  (let ((in-file (org-babel-temp-file "ob-bat-" ".bat")))
+    (with-temp-file in-file
+      (insert body))
+    (org-babel-eval
+     (concat "cmd.exe"
+	           " /C " (org-babel-process-file-name in-file)
+             " 2>&1" ;; redirect stderr ouput
+             )
+     "")))

@@ -16,10 +16,12 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
     then events with a timestamp, then the TODO items
 - Functionality to export a single src block to a file
 - Add support for ~callto~ links
+- Let ~org-babel~ execute =bat= code blocks (using =cmdproxy.exe=)
+- Follow links to Zotero library items (see comments in [[file:local/Org%20Link.js][Org Link.js]] for how to
+  do this)
 - Additional keybindings
   - Quickly reveal things around point
   - Access to ~org-babel~
-
 ** Keybindings
 In the keybindings given below, =,= refers to the major mode leader key.
 | *navigation* | =SPC aofr= / =,fr= | goto last refiled entry                                              |

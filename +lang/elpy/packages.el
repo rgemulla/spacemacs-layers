@@ -19,11 +19,15 @@
     :init
     (setq-default python-indent-offset 4)
     :config
-    ;; disable smartscan-mode to make M-p and M-n select previous/next statement in python shell
     (add-hook 'inferior-python-mode-hook
-              '(lambda ()
-                 (when (featurep 'smartscan)
-                   (smartscan-mode -1))))
+              (lambda ()
+                ;; disable smartscan-mode to make M-p and M-n select previous/next statement in python shell
+                (when (featurep 'smartscan)
+                  (smartscan-mode -1))
+
+                ;; for some reason, q is bound to exit even in insert state -> undo this
+                (define-key evil-insert-state-local-map "q" 'self-insert-command)
+                ))
     ))
 
 (defun elpy/init-jedi ()
