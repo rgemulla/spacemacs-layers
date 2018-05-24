@@ -1,16 +1,3 @@
-// Quickly create org-mode links to Zotero from the Zotero application. Copy
-// this file to the translators subdirectory in your Zotero data folder (e.g.,
-// "~/Zotero/translators"), restart Zotero and set "Org Link" as default
-// translator in Zotero's options. You can then use Ctrl+Shift+c to copy the
-// selected item to the clipboard and subsequently paste a reference into an org
-// file in Emacs.
-//
-// To be able to follow the created links in org-mode, use:
-//
-// (org-link-set-parameters
-//  "zotero"
-//  :follow (lambda (path) (browse-url (concat "zotero:" path))))
-
 {
     "translatorID":"245d1ae0-5eb8-11e8-9c2d-fa7ae01bbebc",
     "translatorType":2,
@@ -23,6 +10,19 @@
     "inRepository":false,
     "lastUpdated":"2018-05-18 22:27:00"
 }
+
+// Quickly create org-mode links to Zotero from the Zotero application. Copy
+// this file to the translators subdirectory in your Zotero data folder (e.g.,
+// "~/Zotero/translators"), restart Zotero and set "Org Link" as default
+// translator in Zotero's options. You can then use Ctrl+Shift+c to copy the
+// selected item to the clipboard and subsequently paste a reference into an org
+// file in Emacs.
+//
+// To be able to follow the created links in org-mode, use:
+//
+// (org-link-set-parameters
+//  "zotero"
+//  :follow (lambda (path) (browse-url (concat "zotero:" path))))
 
 function doExport() {
 	  var item;
