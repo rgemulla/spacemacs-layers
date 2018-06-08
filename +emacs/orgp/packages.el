@@ -14,6 +14,7 @@
     org-agenda-property
     helm
     helm-org-rifle ;; (helm layer does not need to be used)
+    org-sticky-header
     ))
 
 (defun orgp/pre-init-org ()
@@ -185,3 +186,19 @@
       :defer t)
     (defun spacemacs-layouts/post-init-helm ()) ;; don't do that
     ))
+
+(defun orgp/init-org-sticky-header ()
+  (use-package org-sticky-header
+    :commands (org-sticky-header-mode)
+    :init
+    (add-hook 'org-mode-hook #'org-sticky-header-mode)
+    :config
+    (setq org-sticky-header-full-path 'full
+          org-sticky-header-prefix ""
+          org-sticky-header-outline-path-separator " / "
+          )
+
+
+    (defun orgp/org-sticky-header-no-properties (orig-fun &rest arg)
+      (substring-no-properties (apply orig-fun arg)))
+    (advice-add 'org-sticky-header--fetch-stickyline :around #'orgp/org-sticky-header-no-properties)))

@@ -9,6 +9,7 @@
 (defconst latexp-packages
   '(
     auctex
+    (evil-latex-textobjects :location (recipe :fetcher github :repo "hpdeifel/evil-latex-textobjects"))
     ))
 
 (defun latexp/pre-init-auctex ()
@@ -36,7 +37,6 @@
       "eT" 'latexp/LaTeX-table
       "ge" 'TeX-next-error
       "gE" 'TeX-previous-error
-      "in" 'latexp/insert-note
       )
 
     ;; disable fill in some environments
@@ -65,4 +65,11 @@
       (define-key reftex-select-label-mode-map (kbd "C-k") 'reftex-select-previous-heading)
       (define-key reftex-select-label-mode-map (kbd "C-d") 'evil-scroll-down)
       (define-key reftex-select-label-mode-map (kbd "C-u") 'evil-scroll-up))
-  ))
+    ))
+
+(defun latexp/init-evil-latex-textobjects ()
+  (use-package evil-latex-textobjects
+    :after tex
+    :commands turn-on-evil-latex-textobjects-mode
+    :init
+    (add-hook 'LaTeX-mode-hook 'turn-on-evil-latex-textobjects-mode)))

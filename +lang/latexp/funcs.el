@@ -38,12 +38,6 @@
 (latexp/LaTeX-environment "tabular")
 (latexp/LaTeX-environment "table")
 
-(defun latexp/insert-note ()
-  (interactive)
-  (insert "\\note[item]{}")
-  (backward-char)
-  (LaTeX-indent-line))
-
 ;; functions to create/toggle latex math
 (defun latexp/empty-or-whitespace-region-p (beg end)
   "Whether the region between BEG and END is empty or contains only whitespace."
