@@ -198,7 +198,8 @@
           org-sticky-header-outline-path-separator " / "
           )
 
-
     (defun orgp/org-sticky-header-no-properties (orig-fun &rest arg)
-      (substring-no-properties (apply orig-fun arg)))
+      (let ((s (apply orig-fun arg)))
+        (when s
+          (substring-no-properties s))))
     (advice-add 'org-sticky-header--fetch-stickyline :around #'orgp/org-sticky-header-no-properties)))
