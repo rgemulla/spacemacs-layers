@@ -64,9 +64,7 @@
       "h" 'elpy-doc
       "ga" 'elpy-goto-assignment
       "gA" 'elpy-goto-assignment-other-window
-      "gg" 'elpy-goto-definition
       "go" 'elpy-occur-definitions
-      "gG" 'elpy-goto-definition-other-window
       "gi" 'elpy-shell-switch-to-shell
       "gI" 'elpy-shell-switch-to-shell-in-current-window
       "ee" 'elpy-shell-send-statement
@@ -106,6 +104,12 @@
       "Vw" 'pyvenv-workon
       "nc" 'elpy/insert-codecell-above
       "nm" 'elpy/insert-markdowncell-above)
+
+    ;; jump handlers
+    (add-to-list 'spacemacs-jump-handlers-python-mode
+                 '(elpy-goto-definition) t)
+    (add-to-list 'spacemacs-jump-handlers-python-mode
+                 '(dumb-jump-go) t)
 
     ;; inferior-python-mode key bindings
     (spacemacs/declare-prefix-for-mode 'inferior-python-mode "mg" "goto")
