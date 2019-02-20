@@ -12,8 +12,9 @@
     calfw
     calfw-org
     org-agenda-property
-    helm
-    helm-org-rifle ;; (helm layer does not need to be used)
+    ;; TODO this does not work anymore since helm-org-rifle has been added to org
+    ;; helm
+    ;; helm-org-rifle ;; (helm layer does not need to be used)
     org-sticky-header
     ))
 
@@ -95,7 +96,7 @@
                   ))
                 (if time
                     (concat path
-                            (make-string (- (frame-width) 1
+                            (make-string (- (frame-width) 3
                                             (length path) (length time-prefix) (length time))
                                          ? )
                             time-prefix
@@ -122,10 +123,10 @@
 (defun orgp/init-calfw ()
   (use-package calfw
     :after org
-    :defer t
     :config
-    (setq cfw:org-overwrite-default-keybinding t)
+    (setq cfw:org-overwrite-default-keybinding nil)
     (setq cfw:render-line-breaker 'cfw:render-line-breaker-wordwrap)
+    (setq cfw:org-capture-template '("f"))
 
     ;; use Unicode characters
     (setq cfw:fchar-junction ?╋
@@ -135,12 +136,13 @@
           cfw:fchar-right-junction ?┫
           cfw:fchar-top-junction ?┯
           cfw:fchar-top-left-corner ?┏
-          cfw:fchar-top-right-corner ?┓)))
+          cfw:fchar-top-right-corner ?┓)
+
+    (evil-set-initial-state 'cfw:calendar-mode 'emacs)))
 
 (defun orgp/init-calfw-org ()
   (use-package calfw-org
     :after calfw
-    :defer t
     :commands cfw:open-org-calendar
     ))
 
@@ -153,39 +155,42 @@
     (setq org-agenda-property-position 'where-it-fits)
     (setq org-agenda-property-column 0)))
 
-;; rifle through org files
-(defun orgp/init-helm-org-rifle ()
-  (use-package helm-org-rifle
-    :defer t
-    :init
-    ;; show full headline path when rifling
-    (setq helm-org-rifle-show-path t)
+;; layer and explicitly excludes it when helm layer not loaded
+;; rifle through org files even when helm not active
+;; (defun orgp/pre-init-helm-org-rifle ()
+;;   (spacemacs|use-package-add-hook helm-org-rifle
+;;     :post-init
+;;     ;; show full headline path when rifling
+;;     (setq helm-org-rifle-show-path t)
 
-    ;; key bindings
-    (spacemacs/set-leader-keys
-      "aofa" 'helm-org-rifle-agenda-files
-      "aofA" 'orgp/helm-org-rifle-agenda-files-with-archives)
+;;     ;; additional key bindings
+;;     (spacemacs/set-leader-keys
+;;       "aofa" 'helm-org-rifle-agenda-files
+;;       "aofA" 'orgp/helm-org-rifle-agenda-files-with-archives)
 
-    (spacemacs/set-leader-keys-for-major-mode 'org-mode
-      "js" 'helm-org-rifle-current-buffer)
-    ))
+;;     (spacemacs/set-leader-keys-for-major-mode 'org-mode
+;;       "jr" 'helm-org-rifle-current-buffer)
+;;     ))
 
-(unless (configuration-layer/layer-used-p 'helm)
-  ;; needed to define some variables so that the advices of Spacemacs for helm
-  ;; functions don't make trouble
-  (load (concat (configuration-layer/get-layer-path 'helm) "config.el"))
+;; (unless (configuration-layer/layer-used-p 'helm)
+;;   ;; needed to define some variables so that the advices of Spacemacs for helm
+;;   ;; functions don't make trouble
+;;   (load (concat (configuration-layer/get-layer-path 'helm) "config.el"))
 
-  ;; avoid helm to overwrite ivy's minibuffer history bindings
-  (setq helm-minibuffer-history-key nil)
+;;   ;; avoid helm to overwrite ivy's minibuffer history bindings
+;;   (setq helm-minibuffer-history-key nil)
 
-  ;; the Spacemacs keybindings (e.g., C-j and C-k to move down/up in helm) come
-  ;; from with-eval-after-load's from spacemacs-completion. So no need to do
-  ;; anything here.
-  (defun orgp/init-helm ()
-    (use-package helm
-      :defer t)
-    (defun spacemacs-layouts/post-init-helm ()) ;; don't do that
-    ))
+;;   ;; the Spacemacs keybindings (e.g., C-j and C-k to move down/up in helm) come
+;;   ;; from with-eval-after-load's from spacemacs-completion. So no need to do
+;;   ;; anything here.
+;;   (defun orgp/init-helm ()
+;;     (use-package helm
+;;       :defer t)
+;;     (orgp/pre-init-helm-org-rifle)
+;;     (org/init-helm-org-rifle)
+;;     (defun spacemacs-layouts/post-init-helm ()) ;; don't do that
+;;     )
+;;   )
 
 (defun orgp/init-org-sticky-header ()
   (use-package org-sticky-header
