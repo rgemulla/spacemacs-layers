@@ -24,5 +24,9 @@
       (spacemacs/set-leader-keys-for-major-mode 'org-mode (concat "b " (cdr km)) (car km)))))
 
 ;; and add some more
+(spacemacs/set-leader-keys-for-major-mode 'org-mode "bt" nil) ;; undefine tangle
+(spacemacs/declare-prefix-for-mode 'org-mode "bt" "tangle") ;; and make prefix
 (spacemacs/set-leader-keys-for-major-mode 'org-mode
-  "bT" 'orgp/org-babel-tangle-block)
+  "btt" #'org-babel-tangle
+  "bts" #'orgp/org-babel-tangle-subtree
+  "btb" #'orgp/org-babel-tangle-block)

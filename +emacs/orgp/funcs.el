@@ -44,7 +44,7 @@ Only calendar events with a time-of-day are recolored."
                         (member (face-at-point t) '(org-scheduled default)))
                    (equal (get-text-property (point) 'type) "block")))
           (progn
-            (add-face-text-property (point) (+ 1 (point)) face)
+            (add-text-properties (point) (+ 1 (point)) `(face ,face))
             (forward-char))
         ;; exploit that entries always start at beginning of line to quickly skip all other lines
         (forward-line)))))
@@ -117,6 +117,15 @@ Needs to be run as last (or at least late) hook."
           (org-babel-tangle '(4) file-name)
           (message "Tangled current block to file %s" file-name))
       (user-error "Not in a block"))))
+
+(defun orgp/org-babel-tangle-subtree ()
+  (interactive)
+  (save-window-excursion
+    (save-excursion 
+      (save-restriction
+        (org-narrow-to-subtree)
+        (org-babel-tangle)))))
+
 
 (defun orgp/helm-org-rifle-agenda-files-with-archives ()
   (interactive)
