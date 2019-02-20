@@ -3,8 +3,8 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
 - Integrated packages
   - [[https://github.com/kiwanami/emacs-calfw][calfw]] calendar framework
   - [[https://github.com/Malabarba/org-agenda-property][org-agenda-property]] to display properties in the agenda buffer
-  - [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] to quickly search through org files (works with both ~helm~
-    and ~ivy~ layer)
+  # - [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] to quickly search through org files (works with both ~helm~
+  #   and ~ivy~ layer)
   - [[https://github.com/alphapapa/org-sticky-header][org-sticky-header]] to show current org heading in header line
 - Show associated timestamp of a headline in the breadcrumb
 - Various customizations for the agenda view
@@ -15,7 +15,8 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
     layer variable =orgp/org-agenda-time-grid-hide-when-appointment=)
   - Custom comparator to sort agenda items such that full-day events come first,
     then events with a timestamp, then the TODO items
-- Functionality to export a single src block to a file
+- Functionality to tangle a single src block to a file
+- Functionality to tangle all src blocks in a subtree to a file
 - Add support for ~callto~ links
 - Let ~org-babel~ execute =bat= code blocks (using =cmdproxy.exe=)
 - Follow links to Zotero library items (see comments in [[file:local/Org%20Link.js][Org Link.js]] for how to
@@ -36,7 +37,9 @@ In the keybindings given below, =,= refers to the major mode leader key.
 |              | =,vr=              | reveal the current entry, its parents, and the next sibling headline |
 |              | =,vR=              | reveal the current entry, its parents, and all its siblings          |
 | *org-babel*  | =,b=               | prefix to access all org-babel commands                              |
-|              | =,bT=              | export the current org src block to file                             |
+|              | =,btt=             | tangle file                                                          |
+|              | =,bts=             | tangle subtree                                                       |
+|              | =,btb=             | tangle current block                                                 |
 | *Other*      | =,TI=              | toggle org-indent mode                                               |
 
 ** Customizations for agenda view
