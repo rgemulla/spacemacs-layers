@@ -44,8 +44,8 @@
       "ve" 'org-show-entry
       "vo" 'org-overview
       "vr" 'org-reveal
-      "vs" 'org-show-subtree
-      "vR" 'org-reveal-with-siblings)
+      "vR" 'org-reveal-with-siblings
+      )
 
     ;; add C-<return> binding to agenda to select entry and close other window
     (with-eval-after-load 'org-agenda

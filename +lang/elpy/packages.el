@@ -55,13 +55,15 @@
                   (define-key elpy-mode-map (kbd "C-<tab>") 'company-complete)))
 
     ;; python-mode key bindings
+    (spacemacs/declare-prefix-for-mode 'python-mode "mh" "help")
     (spacemacs/declare-prefix-for-mode 'python-mode "mg" "goto")
     (spacemacs/declare-prefix-for-mode 'python-mode "me" "send to REPL")
     (spacemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL and step")
     (spacemacs/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
     (spacemacs/declare-prefix-for-mode 'python-mode "mn" "notebook")
+    (spacemacs/declare-prefix-for-mode 'python-mode "mt" "toggle")
     (spacemacs/set-leader-keys-for-major-mode 'python-mode
-      "h" 'elpy-doc
+      "hh" 'elpy-doc
       "ga" 'elpy-goto-assignment
       "gA" 'elpy-goto-assignment-other-window
       "go" 'elpy-occur-definitions

@@ -30,3 +30,9 @@
   "btt" #'org-babel-tangle
   "bts" #'orgp/org-babel-tangle-subtree
   "btb" #'orgp/org-babel-tangle-block)
+
+;; make RET more useful
+;; more useful return key in insert mode (continue list/tables; or cancel when left empty)
+(evil-define-key 'insert org-mode-map (kbd "RET") 'evil-org-return)
+;; use VIM ret motion unless we are on a link
+(evil-define-key 'normal org-mode-map (kbd "RET") 'orgp/org-open-at-point-or-evil-ret)

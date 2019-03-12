@@ -191,3 +191,11 @@ Needs to be run as last (or at least late) hook."
              " 2>&1" ;; redirect stderr ouput
              )
      "")))
+
+(defun orgp/org-open-at-point-or-evil-ret (&rest args)
+  "Call `org-open-at-point' when point on a link handled by that
+function, else call `evil-ret'."
+  (interactive "P")
+  (condition-case nil
+      (call-interactively 'org-open-at-point)
+    (error (call-interactively 'evil-ret))))
