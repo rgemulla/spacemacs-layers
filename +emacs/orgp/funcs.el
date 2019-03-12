@@ -21,14 +21,14 @@ with timestamp, than all other items without timestamps."
                    ((and time-a time-b) nil)            ;; both timestamps -> equal
                    ((and is-todo-a time-b) 1)           ;; a todo, b timestamp -> up
                    ((and time-a is-todo-b) -1)
-                   ((and is-todo-a is-todo-b) nil)      ;; both todo -> equal
+                   ((and is-todo-a is-todo-b)            ;; both todo -> compare states
+                    (org-cmp-todo-state a b))
                    ((and is-todo-a (not is-todo-b)) 1)  ;; a todo, b not -> up
                    ((and (not is-todo-a) is-todo-b) -1)
                    ((and time-a (not time-b)) 1)        ;; a timestamp, b not -> down
                    ((and (not time-a) time-b) -1)
                    (t nil))))
       result)))
-
 
 (defun orgp/org-agenda-color-by-tag (tag face)
   "Apply FACE for agenda entries with TAG.
