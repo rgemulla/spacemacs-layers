@@ -62,6 +62,32 @@ Only calendar events with a time-of-day are recolored."
             (setq first-date-seen t)))
         (forward-line)))))
 
+(defun orgp/org-agenda-capture (&optional without-time)
+  "Like `org-agenda-capture' but reverses use of prefix. I.e.,
+time of day is captured by default and disabled with a prefix
+argument."
+  (interactive "P")
+  (org-agenda-capture (if without-time nil 1)))
+
+(defun orgp/current-time-stamp (&optional inactive without-time time zone)
+  "Format the current time (or the specified time) as an org timestamp."
+  (let* ((format (if without-time (car org-time-stamp-formats) (cdr org-time-stamp-formats))))
+    (when inactive
+      (setq format (concat "[" (substring format 1 -1) "]")))
+    (format-time-string format time zone)))
+
+(defun orgp/org-agenda-capture-time-stamp (&optional inactive)
+  "Like \"%T\" in `org-capture-templates', but inserts time of
+  day only if not midnight. This can be used in capture templates
+  via \"%(orpg/org-agenda-capture-timestamp)\" to default to
+  full-day events when no timestamp had been specified. This
+  method should only be used in capture templates."
+  (let* ((time (decode-time org-overriding-default-time))
+         (without-time (and (= 0 (nth 0 time)) ;; seconds
+                            (= 0 (nth 1 time)) ;; minutes
+                            (= 0 (nth 2 time))))) ;; hours
+    (orgp/current-time-stamp inactive without-time org-overriding-default-time)))
+
 (defun orgp/org-agenda-modify-mouse-face ()
   "Modifies the mouse face such that it does not highlight in the agenda view.
 
