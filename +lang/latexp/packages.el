@@ -39,6 +39,11 @@
       "gE" 'TeX-previous-error
       )
 
+    ;; set error function
+    (add-hook 'LaTeX-mode-hook
+              (lambda ()
+                (setq next-error-function #'TeX-next-error)))
+
     ;; disable fill in some environments
     (with-eval-after-load 'latex
       (add-to-list 'LaTeX-indent-environment-list '("figure"))
