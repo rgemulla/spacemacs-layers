@@ -17,6 +17,8 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
     then events with a timestamp, then the TODO items
 - Functionality to tangle a single src block to a file
 - Functionality to tangle all src blocks in a subtree to a file
+- Functionality to export the current subtree to a temporary HTML file for
+  inclusion elsewhere (see =orgp/orgp/org-subtree-htmlize-to-temp-file=)
 - Add support for ~callto~ links
 - Let ~org-babel~ execute =bat= code blocks (using =cmdproxy.exe=)
 - Follow links to Zotero library items (see comments in [[file:local/Org%20Link.js][Org Link.js]] for how to

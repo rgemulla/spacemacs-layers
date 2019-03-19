@@ -225,3 +225,26 @@ function, else call `evil-ret'."
   (condition-case nil
       (call-interactively 'org-open-at-point)
     (error (call-interactively 'evil-ret))))
+
+(defun orgp/org-subtree-htmlize-to-temp-file ()
+  "Exports current subtree or region to a temporary HTML file and
+adds its full name to the kill ring. The file can then, for
+example, be easily attached to an email."
+  (interactive)
+  (save-window-excursion
+    (save-excursion
+      (save-restriction
+        (let* ((temp-directory (make-temp-file "org-export-" t))
+               (filename (file-name-nondirectory (org-export-output-file-name ".html" t)))
+               (fullname (concat temp-directory "/" filename))
+	       (org-export-coding-system org-html-coding-system)
+               (what
+                (if (org-region-active-p)
+                    "region"
+	          (org-narrow-to-subtree)
+                  (beginning-of-buffer)
+                  (string-trim (thing-at-point 'line) "[ \\t\\n\\r\\*]+"))))
+          (org-export-to-file 'html fullname nil t)
+          (kill-new fullname)
+          (message "Exported %s to %s" what fullname)
+          fullname)))))
