@@ -96,11 +96,12 @@
                   ))
                 (if time
                     (concat path
-                            (make-string (- (frame-width) 3
-                                            (length path) (length time-prefix) (length time))
-                                         ? )
+                            ;; (make-string (- (frame-width) 3
+                            ;;                 (length path) (length time-prefix) (length time))
+                            ;;              ? )
+                            " ("
                             time-prefix
-                            (propertize time 'face 'org-date))
+                            (propertize time 'face 'org-date) ")")
                   path)
                 ))))))
 
