@@ -39,6 +39,8 @@ In the keybindings given below, =,= refers to the major mode leader key.
 |              | =,vr=              | reveal the current entry, its parents, and the next sibling headline |
 |              | =,vR=              | reveal the current entry, its parents, and all its siblings          |
 | *org-babel*  | =,b=               | prefix to access all org-babel commands                              |
+|              | =,bb=              | execute current src block                                            |
+|              | =,bB=              | execute all src blocks in buffer                                     |
 |              | =,btt=             | tangle file                                                          |
 |              | =,bts=             | tangle subtree                                                       |
 |              | =,btb=             | tangle current block                                                 |

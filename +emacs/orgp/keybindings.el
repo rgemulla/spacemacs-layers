@@ -23,6 +23,10 @@
     (dolist (km bindings)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode (concat "b " (cdr km)) (car km)))))
 
+;; and change some
+(spacemacs/set-leader-keys-for-major-mode 'org-mode "bb" #'org-babel-execute-src-block)
+(spacemacs/set-leader-keys-for-major-mode 'org-mode "bB" #'org-babel-execute-buffer)
+
 ;; and add some more
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "bt" nil) ;; undefine tangle
 (spacemacs/declare-prefix-for-mode 'org-mode "bt" "tangle") ;; and make prefix
