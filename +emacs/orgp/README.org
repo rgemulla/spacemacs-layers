@@ -19,9 +19,13 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
 - Functionality to tangle all src blocks in a subtree to a file
 - Functionality to export the current subtree to a temporary HTML file for
   inclusion elsewhere (see =orgp/orgp/org-subtree-htmlize-to-temp-file=)
+- More useful return key for Evil
+  - in insert mode, use =evil-org-return=
+  - in normal mode, use =org-open-at-point= when point is on a link, else use
+    =evil-ret=
 - Add support for ~callto~ links
 - Let ~org-babel~ execute =bat= code blocks (using =cmdproxy.exe=)
-- Follow links to Zotero library items (see comments in [[file:local/Org%20Link.js][Org Link.js]] for how to
+- Follow links to [[https://www.zotero.org/][Zotero]] library items (see comments in [[file:local/Org%20Link.js][Org Link.js]] for how to
   do this)
 - Additional keybindings
   - Quickly reveal things around point
