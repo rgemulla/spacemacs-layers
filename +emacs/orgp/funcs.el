@@ -226,11 +226,12 @@ function, else call `evil-ret'."
       (call-interactively 'org-open-at-point)
     (error (call-interactively 'evil-ret))))
 
-(defun orgp/org-subtree-htmlize-to-temp-file ()
+(defun orgp/org-subtree-htmlize-to-temp-file (&optional open)
   "Exports current subtree or region to a temporary HTML file and
 adds its full name to the kill ring. The file can then, for
-example, be easily attached to an email."
-  (interactive)
+example, be easily attached to an email. With prefix argument,
+also open the created file (using `org-open-file')."
+  (interactive "P")
   (save-window-excursion
     (save-excursion
       (save-restriction
@@ -247,4 +248,6 @@ example, be easily attached to an email."
           (org-export-to-file 'html fullname nil t)
           (kill-new fullname)
           (message "Exported %s to %s" what fullname)
+          (when browse
+            (org-open-file fullname))
           fullname)))))
