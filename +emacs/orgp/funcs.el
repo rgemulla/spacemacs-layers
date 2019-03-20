@@ -248,6 +248,6 @@ also open the created file (using `org-open-file')."
           (org-export-to-file 'html fullname nil t)
           (kill-new fullname)
           (message "Exported %s to %s" what fullname)
-          (when browse
+          (when open
             (org-open-file fullname))
           fullname)))))
