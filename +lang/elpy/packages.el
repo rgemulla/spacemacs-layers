@@ -59,6 +59,7 @@
     (spacemacs/declare-prefix-for-mode 'python-mode "mg" "goto")
     (spacemacs/declare-prefix-for-mode 'python-mode "me" "send to REPL")
     (spacemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL and step")
+    (spacemacs/declare-prefix-for-mode 'python-mode "mr" "refactor")
     (spacemacs/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
     (spacemacs/declare-prefix-for-mode 'python-mode "mn" "notebook")
     (spacemacs/declare-prefix-for-mode 'python-mode "mt" "toggle")
@@ -101,6 +102,11 @@
       "sR" 'elpy-shell-send-region-or-buffer-and-step-and-go
       "sb" 'elpy-shell-send-buffer-and-step
       "sB" 'elpy-shell-send-buffer-and-step-and-go
+      "rc" 'elpy-check
+      "re" 'elpy-multiedit
+      "rf" 'elpy-format-code
+      "rr" 'elpy-refactor
+      "rs" 'elpy-rgrep-symbol
       "Va" 'pyvenv-activate
       "Vd" 'pyvenv-deactivate
       "Vw" 'pyvenv-workon
@@ -124,7 +130,7 @@
       (define-key inferior-python-mode-map (kbd "C-r") 'spacemacs/helm-shell-history))
 
     ;; toggles
-    (spacemacs/declare-prefix-for-mode 'python-mode "t" "toggles")
+    (spacemacs/declare-prefix-for-mode 'python-mode "mt" "toggles")
     (spacemacs|add-toggle elpy/shell-display-buffer-after-send
       :documentation "Toggles whether to show the python shell after sending something to it"
       :status elpy-shell-display-buffer-after-send
