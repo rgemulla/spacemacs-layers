@@ -12,10 +12,10 @@
     calfw
     calfw-org
     org-agenda-property
+    org-sticky-header
     ;; TODO this does not work anymore since helm-org-rifle has been added to org
     ;; helm
     ;; helm-org-rifle ;; (helm layer does not need to be used)
-    org-sticky-header
     ))
 
 (defun orgp/pre-init-org ()
@@ -193,19 +193,15 @@
 ;;     )
 ;;   )
 
-(defun orgp/init-org-sticky-header ()
-  (use-package org-sticky-header
-    :commands (org-sticky-header-mode)
-    :init
-    (add-hook 'org-mode-hook #'org-sticky-header-mode)
-    :config
+(defun orgp/pre-init-org-sticky-header ()
+  (with-eval-after-load 'org-sticky-header
     (setq org-sticky-header-full-path 'full
           org-sticky-header-prefix ""
-          org-sticky-header-outline-path-separator " / "
-          )
+          org-sticky-header-outline-path-separator " / ")
 
     (defun orgp/org-sticky-header-no-properties (orig-fun &rest arg)
       (let ((s (apply orig-fun arg)))
         (when s
           (substring-no-properties s))))
-    (advice-add 'org-sticky-header--fetch-stickyline :around #'orgp/org-sticky-header-no-properties)))
+    (advice-add 'org-sticky-header--fetch-stickyline
+                :around #'orgp/org-sticky-header-no-properties)))

@@ -29,7 +29,7 @@
 
 ;; and add some more
 (spacemacs/set-leader-keys-for-major-mode 'org-mode "bt" nil) ;; undefine tangle
-(spacemacs/declare-prefix-for-mode 'org-mode "bt" "tangle") ;; and make prefix
+(spacemacs/declare-prefix-for-mode 'org-mode "mbt" "tangle") ;; and make prefix
 (spacemacs/set-leader-keys-for-major-mode 'org-mode
   "btt" #'org-babel-tangle
   "bts" #'orgp/org-babel-tangle-subtree

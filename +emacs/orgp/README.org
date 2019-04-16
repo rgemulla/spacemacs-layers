@@ -5,7 +5,6 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
   - [[https://github.com/Malabarba/org-agenda-property][org-agenda-property]] to display properties in the agenda buffer
   # - [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] to quickly search through org files (works with both ~helm~
   #   and ~ivy~ layer)
-  - [[https://github.com/alphapapa/org-sticky-header][org-sticky-header]] to show current org heading in header line
 - Show associated timestamp of a headline in the breadcrumb
 - Various customizations for the agenda view
   - Functionality to apply custom faces for each tag in the agenda view
@@ -27,6 +26,8 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
 - Let ~org-babel~ execute =bat= code blocks (using =cmdproxy.exe=)
 - Follow links to [[https://www.zotero.org/][Zotero]] library items (see comments in [[file:local/Org%20Link.js][Org Link.js]] for how to
   do this)
+- Modifies [[https://github.com/alphapapa/org-sticky-header][org-sticky-header]] to show full path unfontified in header line
+  (enable with layer variable =org-enable-sticky-header=)
 - Additional keybindings
   - Quickly reveal things around point
   - Access to ~org-babel~
