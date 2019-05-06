@@ -6,13 +6,13 @@ Copy the desired layer(s) into the private layers directory of Spacemacs
 (defaults to =~/.spacemacs.d/private=). Then add them to
 ~dotspacemacs-configuration-layers~ in the =.spacemacs= file.
 ** Provided layers
-- [[file:+lang/pythonp][pythonp]]: Work with Python in a style similar to [[http:ess.r-project.org][ESS]] (integrates into ~python~
-  layer of Spacemacs).
-- [[file:+lang/elpy][elpy]]: Work with Python in a style similar to [[http:ess.r-project.org][ESS]] (alternative to ~python~
-  layer of Spacemacs).
 - [[file:+emacs/frames/][frames]]: Add a transient state for frame configuration
 - [[file:+lang/latexp/][latexp]]: Additions/improvements for ~latex~ layer of Spacemacs.
 - [[file:+emacs/orgp/][orgp]]: Additions/improvements for ~org~ layer of Spacemacs.
+- [[file:+lang/pythonp][pythonp]]: Additions/improvements for the ~python~ layer of Spacemacs
 - [[file:+intl/umlauts/][umlauts]]: Make better use of umlauts when using a German keyboard layout.
 - [[file:+web-services/web-search/][web-search]]: Quick access to web search and Google translate (alternative to
   ~search-engine~ layer of Spacemacs).
+** Older layers
+- [[file:+lang/elpy][elpy]]: Work with Python in a style similar to [[http:ess.r-project.org][ESS]] (alternative to ~python~
+  layer of Spacemacs).

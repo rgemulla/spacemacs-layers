@@ -19,7 +19,6 @@
     ;; faster send
     (advice-add #'python-shell-buffer-substring :around #'pythonp//no-python-mode-hook-advice)
 
-
     ;; add the bindings
     (spacemacs/declare-prefix-for-mode 'python-mode "me" "send to REPL")
     (spacemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL and step")
@@ -92,4 +91,10 @@
       (define-key inferior-python-mode-map (kbd "C-r") 'counsel-shell-history))
     (when (configuration-layer/layer-used-p 'helm)
       (define-key inferior-python-mode-map (kbd "C-r") 'spacemacs/helm-shell-history))
+
+    ;; jump to class/function definition with ivy
+    (when (configuration-layer/layer-used-p 'ivy)
+      (spacemacs/set-leader-keys-for-major-mode 'python-mode
+        "gc" #'pythonp/counsel-projectile-python-class
+        "gf" #'pythonp/counsel-projectile-python-function))
     ))

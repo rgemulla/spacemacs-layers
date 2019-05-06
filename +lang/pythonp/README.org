@@ -1,6 +1,9 @@
 * pythonp layer
-A [[http:spacemacs.org][Spacemacs]] layer that allows to work with Python in style similar to [[http:ess.r-project.org][ESS]]. The
-layer extends Spacemacs' python layer by just the shell features of [[https:github.com/jorgenschaefer/elpy][elpy]].
+Additions/improvements for ~python~ layer of Spacemacs.
+- Allows to work with Python in style similar to [[http:ess.r-project.org][ESS]] via the shell features of
+  [[https:github.com/jorgenschaefer/elpy][elpy]]
+- Functionality to quickly navigate to a class or function definition in the
+  current project using [[https://github.com/abo-abo/swiper][counsel]]
 
 ** Sending code fragments to the shell
 
@@ -65,6 +68,8 @@ For example:
 | ~,sR~ | elpy-shell-send-region-or-buffer-and-step-and-go |
 | ~,sb~ | elpy-shell-send-buffer-and-step                  |
 | ~,sB~ | elpy-shell-send-buffer-and-step-and-go           |
+| ~,gc~ | counsel-projectile-python-class                  |
+| ~,gf~ | counsel-projectile-python-function               |
 
 ** inferior-python-mode bindings
 In the Python shell, ~C-r~ is bound to counsel the shell history.
