@@ -54,10 +54,18 @@
       ("D" delete-other-frames)
       ("q" nil :exit t))
 
-  (spacemacs/set-leader-keys "F." 'spacemacs/frame-transient-state/body)
-  (spacemacs/set-leader-keys "F+" 'frames/frame-enlarge-and-split-horizontally)
-  (spacemacs/set-leader-keys "F-" 'frames/frame-shrink-and-delete-horizontally)
+  (spacemacs/set-leader-keys
+    "Fz" #'suspend-frame
+    "F+" #'frames/frame-enlarge-and-split-horizontally
+    "F-" #'frames/frame-shrink-and-delete-horizontally
+    "Fm" #'toggle-frame-maximized
 
-  (spacemacs/set-leader-keys "Fm" 'toggle-frame-maximized)
-  (spacemacs/set-leader-keys "Fz" 'suspend-frame)
-  )
+    "F." #'spacemacs/frame-transient-state/body
+    "Fj" #'spacemacs/frame-transient-state/move-frame-down
+    "Fk" #'spacemacs/frame-transient-state/move-frame-up
+    "Fh" #'spacemacs/frame-transient-state/move-frame-left
+    "Fl" #'spacemacs/frame-transient-state/move-frame-right
+    "F[" #'spacemacs/frame-transient-state/shrink-frame-horizontally
+    "F]" #'spacemacs/frame-transient-state/enlarge-frame-horizontally
+    "F{" #'spacemacs/frame-transient-state/shrink-frame
+    "F}" #'spacemacs/frame-transient-state/enlarge-frame))
