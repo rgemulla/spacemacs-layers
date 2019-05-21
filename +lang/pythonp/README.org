@@ -33,43 +33,43 @@ For example:
 | ~,to~ | Toggle whether to show shell outputs in the echo area                       |
 
 ** python-mode bindings
-| ~,'~  | elpy-shell-switch-to-shell                       |
-| ~,si~ | elpy-shell-switch-to-shell                       |
-| ~,sI~ | elpy-shell-switch-to-shell-in-current-window     |
-| ~,ee~ | elpy-shell-send-statement                        |
-| ~,eE~ | elpy-shell-send-statement-and-go                 |
-| ~,es~ | elpy-shell-send-top-statement                    |
-| ~,eS~ | elpy-shell-send-top-statement-and-go             |
-| ~,ef~ | elpy-shell-send-defun                            |
-| ~,eF~ | elpy-shell-send-defun-and-go                     |
-| ~,ec~ | elpy-shell-send-defclass                         |
-| ~,eC~ | elpy-shell-send-defclass-and-go                  |
-| ~,eg~ | elpy-shell-send-group                            |
-| ~,eG~ | elpy-shell-send-group-and-go                     |
-| ~,ew~ | elpy-shell-send-codecell                         |
-| ~,eW~ | elpy-shell-send-codecell-and-go                  |
-| ~,er~ | elpy-shell-send-region-or-buffer                 |
-| ~,eR~ | elpy-shell-send-region-or-buffer-and-go          |
-| ~,eb~ | elpy-shell-send-buffer                           |
-| ~,eB~ | elpy-shell-send-buffer-and-go                    |
-| ~,se~ | elpy-shell-send-statement-and-step               |
-| ~,sE~ | elpy-shell-send-statement-and-step-and-go        |
-| ~,ss~ | elpy-shell-send-top-statement-and-step           |
-| ~,sS~ | elpy-shell-send-top-statement-and-step-and-go    |
-| ~,sf~ | elpy-shell-send-defun-and-step                   |
-| ~,sF~ | elpy-shell-send-defun-and-step-and-go            |
-| ~,sc~ | elpy-shell-send-defclass-and-step                |
-| ~,sC~ | elpy-shell-send-defclass-and-step-and-go         |
-| ~,sg~ | elpy-shell-send-group-and-step                   |
-| ~,sG~ | elpy-shell-send-group-and-step-and-go            |
-| ~,sw~ | elpy-shell-send-codecell-and-step                |
-| ~,sW~ | elpy-shell-send-codecell-and-step-and-go         |
-| ~,sr~ | elpy-shell-send-region-or-buffer-and-step        |
-| ~,sR~ | elpy-shell-send-region-or-buffer-and-step-and-go |
-| ~,sb~ | elpy-shell-send-buffer-and-step                  |
-| ~,sB~ | elpy-shell-send-buffer-and-step-and-go           |
-| ~,gc~ | counsel-projectile-python-class                  |
-| ~,gf~ | counsel-projectile-python-function               |
+| ~,'~                | elpy-shell-switch-to-shell                       |
+| ~,si~               | elpy-shell-switch-to-shell                       |
+| ~,sI~               | elpy-shell-switch-to-shell-in-current-window     |
+| ~,ee~               | elpy-shell-send-statement                        |
+| ~,eE~               | elpy-shell-send-statement-and-go                 |
+| ~,es~               | elpy-shell-send-top-statement                    |
+| ~,eS~               | elpy-shell-send-top-statement-and-go             |
+| ~,ef~               | elpy-shell-send-defun                            |
+| ~,eF~               | elpy-shell-send-defun-and-go                     |
+| ~,ec~               | elpy-shell-send-defclass                         |
+| ~,eC~               | elpy-shell-send-defclass-and-go                  |
+| ~,eg~               | elpy-shell-send-group                            |
+| ~,eG~               | elpy-shell-send-group-and-go                     |
+| ~,ew~               | elpy-shell-send-codecell                         |
+| ~,eW~               | elpy-shell-send-codecell-and-go                  |
+| ~,er~               | elpy-shell-send-region-or-buffer                 |
+| ~,eR~               | elpy-shell-send-region-or-buffer-and-go          |
+| ~,eb~               | elpy-shell-send-buffer                           |
+| ~,eB~               | elpy-shell-send-buffer-and-go                    |
+| ~,se~, ~<C-return>~ | elpy-shell-send-statement-and-step               |
+| ~,sE~               | elpy-shell-send-statement-and-step-and-go        |
+| ~,ss~               | elpy-shell-send-top-statement-and-step           |
+| ~,sS~               | elpy-shell-send-top-statement-and-step-and-go    |
+| ~,sf~               | elpy-shell-send-defun-and-step                   |
+| ~,sF~               | elpy-shell-send-defun-and-step-and-go            |
+| ~,sc~               | elpy-shell-send-defclass-and-step                |
+| ~,sC~               | elpy-shell-send-defclass-and-step-and-go         |
+| ~,sg~, ~,,~         | elpy-shell-send-group-and-step                   |
+| ~,sG~               | elpy-shell-send-group-and-step-and-go            |
+| ~,sw~               | elpy-shell-send-codecell-and-step                |
+| ~,sW~               | elpy-shell-send-codecell-and-step-and-go         |
+| ~,sr~               | elpy-shell-send-region-or-buffer-and-step        |
+| ~,sR~               | elpy-shell-send-region-or-buffer-and-step-and-go |
+| ~,sb~               | elpy-shell-send-buffer-and-step                  |
+| ~,sB~               | elpy-shell-send-buffer-and-step-and-go           |
+| ~,gc~               | counsel-projectile-python-class                  |
+| ~,gf~               | counsel-projectile-python-function               |
 
 ** inferior-python-mode bindings
 In the Python shell, ~C-r~ is bound to counsel the shell history.
