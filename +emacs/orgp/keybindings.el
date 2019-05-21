@@ -33,7 +33,8 @@
 (spacemacs/set-leader-keys-for-major-mode 'org-mode
   "btt" #'org-babel-tangle
   "bts" #'orgp/org-babel-tangle-subtree
-  "btb" #'orgp/org-babel-tangle-block)
+  "btb" #'orgp/org-babel-tangle-block
+  "bty" #'orgp/org-babel-yank-block)
 
 ;; make RET more useful
 ;; more useful return key in insert mode (continue list/tables; or cancel when left empty)

@@ -152,6 +152,18 @@ Needs to be run as last (or at least late) hook."
         (org-narrow-to-subtree)
         (org-babel-tangle)))))
 
+(defun orgp/org-babel-yank-block ()
+  (interactive)
+  "Tangle the current block.
+
+  When no tangle file is set for the current block, ask for file
+  name with sensible defaults."
+  (interactive)
+  (let ((block-info (org-babel-get-src-block-info)))
+    (unless block-info
+      (user-error "Not in a block"))
+    (kill-new (nth 1 block-info))
+    (message "Copied %s block to kill ring" (nth 0 block-info))))
 
 (defun orgp/helm-org-rifle-agenda-files-with-archives ()
   (interactive)

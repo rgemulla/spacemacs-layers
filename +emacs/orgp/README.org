@@ -15,6 +15,7 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
   - Custom comparator to sort agenda items such that full-day events come first,
     then events with a timestamp, then the TODO items
 - Functionality to tangle a single src block to a file
+- Functionality to copy a single src block to kill ring
 - Functionality to tangle all src blocks in a subtree to a file
 - Functionality to export the current subtree to a temporary HTML file for
   inclusion elsewhere (see =orgp/orgp/org-subtree-htmlize-to-temp-file=)
@@ -49,6 +50,7 @@ In the keybindings given below, =,= refers to the major mode leader key.
 |              | =,btt=             | tangle file                                                          |
 |              | =,bts=             | tangle subtree                                                       |
 |              | =,btb=             | tangle current block                                                 |
+|              | =,bty=             | copy current block to kill ring                                      |
 | *Other*      | =,TI=              | toggle org-indent mode                                               |
 
 ** Customizations for agenda view
