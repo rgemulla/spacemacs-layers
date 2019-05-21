@@ -23,6 +23,7 @@
     (spacemacs/declare-prefix-for-mode 'python-mode "me" "send to REPL")
     (spacemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL and step")
     (spacemacs/set-leader-keys-for-major-mode 'python-mode
+      "," 'elpy-shell-send-group-and-step
       "ee" 'elpy-shell-send-statement
       "eE" 'elpy-shell-send-statement-and-go
       "es" 'elpy-shell-send-top-statement
@@ -58,6 +59,8 @@
       "si" 'elpy-shell-switch-to-shell
       "sI" 'elpy-shell-switch-to-shell-in-current-window
       "'" 'elpy-shell-switch-to-shell)
+    (evil-declare-key 'normal python-mode-map (kbd "<C-return>")
+      #'elpy-shell-send-statement-and-step)
 
     ;; toggles
     (spacemacs/declare-prefix-for-mode 'python-mode "mt" "toggles")
