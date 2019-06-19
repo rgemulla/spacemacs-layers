@@ -12,6 +12,8 @@
     calfw
     calfw-org
     org-agenda-property
+    org-super-agenda  ;; required by org-ql
+    (org-ql :location (recipe :fetcher github :repo "alphapapa/org-ql"))
     org-sticky-header
     ;; TODO this does not work anymore since helm-org-rifle has been added to org
     ;; helm
@@ -205,3 +207,15 @@
           (substring-no-properties s))))
     (advice-add 'org-sticky-header--fetch-stickyline
                 :around #'orgp/org-sticky-header-no-properties)))
+
+(defun orgp/init-org-super-agenda ()
+  (use-package org-super-agenda
+    :commands org-super-agenda-mode))
+
+(defun orgp/init-org-ql ()
+  (use-package org-ql
+    :commands org-ql-search
+    :init
+    (spacemacs/set-leader-keys (kbd "SPC a o q") #'org-ql-search)
+    :config
+    (org-super-agenda-mode)))

@@ -3,6 +3,7 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
 - Integrated packages
   - [[https://github.com/kiwanami/emacs-calfw][calfw]] calendar framework
   - [[https://github.com/Malabarba/org-agenda-property][org-agenda-property]] to display properties in the agenda buffer
+  - [[https://github.com/alphapapa/org-ql][org-ql]] to query org files
   # - [[https://github.com/alphapapa/helm-org-rifle][helm-org-rifle]] to quickly search through org files (works with both ~helm~
   #   and ~ivy~ layer)
 - Show associated timestamp of a headline in the breadcrumb
@@ -34,11 +35,12 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
   - Access to ~org-babel~
 ** Keybindings
 In the keybindings given below, =,= refers to the major mode leader key.
+# |              | =SPC aofa= / =,fa= | search through agenda files with ~helm-org-rifle~                    |
+# |              | =SPC aofA= / =,fA= | search through agenda and archive files with ~helm-org-rifle~        |
+# |              | =,js=              | search through current buffer with ~helm-org-rifle~                  |
 | *navigation* | =SPC aofr= / =,fr= | goto last refiled entry                                              |
 |              | =SPC aofc= / =,fc= | goto last captured entry                                             |
-|              | =SPC aofa= / =,fa= | search through agenda files with ~helm-org-rifle~                    |
-|              | =SPC aofA= / =,fA= | search through agenda and archive files with ~helm-org-rifle~        |
-|              | =,js=              | search through current buffer with ~helm-org-rifle~                  |
+|              | =SPC aoq=          | query agenda using ~org-ql~                                          |
 | *visiblity*  | =,vc=              | reveal the children of the current entry                             |
 |              | =,ve=              | reveal the body of the current entry                                 |
 |              | =,vo=              | fold all top-level headlines                                         |
