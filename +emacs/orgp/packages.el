@@ -13,7 +13,7 @@
     calfw-org
     org-agenda-property
     org-super-agenda  ;; required by org-ql
-    (org-ql :location (recipe :fetcher github :repo "alphapapa/org-ql"))
+    org-ql
     org-sticky-header
     ;; TODO this does not work anymore since helm-org-rifle has been added to org
     ;; helm
