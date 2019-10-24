@@ -41,3 +41,4 @@
 (evil-define-key 'insert org-mode-map (kbd "RET") 'evil-org-return)
 ;; use VIM ret motion unless we are on a link
 (evil-define-key 'normal org-mode-map (kbd "RET") 'orgp/org-open-at-point-or-evil-ret)
+

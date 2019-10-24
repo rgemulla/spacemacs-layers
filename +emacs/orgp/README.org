@@ -15,9 +15,13 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
     layer variable =orgp/org-agenda-time-grid-hide-when-appointment=)
   - Custom comparator to sort agenda items such that full-day events come first,
     then events with a timestamp, then the TODO items
-- Functionality to tangle a single src block to a file
-- Functionality to copy a single src block to kill ring
-- Functionality to tangle all src blocks in a subtree to a file
+- When selecting a date using =org-read-date=, show/hide diary view for
+  selected day via =!=
+- Processing of src blocks
+  - Functionality to tangle a single src block to a file
+  - Functionality to copy a single src block to kill ring
+  - Functionality to tangle all src blocks in a subtree to a file
+  - Let ~org-babel~ execute =bat= code blocks (using =cmdproxy.exe=)
 - Functionality to export the current subtree to a temporary HTML file for
   inclusion elsewhere (see =orgp/orgp/org-subtree-htmlize-to-temp-file=)
 - More useful return key for Evil
@@ -25,7 +29,6 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
   - in normal mode, use =org-open-at-point= when point is on a link, else use
     =evil-ret=
 - Add support for ~callto~ links
-- Let ~org-babel~ execute =bat= code blocks (using =cmdproxy.exe=)
 - Follow links to [[https://www.zotero.org/][Zotero]] library items (see comments in [[file:local/Org%20Link.js][Org Link.js]] for how to
   do this)
 - Modifies [[https://github.com/alphapapa/org-sticky-header][org-sticky-header]] to show full path unfontified in header line

@@ -263,3 +263,19 @@ also open the created file (using `org-open-file')."
           (when open
             (org-open-file fullname))
           fullname)))))
+
+(setq orgp//calendar-toggle-diary-window nil)
+(defun orgp/calendar-toggle-diary ()
+  "When entering a date in org, show/hide diary for currently selected calendar entry."
+  (interactive)
+  (condition-case nil
+      (let ((inhibit-message t))
+        (org-eval-in-calendar
+         '(progn
+            (setq orgp//calendar-toggle-diary-window (selected-window))
+            (diary-view-entries))))
+    (error
+     (let ((win (selected-window)))
+       (select-window orgp//calendar-toggle-diary-window)
+       (quit-window)
+       (select-window win)))))

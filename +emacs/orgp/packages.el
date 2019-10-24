@@ -49,6 +49,9 @@
       "vR" 'org-reveal-with-siblings
       )
 
+    ;; toggle diary in org-read-date
+    (define-key org-read-date-minibuffer-local-map "!" #'orgp/calendar-toggle-diary)
+
     ;; add C-<return> binding to agenda to select entry and close other window
     (with-eval-after-load 'org-agenda
       (define-key org-agenda-mode-map (kbd "C-<return>") 'orgp/org-agenda-switch-to-delete-other-window)
