@@ -124,7 +124,22 @@
                 ad-do-it
                 (setq-default buffer-file-coding-system default-file-coding))
             ad-do-it))))
-  ))
+
+    ;; quicker timestamp changes in agenda
+    (with-eval-after-load 'org-agenda
+      (evil-define-key 'evilified org-agenda-mode-map (kbd "S-<left>")
+        #'orgp/org-agenda-date-earlier-days)
+      (evil-define-key 'evilified org-agenda-mode-map (kbd "S-<right>")
+        #'orgp/org-agenda-date-later-days)
+      (evil-define-key 'evilified org-agenda-mode-map (kbd "M-<left>")
+        #'org-agenda-date-earlier-minutes)
+      (evil-define-key 'evilified org-agenda-mode-map (kbd "M-<right>")
+        #'org-agenda-date-later-minutes)
+      (evil-define-key 'evilified org-agenda-mode-map (kbd "C-<left>")
+        #'org-agenda-date-earlier-hours)
+      (evil-define-key 'evilified org-agenda-mode-map (kbd "C-<right>")
+        #'org-agenda-date-later-hours))
+    ))
 
 (defun orgp/init-calfw ()
   (use-package calfw

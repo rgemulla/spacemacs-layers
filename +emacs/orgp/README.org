@@ -36,27 +36,32 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
 - Additional keybindings
   - Quickly reveal things around point
   - Access to ~org-babel~
+  - Quicker timestamp changes in agenda view
 ** Keybindings
 In the keybindings given below, =,= refers to the major mode leader key.
 # |              | =SPC aofa= / =,fa= | search through agenda files with ~helm-org-rifle~                    |
 # |              | =SPC aofA= / =,fA= | search through agenda and archive files with ~helm-org-rifle~        |
 # |              | =,js=              | search through current buffer with ~helm-org-rifle~                  |
-| *navigation* | =SPC aofr= / =,fr= | goto last refiled entry                                              |
-|              | =SPC aofc= / =,fc= | goto last captured entry                                             |
-|              | =SPC aoq=          | query agenda using ~org-ql~                                          |
-| *visiblity*  | =,vc=              | reveal the children of the current entry                             |
-|              | =,ve=              | reveal the body of the current entry                                 |
-|              | =,vo=              | fold all top-level headlines                                         |
-|              | =,vr=              | reveal the current entry, its parents, and the next sibling headline |
-|              | =,vR=              | reveal the current entry, its parents, and all its siblings          |
-| *org-babel*  | =,b=               | prefix to access all org-babel commands                              |
-|              | =,bb=              | execute current src block                                            |
-|              | =,bB=              | execute all src blocks in buffer                                     |
-|              | =,btt=             | tangle file                                                          |
-|              | =,bts=             | tangle subtree                                                       |
-|              | =,btb=             | tangle current block                                                 |
-|              | =,bty=             | copy current block to kill ring                                      |
-| *Other*      | =,TI=              | toggle org-indent mode                                               |
+| *navigation*  | =SPC aofr= / =,fr=       | goto last refiled entry                                              |
+|               | =SPC aofc= / =,fc=       | goto last captured entry                                             |
+|               | =SPC aoq=                | query agenda using ~org-ql~                                          |
+| *visiblity*   | =,vc=                    | reveal the children of the current entry                             |
+|               | =,ve=                    | reveal the body of the current entry                                 |
+|               | =,vo=                    | fold all top-level headlines                                         |
+|               | =,vr=                    | reveal the current entry, its parents, and the next sibling headline |
+|               | =,vR=                    | reveal the current entry, its parents, and all its siblings          |
+| *org-babel*   | =,b=                     | prefix to access all org-babel commands                              |
+|               | =,bb=                    | execute current src block                                            |
+|               | =,bB=                    | execute all src blocks in buffer                                     |
+|               | =,btt=                   | tangle file                                                          |
+|               | =,bts=                   | tangle subtree                                                       |
+|               | =,btb=                   | tangle current block                                                 |
+|               | =,bty=                   | copy current block to kill ring                                      |
+| *Agenda*      | =S-<left>= / =S-<right>= | change forward/backward timestamp by day                             |
+|               | =C-<left>= / =C-<right>= | change forward/backward timestamp by hour                            |
+|               | =M-<left>= / =M-<right>= | change forward/backward timestamp by minute                          |
+| *Date prompt* | =!=                      | Toggle diary view for selected day                                   |
+| *Other*       | =,TI=                    | toggle org-indent mode                                               |
 
 ** Customizations for agenda view
 Disabled by default. Example usage:

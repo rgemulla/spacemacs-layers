@@ -279,3 +279,13 @@ also open the created file (using `org-open-file')."
        (select-window orgp//calendar-toggle-diary-window)
        (quit-window)
        (select-window win)))))
+
+(defun orgp/org-agenda-date-earlier-days (arg)
+  "Change the time of this item, in units of days."
+  (interactive "p")
+  (org-agenda-date-earlier arg 'day))
+
+(defun orgp/org-agenda-date-later-days (arg)
+  "Change the time of this item, in units of days."
+  (interactive "p")
+  (org-agenda-date-later arg 'day))
