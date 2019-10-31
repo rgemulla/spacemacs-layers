@@ -38,6 +38,8 @@
       "eW" 'elpy-shell-send-codecell-and-go
       "er" 'elpy-shell-send-region-or-buffer
       "eR" 'elpy-shell-send-region-or-buffer-and-go
+      "eo" 'pythonp/elpy-shell-send-symbol
+      "eO" 'pythonp/elpy-shell-send-symbol-and-go
       "eb" 'elpy-shell-send-buffer
       "eB" 'elpy-shell-send-buffer-and-go
       "se" 'elpy-shell-send-statement-and-step
@@ -54,6 +56,8 @@
       "sW" 'elpy-shell-send-codecell-and-step-and-go
       "sr" 'elpy-shell-send-region-or-buffer-and-step
       "sR" 'elpy-shell-send-region-or-buffer-and-step-and-go
+      "so" 'pythonp/elpy-shell-send-symbol-and-step
+      "sO" 'pythonp/elpy-shell-send-symbol-and-step-and-go
       "sb" 'elpy-shell-send-buffer-and-step
       "sB" 'elpy-shell-send-buffer-and-step-and-go
       "si" 'elpy-shell-switch-to-shell

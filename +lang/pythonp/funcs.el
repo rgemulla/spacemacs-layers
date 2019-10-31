@@ -66,6 +66,21 @@ indentation levels."
       (goto-char start))))
 
 
+;; -- send symbol under point to shell -----------------------------------------
+
+(defun pythonp/elpy-shell-send-symbol-and-step ()
+  (interactive)
+  (let ((symbol (thing-at-point 'symbol))
+        (bounds (bounds-of-thing-at-point 'symbol)))
+    (elpy-shell--flash-and-message-region (car bounds) (cdr bounds))
+    (elpy-shell--with-maybe-echo
+     (python-shell-send-string symbol))
+    (goto-char (cdr bounds))
+    (re-search-forward "[^ 	\n]")
+    (goto-char (- (point) 1))))
+
+(elpy-shell--defun-step-go pythonp/elpy-shell-send-symbol-and-step)
+
 ;; -- search project for definitions -------------------------------------------
 
 (defun pythonp//ivy--regex-fuzzy-restricted (str forbidden-chars)
