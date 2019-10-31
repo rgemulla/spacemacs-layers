@@ -15,6 +15,7 @@
     ;; load the elpy-shell definitions
     (require 'elpy-shell)
     (add-hook 'inferior-python-mode-hook 'elpy-shell--enable-output-filter)
+    (elpy-shell--defun-step-go pythonp/elpy-shell-send-symbol-and-step)
 
     ;; faster send
     (advice-add #'python-shell-buffer-substring :around #'pythonp//no-python-mode-hook-advice)

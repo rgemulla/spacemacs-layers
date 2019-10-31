@@ -79,8 +79,6 @@ indentation levels."
     (re-search-forward "[^ 	\n]")
     (goto-char (- (point) 1))))
 
-(elpy-shell--defun-step-go pythonp/elpy-shell-send-symbol-and-step)
-
 ;; -- search project for definitions -------------------------------------------
 
 (defun pythonp//ivy--regex-fuzzy-restricted (str forbidden-chars)
