@@ -29,12 +29,19 @@
     (spacemacs/set-leader-keys "aofc" 'org-capture-goto-last-stored)
 
     :post-config
+    ;; recent captured/refiles entries
     (spacemacs/declare-prefix-for-mode 'org-mode "mf" "files")
     (spacemacs/set-leader-keys-for-major-mode 'org-mode "fr" 'org-refile-goto-last-stored)
     (spacemacs/set-leader-keys-for-major-mode 'org-mode "fc" 'org-capture-goto-last-stored)
     (spacemacs/declare-prefix-for-mode 'org-agenda-mode "mf" "files")
     (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "fr" 'org-refile-goto-last-stored)
     (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "fc" 'org-capture-goto-last-stored)
+
+    ;; yank tables
+    (spacemacs/declare-prefix-for-mode 'org-mode "mty" "yank")
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode "tyy" #'orgp/org-table-yank)
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode "tyc" #'orgp/org-table-yank-csv)
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode "tyt" #'orgp/org-table-yank-tsv)
 
     ;; quicker way to reveal things around point
     (defun org-reveal-with-siblings ()

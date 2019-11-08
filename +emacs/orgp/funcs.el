@@ -289,3 +289,26 @@ also open the created file (using `org-open-file')."
   "Change the time of this item, in units of days."
   (interactive "p")
   (org-agenda-date-later arg 'day))
+
+(defun orgp//org-table-yank (format)
+  "Yank the table at point using the specified FORMAT."
+  (let ((tempfile (make-temp-file "org-table-yank-")))
+    (org-table-export tempfile format)
+    (with-temp-buffer
+      (insert-file-contents tempfile)
+      (message "Yanked %d lines in %s format"
+               (count-lines (point-min) (point-max))
+               (replace-regexp-in-string "orgtbl-to-" "" format))
+      (kill-new (buffer-string)))))
+(defun orgp/org-table-yank ()
+  "Yank the table at point in ORG format."
+  (interactive)
+  (orgp//org-table-yank "orgtbl-to-orgtbl"))
+(defun orgp/org-table-yank-tsv ()
+  "Yank the table at point in TSV format."
+  (interactive)
+  (orgp//org-table-yank "orgtbl-to-tsv"))
+(defun orgp/org-table-yank-csv ()
+  "Yank the table at point in CSV format."
+  (interactive)
+  (orgp//org-table-yank "orgtbl-to-csv"))
