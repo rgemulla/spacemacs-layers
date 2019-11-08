@@ -37,11 +37,15 @@
     (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "fr" 'org-refile-goto-last-stored)
     (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "fc" 'org-capture-goto-last-stored)
 
-    ;; yank tables
+    ;; yank/paste tables
     (spacemacs/declare-prefix-for-mode 'org-mode "mty" "yank")
     (spacemacs/set-leader-keys-for-major-mode 'org-mode "tyy" #'orgp/org-table-yank)
     (spacemacs/set-leader-keys-for-major-mode 'org-mode "tyc" #'orgp/org-table-yank-csv)
     (spacemacs/set-leader-keys-for-major-mode 'org-mode "tyt" #'orgp/org-table-yank-tsv)
+    (spacemacs/declare-prefix-for-mode 'org-mode "mtP" "paste")
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode "tPP" #'orgp/org-table-paste)
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode "tPc" #'orgp/org-table-paste-csv)
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode "tPt" #'orgp/org-table-paste-tsv)
 
     ;; quicker way to reveal things around point
     (defun org-reveal-with-siblings ()

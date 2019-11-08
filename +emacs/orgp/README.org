@@ -24,7 +24,7 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
   - Let ~org-babel~ execute =bat= code blocks (using =cmdproxy.exe=)
 - Functionality to export the current subtree to a temporary HTML file for
   inclusion elsewhere (see =orgp/orgp/org-subtree-htmlize-to-temp-file=)
-- Functionality to yank table at point in various formats (org, csv, tsv)
+- Functionality to yank/paste table at point in various formats (org, csv, tsv)
 - More useful return key for Evil
   - in insert mode, use =evil-org-return=
   - in normal mode, use =org-open-at-point= when point is on a link, else use
@@ -46,9 +46,12 @@ In the keybindings given below, =,= refers to the major mode leader key.
 | *navigation*  | =SPC aofr= / =,fr=       | goto last refiled entry                                              |
 |               | =SPC aofc= / =,fc=       | goto last captured entry                                             |
 |               | =SPC aoq=                | query agenda using ~org-ql~                                          |
-| *yank table*  | =,tyy=                   | yank table at point as ORG                                           |
+| *table*       | =,tyy=                   | yank table at point as ORG                                           |
 |               | =,tyc=                   | yank table at point as CSV                                           |
 |               | =,tyt=                   | yank table at point as TSV                                           |
+|               | =,tPP=                   | paste table (automatically determine format)                         |
+|               | =,tPc=                   | paste table from CSV                                                 |
+|               | =,tPt=                   | paste table from TSV                                                 |
 | *visiblity*   | =,vc=                    | reveal the children of the current entry                             |
 |               | =,ve=                    | reveal the body of the current entry                                 |
 |               | =,vo=                    | fold all top-level headlines                                         |

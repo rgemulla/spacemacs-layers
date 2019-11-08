@@ -312,3 +312,21 @@ also open the created file (using `org-open-file')."
   "Yank the table at point in CSV format."
   (interactive)
   (orgp//org-table-yank "orgtbl-to-csv"))
+
+(defun orgp/org-table-paste (&optional separator)
+  "Paste table in kill ring interpreting it in the specified FORMAT.
+
+If format is `nil', try to determine it. See `org-table-import.'"
+  (interactive "P")
+  (unless (bolp) (insert "\n"))
+  (let ((beg (point)))
+    (yank)
+    (org-table-convert-region beg (point) separator)))
+(defun orgp/org-table-paste-csv ()
+  "Paste table in kill ring interpreting it as CSV."
+  (interactive)
+  (orgp/org-table-paste '(4)))
+(defun orgp/org-table-paste-tsv ()
+  "Paste table in kill ring interpreting it as TSV."
+  (interactive)
+  (orgp/org-table-paste '(16)))
