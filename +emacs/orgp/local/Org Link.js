@@ -3,7 +3,7 @@
     "translatorType":2,
     "label":"Org Link",
     "creator":"Rainer Gemulla",
-    "target":"html",
+    "target":"org",
     "minVersion":"2.0",
     "maxVersion":"",
     "priority":200,
@@ -11,9 +11,10 @@
     "lastUpdated":"2018-05-18 22:27:00"
 }
 
-// Quickly create org-mode links to Zotero from the Zotero application. Copy
-// this file to the translators subdirectory in your Zotero data folder (e.g.,
-// "~/Zotero/translators"), restart Zotero and set "Org Link" as default
+// Quickly create org-mode links to Zotero from the Zotero application.
+//
+// Copy this file to the translators subdirectory in your Zotero data folder
+// (e.g., "~/Zotero/translators"), restart Zotero and set "Org Link" as default
 // translator in Zotero's options. You can then use Ctrl+Shift+c to copy the
 // selected item to the clipboard and subsequently paste a reference into an org
 // file in Emacs.
@@ -25,13 +26,13 @@
 //  :follow (lambda (path) (browse-url (concat "zotero:" path))))
 
 function doExport() {
-	  var item;
-	  while (item = Zotero.nextItem()) {
-		    Zotero.write("[[zotero://select/items/");
-		    var library_id = item.libraryID ? item.libraryID : 0;
-		    Zotero.write(library_id+"_"+item.key);
+    var item;
+    while (item = Zotero.nextItem()) {
+        Zotero.write("[[zotero://select/items/");
+        var library_id = item.libraryID ? item.libraryID : 0;
+        Zotero.write(library_id+"_"+item.key);
         Zotero.write("][");
-		    let creator = item.creators[0].lastName;
+        let creator = item.creators[0].lastName;
         if (item.creators.length == 2) {
             creator += " and " + item.creators[1].lastName;
         } else if (item.creators.length>2) {

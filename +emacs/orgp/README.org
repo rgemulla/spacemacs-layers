@@ -30,8 +30,12 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
   - in normal mode, use =org-open-at-point= when point is on a link, else use
     =evil-ret=
 - Add support for ~callto~ links
-- Follow links to [[https://www.zotero.org/][Zotero]] library items (see comments in [[file:local/Org%20Link.js][Org Link.js]] for how to
-  do this)
+- Integration with [[https://www.zotero.org/][Zotero]]
+   - Support for links to Zotero items
+   - Export an org-mode link from Zotero (see comments in [[file:local/Org%20Link.js][Org Link.js]])
+   - Export an org-mode item from Zotero (see comments in [[file:local/Org%20Entry.js][Org Entry.js]]),
+     including a link to the Zotero item and a suitable setting of the
+     attachment folder
 - Modifies [[https://github.com/alphapapa/org-sticky-header][org-sticky-header]] to show full path unfontified in header line
   (enable with layer variable =org-enable-sticky-header=)
 - Additional keybindings
