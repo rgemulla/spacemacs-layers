@@ -15,9 +15,7 @@
     org-super-agenda  ;; required by org-ql
     org-ql
     org-sticky-header
-    ;; TODO this does not work anymore since helm-org-rifle has been added to org
-    ;; helm
-    ;; helm-org-rifle ;; (helm layer does not need to be used)
+    (helm-org-rifle :toggle t)  ;; override toggle of org layer
     ))
 
 (defun orgp/pre-init-org ()
@@ -187,42 +185,41 @@
     (setq org-agenda-property-position 'where-it-fits)
     (setq org-agenda-property-column 0)))
 
-;; layer and explicitly excludes it when helm layer not loaded
-;; rifle through org files even when helm not active
-;; (defun orgp/pre-init-helm-org-rifle ()
-;;   (spacemacs|use-package-add-hook helm-org-rifle
-;;     :post-init
-;;     ;; show full headline path when rifling
-;;     (setq helm-org-rifle-show-path t)
+;; rifle through org files
+(defun orgp/pre-init-helm-org-rifle ()
+  (spacemacs|use-package-add-hook helm-org-rifle
+    :post-init
+    ;; show full headline path when rifling
+    (setq helm-org-rifle-show-path t)
 
-;;     ;; additional key bindings
-;;     (spacemacs/set-leader-keys
-;;       "aofa" 'helm-org-rifle-agenda-files
-;;       "aofA" 'orgp/helm-org-rifle-agenda-files-with-archives)
+    ;; additional key bindings
+    (spacemacs/set-leader-keys
+      "aofa" 'helm-org-rifle-agenda-files
+      "aofA" 'orgp/helm-org-rifle-agenda-files-with-archives)
 
-;;     (spacemacs/set-leader-keys-for-major-mode 'org-mode
-;;       "jr" 'helm-org-rifle-current-buffer)
-;;     ))
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode
+      "fa" 'helm-org-rifle-agenda-files
+      "fA" 'orgp/helm-org-rifle-agenda-files-with-archives
+      "jr" 'helm-org-rifle-current-buffer)
+    ))
 
-;; (unless (configuration-layer/layer-used-p 'helm)
-;;   ;; needed to define some variables so that the advices of Spacemacs for helm
-;;   ;; functions don't make trouble
-;;   (load (concat (configuration-layer/get-layer-path 'helm) "config.el"))
+;; make helm-org-rifle work when org layer is not used
+(unless (configuration-layer/layer-used-p 'helm)
+  ;; needed to define some variables so that the advices of Spacemacs for helm
+  ;; functions don't make trouble
+  (load (concat (configuration-layer/get-layer-path 'helm) "config.el"))
 
-;;   ;; avoid helm to overwrite ivy's minibuffer history bindings
-;;   (setq helm-minibuffer-history-key nil)
+  ;; avoid helm to overwrite ivy's minibuffer history bindings
+  (setq helm-minibuffer-history-key nil)
 
-;;   ;; the Spacemacs keybindings (e.g., C-j and C-k to move down/up in helm) come
-;;   ;; from with-eval-after-load's from spacemacs-completion. So no need to do
-;;   ;; anything here.
-;;   (defun orgp/init-helm ()
-;;     (use-package helm
-;;       :defer t)
-;;     (orgp/pre-init-helm-org-rifle)
-;;     (org/init-helm-org-rifle)
-;;     (defun spacemacs-layouts/post-init-helm ()) ;; don't do that
-;;     )
-;;   )
+  ;; take ownership
+  (defun orgp/init-helm-org-rifle ()
+    (org/init-helm-org-rifle))
+
+  ;; the Spacemacs keybindings (e.g., C-j and C-k to move down/up in helm) come
+  ;; from with-eval-after-load's from spacemacs-completion. So no need to do
+  ;; anything here.
+  (defun spacemacs-layouts/post-init-helm ()))
 
 (defun orgp/pre-init-org-sticky-header ()
   (with-eval-after-load 'org-sticky-header
@@ -232,8 +229,9 @@
 
     (defun orgp/org-sticky-header-no-properties (orig-fun &rest arg)
       (let ((s (apply orig-fun arg)))
-        (when s
-          (substring-no-properties s))))
+        (if s
+            (substring-no-properties s)
+          "")))
     (advice-add 'org-sticky-header--fetch-stickyline
                 :around #'orgp/org-sticky-header-no-properties)))
 
