@@ -67,8 +67,7 @@
       (add-to-list 'purpose-user-mode-purposes '(notmuch-search-mode . mail))
       (add-to-list 'purpose-user-mode-purposes '(notmuch-tree-mode . mail))
       (add-to-list 'purpose-user-mode-purposes '(notmuch-message-mode . mail))
-      (purpose-compile-user-configuration)
-      (purpose-x-popwin-update-conf))
+      (purpose-compile-user-configuration))
 
     ;; ignore for projectile
     (with-eval-after-load 'projectile
