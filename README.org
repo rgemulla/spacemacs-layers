@@ -9,6 +9,7 @@ Copy the desired layer(s) into the private layers directory of Spacemacs
 - [[file:+emacs/frames/][frames]]: Add a transient state for frame configuration
 - [[file:+lang/latexp/][latexp]]: Additions/improvements for ~latex~ layer of Spacemacs.
 - [[file:+emacs/orgp/][orgp]]: Additions/improvements for ~org~ layer of Spacemacs.
+- [[file:+email/notmuchp/][notmuchp]]: Additions/improvements for ~notmuch~ layer of Spacemacs.
 - [[file:+lang/pythonp][pythonp]]: Additions/improvements for the ~python~ layer of Spacemacs
 - [[file:+intl/umlauts/][umlauts]]: Make better use of umlauts when using a German keyboard layout.
 - [[file:+web-services/web-search/][web-search]]: Quick access to web search and Google translate (alternative to
