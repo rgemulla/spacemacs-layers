@@ -108,7 +108,7 @@ between characters of search string."
 transparently add a pre regex, a post regex, a set of
 forbidden-to-skip chars, and/or a set of filename extensions to
 the search."
-  (lexical-let ((base-cmd
+  (let ((base-cmd
                  (cdr (assoc-string tool spacemacs--counsel-commands))))
     (lambda (string &optional _pred &rest _unused)
       "Grep in the current directory for STRING."
