@@ -217,3 +217,28 @@ citation in a reply often contains the name).
                        (last (car (last words)))
                        (t (car words)))))))
     result))
+
+(defun notmuchp//view-parts-externally-method (handle &optional in-emacs)
+  (let* ((filename (mm-handle-filename handle))
+         (temporary-file-directory
+          (if (file-directory-p "/mnt/c/Windows/Temp")
+              "/mnt/c/Windows/Temp/" ;; to allow opening via Windows apps
+            temporary-file-directory))
+         (directory (make-temp-file "mm-part-" t))
+         (file (concat directory "/" filename)))
+    (mm-save-part-to-file handle file)
+    (set-file-modes file #o666)
+    (org-open-file file in-emacs)))
+
+
+(defun notmuchp/view-part-externally (&optional no-force-system)
+  """Store part to temporary file and open it using external viewer.
+
+If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org-apps'
+"""
+  (interactive)
+  (notmuch-show-apply-to-current-part-handle
+   (lambda (handle)
+     (notmuchp//view-parts-externally-method
+      handle
+      (unless no-force-system 'system)))))

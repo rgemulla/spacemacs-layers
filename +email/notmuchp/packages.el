@@ -10,6 +10,7 @@
   '(
     el-patch
     notmuch
+    org
     ))
 
 (defun notmuchp/pre-init-notmuch ()
@@ -57,6 +58,10 @@
       "p" #'notmuch-draft-postpone
       "c" #'notmuchp/counsel-address
       "C" #'notmuchp/counsel-addresses)
+
+    ;; view parts externally
+    (spacemacs/set-leader-keys-for-major-mode
+      'notmuch-show-mode "pp" #'notmuchp/view-part-externally)
 
     ;; set notmuch window purpose
     (with-eval-after-load 'window-purpose
