@@ -242,3 +242,40 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
      (notmuchp//view-parts-externally-method
       handle
       (unless no-force-system 'system)))))
+
+(defun notmuchp//next-attachment-position (count)
+  (let (point done)
+    (save-excursion
+      (while (not done)
+        (setq point (point))
+        (if (condition-case nil (forward-button count) (error nil))
+            (let ((part (get-text-property (point) :notmuch-part)))
+              (if (and part
+                       (plist-get part :filename)
+                       (string= (plist-get part :content-disposition) "attachment"))
+                  (progn
+                    (setq point (point))
+                    (setq done t))
+                (when (= point (point)) ;; we did not move
+                  (setq point nil)
+                  (setq done t))))
+          (setq point nil)
+          (setq done t)))
+      point)))
+
+
+(defun notmuchp/goto-next-attachment ()
+  "Move point forwards to the next attachment."
+  (interactive)
+  (let ((point (notmuchp//next-attachment-position 1)))
+    (if point
+        (goto-char point)
+      (user-error "No more attachments"))))
+
+(defun notmuchp/goto-prev-attachment ()
+  "Move point backwards to the previous attachment."
+  (interactive)
+  (let ((point (notmuchp//next-attachment-position -1)))
+    (if point
+        (goto-char point)
+      (user-error "No more attachments"))))

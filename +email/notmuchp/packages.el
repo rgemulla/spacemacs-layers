@@ -13,6 +13,10 @@
     org
     ))
 
+(defun notmuchp/pre-init-org ()
+  ;; nothing to do
+  )
+
 (defun notmuchp/pre-init-notmuch ()
   (spacemacs|use-package-add-hook notmuch
     :post-init
@@ -62,6 +66,12 @@
     ;; view parts externally
     (spacemacs/set-leader-keys-for-major-mode
       'notmuch-show-mode "pp" #'notmuchp/view-part-externally)
+
+    ;; navigate to attachments
+    (evil-declare-key 'evilified notmuch-show-mode-map
+      "ga" 'notmuchp/goto-next-attachment
+      "gJ" 'notmuchp/goto-next-attachment
+      "gK" 'notmuchp/goto-prev-attachment)
 
     ;; set notmuch window purpose
     (with-eval-after-load 'window-purpose
