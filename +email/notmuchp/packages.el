@@ -73,6 +73,11 @@
       "gJ" 'notmuchp/goto-next-attachment
       "gK" 'notmuchp/goto-prev-attachment)
 
+    ;; links to attachments
+    ;; (org-link-set-parameters "notmuch-attachment"
+    ;;                          :follow #'notmuchp//open-org-attachment-link
+    ;;                          :store #'notmuchp//store-org-attachment-link)
+
     ;; set notmuch window purpose
     (with-eval-after-load 'window-purpose
       (add-to-list 'purpose-user-regexp-purposes '("\\*notmuch.*" . mail))

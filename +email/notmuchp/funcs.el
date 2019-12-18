@@ -252,7 +252,10 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
             (let ((part (get-text-property (point) :notmuch-part)))
               (if (and part
                        (plist-get part :filename)
-                       (string= (plist-get part :content-disposition) "attachment"))
+                       ;; Commented out sind some clients use inline disposition
+                       ;; for attachments, and we should accept that too
+                       ;; (string= (plist-get part ;; :content-disposition) "attachment")
+                       )
                   (progn
                     (setq point (point))
                     (setq done t))
@@ -279,3 +282,48 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
     (if point
         (goto-char point)
       (user-error "No more attachments"))))
+
+(defun notmuchp//attachment-position (filename)
+  "Returns the position of the attachment with specified FILENAME"
+  (save-excursion
+    (goto-char (point-min))
+    (let ((point (notmuchp//next-attachment-position 1))
+          part part-filename found)
+      (while (and point (not found))
+        (goto-char point)
+        (setq part (get-text-property point :notmuch-part))
+        (setq part-filename (plist-get part :filename))
+        (setq found (string= filename part-filename))
+        (unless found
+          (setq point (notmuchp//next-attachment-position 1))))
+      (if found
+          (point)
+        nil))))
+
+(defun notmuchp//open-attachment (search filename &optional no-force-system)
+  (save-window-excursion
+    (with-temp-buffer
+      (notmuch-show search nil nil nil (buffer-name))
+      (let ((point (notmuchp//attachment-position filename)))
+        (unless point
+          (user-error "Cannot find attached file %s" filename))
+        (goto-char point)
+        (notmuchp/view-part-externally no-force-system)))))
+
+(defun notmuchp//store-org-attachment-link ()
+  "Store a link to an attachment."
+  (when (eq major-mode 'notmuch-show-mode)
+    (let* ((message-id (notmuch-show-get-message-id t))
+           (part (get-text-property (point) :notmuch-part))
+           (filename (and part (plist-get part :filename))))
+      (unless filename
+        (user-error "No file attachment at point"))
+      (org-store-link-props :type "notmuch-attachment"
+                            :message-id message-id
+                            :filename filename)
+      (setq link (concat "notmuch-attachment:id:" message-id ":part:" filename))
+      (org-add-link-props :link link :description filename)
+      link)))
+
+(defun notmuchp//open-org-attachment-link (link)
+  (user-error "TODO"))
