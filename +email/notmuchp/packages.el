@@ -84,6 +84,10 @@
       (setq org-link-parameters (remove data org-link-parameters))
       (add-to-list 'org-link-parameters data t))
 
+    ;; quickly yank all attachments
+    (spacemacs/set-leader-keys-for-major-mode
+      'notmuch-show-mode "A" #'notmuchp/store-all-attachment-links)
+
     ;; set notmuch window purpose
     (with-eval-after-load 'window-purpose
       (add-to-list 'purpose-user-regexp-purposes '("\\*notmuch.*" . mail))

@@ -334,3 +334,29 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
          (filename (car parts))
          (search (string-join (cdr parts) "/")))
     (notmuchp//open-attachment search filename no-force-system)))
+
+(defun notmuchp/store-all-attachment-links ()
+  "Yank org-links for all attachments of the current message."
+  (interactive)
+  (save-excursion
+    (let ((count 0) result point link id sep)
+      (setq id (notmuch-show-get-message-id))
+      (goto-char (point-min))
+      (setq point (notmuchp//next-attachment-position 1))
+      (while point
+        (goto-char point)
+        (setq point nil)
+        (when (string= id (notmuch-show-get-message-id))
+          (setq link (notmuchp/store-org-attachment-link))
+          (setq link-text
+                (org-link-make-string
+                 link
+                 (plist-get org-store-link-plist :description)))
+          (setq result (concat result sep link-text))
+          (setq sep " ")
+          (setq count (+ count 1)))
+        (setq point (notmuchp//next-attachment-position 1)))
+      (unless result
+        (user-error "No attachments founds"))
+      (kill-new result)
+      (message "Copied links to %d attachments" count))))

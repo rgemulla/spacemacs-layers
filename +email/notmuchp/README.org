@@ -4,7 +4,7 @@ Additions/improvements for [[https://notmuchmail.org/][notmuch]] layer of [[http
 - Abort a notmuch search process (via =X=, results so far are kept)
 - Quickly attach a file or a set of files from kill ring (via =,A=)
 - Support for org-mode links to attachments (use =org-store-link= when point is
-  on attachment)
+  on attachment or use =,A= to store links to all attachments)
 - Append or insert e-mail addresses using [[https://github.com/abo-abo/swiper][ivy]] (via =,c= and =,C=)
 - Functionality to use recipient names in [[https://github.com/joaotavora/yasnippet][yasnippets]] (example: =Dear ${1:`(notmuchp/get-recipient-names nil " and ")`,=}
 - Quick navigation to attachments (via =ga=)
@@ -19,19 +19,20 @@ Additions/improvements for [[https://notmuchmail.org/][notmuch]] layer of [[http
 - Various additional key bindings
 ** Keybindings
 In the keybindings given below, =,= refers to the major mode leader key.
-| *notmuch-show-mode*    | =,pp=       | open attachment (part) using external application |
-|                        | =ga= / =gJ= | move point to next attachment                     |
-|                        | =gK=        | move point to previous attachment                 |
-| *notmuch-search-mode*  | =X=         | abort current search (results so far are kept)    |
-| *notmuch-tree-mode*    | =L=         | filter current results                            |
-|                        | =t=         | filter current results by tag                     |
-|                        | =X=         | abort current search (results so far are kept)    |
-| *notmuch-message-mode* | =,,=        | notmuch-mua-send-and-exit                         |
-|                        | =,d=        | message-dont-send                                 |
-|                        | =,k=        | message-kill-buffer                               |
-|                        | =,a=        | mml-attach-file                                   |
-|                        | =,A=        | quick attach files (filename(s) from kill ring)   |
-|                        | =,s=        | notmuch-draft-save                                |
-|                        | =,p=        | notmuch-draft-postpone                            |
-|                        | =,c=        | Append/insert e-mail address using =ivy=          |
-|                        | =,C=        | Append/insert e-mail addresses using =ivy=        |
+| *notmuch-show-mode*    | =,pp=       | open attachment (part) using external application     |
+|                        | =,A=        | store org links to all attachments of current message |
+|                        | =ga= / =gJ= | move point to next attachment                         |
+|                        | =gK=        | move point to previous attachment                     |
+| *notmuch-search-mode*  | =X=         | abort current search (results so far are kept)        |
+| *notmuch-tree-mode*    | =L=         | filter current results                                |
+|                        | =t=         | filter current results by tag                         |
+|                        | =X=         | abort current search (results so far are kept)        |
+| *notmuch-message-mode* | =,,=        | notmuch-mua-send-and-exit                             |
+|                        | =,d=        | message-dont-send                                     |
+|                        | =,k=        | message-kill-buffer                                   |
+|                        | =,a=        | mml-attach-file                                       |
+|                        | =,A=        | quick attach files (filename(s) from kill ring)       |
+|                        | =,s=        | notmuch-draft-save                                    |
+|                        | =,p=        | notmuch-draft-postpone                                |
+|                        | =,c=        | Append/insert e-mail address using =ivy=              |
+|                        | =,C=        | Append/insert e-mail addresses using =ivy=            |
