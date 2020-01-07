@@ -271,17 +271,19 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
   "Move point forwards to the next attachment."
   (interactive)
   (let ((point (notmuchp//next-attachment-position 1)))
-    (if point
-        (goto-char point)
-      (user-error "No more attachments"))))
+    (unless point
+      (user-error "No more attachments"))
+    (goto-char point)
+    (notmuch-show-message-visible (notmuch-show-get-message-properties) t)))
 
 (defun notmuchp/goto-prev-attachment ()
   "Move point backwards to the previous attachment."
   (interactive)
   (let ((point (notmuchp//next-attachment-position -1)))
-    (if point
-        (goto-char point)
-      (user-error "No more attachments"))))
+    (unless point
+      (user-error "No more attachments"))
+    (goto-char point)
+    (notmuch-show-message-visible (notmuch-show-get-message-properties) t)))
 
 (defun notmuchp//attachment-position (filename)
   "Returns the position of the attachment with specified FILENAME"
