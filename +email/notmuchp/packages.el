@@ -73,10 +73,16 @@
       "gJ" 'notmuchp/goto-next-attachment
       "gK" 'notmuchp/goto-prev-attachment)
 
-    ;; links to attachments
-    ;; (org-link-set-parameters "notmuch-attachment"
-    ;;                          :follow #'notmuchp//open-org-attachment-link
-    ;;                          :store #'notmuchp//store-org-attachment-link)
+    ;; Enable org links to attachments.
+    (org-link-set-parameters
+     "notmuch-attachment"
+     :follow #'notmuchp/open-org-attachment-link
+     :store #'notmuchp/store-org-attachment-link)
+    ;; Move notmuch-attachment parameters to end of list so that they take
+    ;; precedence
+    (let ((data (assoc "notmuch-attachment" org-link-parameters)))
+      (setq org-link-parameters (remove data org-link-parameters))
+      (add-to-list 'org-link-parameters data t))
 
     ;; set notmuch window purpose
     (with-eval-after-load 'window-purpose

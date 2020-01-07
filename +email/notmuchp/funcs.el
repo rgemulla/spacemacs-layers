@@ -301,6 +301,7 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
         nil))))
 
 (defun notmuchp//open-attachment (search filename &optional no-force-system)
+  "Open an attachment."
   (save-window-excursion
     (with-temp-buffer
       (notmuch-show search nil nil nil (buffer-name))
@@ -310,20 +311,24 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
         (goto-char point)
         (notmuchp/view-part-externally no-force-system)))))
 
-(defun notmuchp//store-org-attachment-link ()
+(defun notmuchp/store-org-attachment-link ()
   "Store a link to an attachment."
   (when (eq major-mode 'notmuch-show-mode)
     (let* ((message-id (notmuch-show-get-message-id t))
            (part (get-text-property (point) :notmuch-part))
            (filename (and part (plist-get part :filename))))
-      (unless filename
-        (user-error "No file attachment at point"))
-      (org-store-link-props :type "notmuch-attachment"
-                            :message-id message-id
-                            :filename filename)
-      (setq link (concat "notmuch-attachment:id:" message-id ":part:" filename))
-      (org-add-link-props :link link :description filename)
-      link)))
+      (when filename
+        (org-link-store-props :type "notmuch-attachment"
+                              :message-id message-id
+                              :filename filename)
+        ;; / is forbidden in filenames, so use it to separte off message-id
+        (setq link (concat "notmuch-attachment:" filename "/id:" message-id))
+        (org-link-add-props :link link :description filename)
+        link))))
 
-(defun notmuchp//open-org-attachment-link (link)
-  (user-error "TODO"))
+(defun notmuchp/open-org-attachment-link (link &optional no-force-system)
+  "Open a link to an attachment"
+  (let* ((parts (split-string link "/"))
+         (filename (car parts))
+         (search (string-join (cdr parts) "/")))
+    (notmuchp//open-attachment search filename no-force-system)))
