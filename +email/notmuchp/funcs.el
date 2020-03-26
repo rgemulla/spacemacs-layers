@@ -122,6 +122,7 @@ current search results AND that are tagged with the given tag."
 
 ;; counsel function for notmuch address history
 (defvar notmuchp//counsel-address-history nil)
+
 (defun notmuchp/counsel-address (&optional initial-input)
   "Insert an email address from `notmuch-address-completions' using Ivy.
 
@@ -146,7 +147,30 @@ lines (e.g., to/cc/bcc) or simply inserts it otherwise. "
           (unless (string-match-p "[\s-]+$" line)
             (insert " "))
           (insert address))
+      (unless (looking-back "^\\|[\s-]")
+        (insert " "))
       (insert address))))
+
+(defun notmuchp/counsel-to-address (&optional initial-input)
+  "Insert an email address to the TO header using Ivy."
+  (interactive)
+  (save-excursion
+    (message-goto-to)
+    (notmuchp/counsel-address initial-input)))
+
+(defun notmuchp/counsel-cc-address (&optional initial-input)
+  "Insert an email address to the CC header using Ivy."
+  (interactive)
+  (save-excursion
+    (message-goto-cc)
+    (notmuchp/counsel-address initial-input)))
+
+(defun notmuchp/counsel-bcc-address (&optional initial-input)
+  "Insert an email address to the BCC header using Ivy."
+  (interactive)
+  (save-excursion
+    (message-goto-bcc)
+    (notmuchp/counsel-address initial-input)))
 
 (defun notmuchp/counsel-addresses ()
   "Like `notmuchp/counsel-address' but repeatedly inserts e-mail

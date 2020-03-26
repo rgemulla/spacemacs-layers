@@ -52,16 +52,22 @@
     (evil-declare-key 'evilified notmuch-tree-mode-map "X" #'notmuchp/terminate-search-process)
 
     ;; improved bindings for mail composition
-    (spacemacs/set-leader-keys-for-major-mode 'notmuch-message-mode
-      "," #'notmuch-mua-send-and-exit
-      "k" #'message-kill-buffer
-      "d" #'message-dont-send
-      "a" #'mml-attach-file
-      "A" #'notmuchp/quick-attach-files
-      "s" #'notmuch-draft-save
-      "p" #'notmuch-draft-postpone
-      "c" #'notmuchp/counsel-address
-      "C" #'notmuchp/counsel-addresses)
+    (spacemacs|spacebind
+     :major
+     (notmuch-message-mode
+      ("," notmuch-mua-send-and-exit "send&exit")
+      ("k" message-kill-buffer "kill")
+      ("d" message-dont-send "don't send")
+      ("a" mml-attach-file "attach file")
+      ("A" notmuchp/quick-attach-files "attach files")
+      ("s" notmuch-draft-save "save draft")
+      ("p" notmuch-draft-postpone "postpone draft")
+      ("i" "insert"
+       ("i" notmuchp/counsel-address "insert address")
+       ("I" notmuchp/counsel-addresses "insert addresses")
+       ("t" notmuchp/counsel-to-address "add TO recipient")
+       ("c" notmuchp/counsel-cc-address "add CC recipient")
+       ("b" notmuchp/counsel-bcc-address "add BCC recipient"))))
 
     ;; view parts externally
     (spacemacs/set-leader-keys-for-major-mode
