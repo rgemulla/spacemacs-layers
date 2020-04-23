@@ -6,8 +6,9 @@
 ;;
 ;;; Code:
 
-(when umlauts-remap-when-not-mapped
-  (umlauts//remap-on local-function-key-map t))
+(spacemacs|unless-dumping-and-eval-after-loaded-dump umlauts
+  (when umlauts-remap-when-not-mapped
+    (umlauts//remap-on local-function-key-map t))
 
-(when umlauts-remap-initially
-  (spacemacs/toggle-umlauts-minor-mode-on))
+  (when umlauts-remap-initially
+    (spacemacs/toggle-umlauts-minor-mode-on)))
