@@ -8,11 +8,16 @@ keyboard layout has the umlauts =öäÖÄü=. Fortunately, these umlauts are
 relatively rare in German words, they are useless when working in a
 different language, and they are not bound by Spacemacs.
 
-This layer provides a minor mode that remaps =öäÖÄü= to =[]{}\=. When the mode
-is active, umlauts can still be typed by also pressing the control key (e.g.,
-=C-ö= produces character =ö=).
+The layer provides functionality to remap =öäÖÄü= to =[]{}\=.
 
-The umlauts minor mode can be toggled via =SPC tä= or =SPC t]=.
+1. When =umlauts-remap-when-not-mapped= is set, =öäÖÄ= are mapped to =[]{}=
+   whenever the former are unbound (e.g., in Evil's normal mode). This
+   functionality is enabled by default.
+2. This layer provides a minor mode called =global-umlaut-minor-mode=, which
+   globally remaps =öäÖÄü= to =[]{}\=. When the mode is active, umlauts can
+   still be typed by also pressing the control key (e.g., =C-ö= produces
+   character =ö=). The =global-umlauts-minor-mode= is disabled by default and
+   can be toggled via =SPC tÄ= or =SPC t}=.
 
 Layer configuration variables:
 | =umlauts-remap-when-not-mapped= | Remap =öäÖÄ= to =[]{}= whereever they are unbound (default: =t=)                             |

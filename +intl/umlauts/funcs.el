@@ -75,12 +75,12 @@ If NOT-UE is nil, also remap ü to \\."
   (setq char (umlauts//remap-char char))
   (apply orig-fun char outer inner nil))
 
-(define-minor-mode umlauts-minor-mode
+(define-minor-mode global-umlauts-minor-mode
   "Remap öäÖÄü to []{}\\."
   :init-value nil
   :global t
-  :lighter " ä"
-  (if umlauts-minor-mode
+  :lighter " Ä"
+  (if global-umlauts-minor-mode
       (progn
         (umlauts//remap-on evil-insert-state-map)
         (umlauts//remap-on evil-replace-state-map)

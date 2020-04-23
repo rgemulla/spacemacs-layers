@@ -11,9 +11,9 @@
   the current location.")
 
 (defvar umlauts-remap-initially nil
-  "When non-nil, initially enable `umlauts-minor-mode'")
+  "When non-nil, initially enable `global-umlauts-minor-mode'")
 
-(spacemacs|add-toggle umlauts-minor-mode
-  :mode umlauts-minor-mode
-  :documentation "Toggle remapping of öäÖÄü to []{}\\."
-  :evil-leader "t]")
+(spacemacs|add-toggle global-umlauts-minor-mode
+  :mode global-umlauts-minor-mode
+  :documentation "Globally toggle remapping of öäÖÄü to []{}\\."
+  :evil-leader "t}" "tÄ")

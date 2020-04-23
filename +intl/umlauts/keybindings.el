@@ -11,4 +11,4 @@
     (umlauts//remap-on local-function-key-map t))
 
   (when umlauts-remap-initially
-    (spacemacs/toggle-umlauts-minor-mode-on)))
+    (spacemacs/toggle-global-umlauts-minor-mode-on)))
