@@ -10,10 +10,10 @@ Copy the desired layer(s) into the private layers directory of Spacemacs
 - [[file:+lang/latexp/][latexp]]: Additions/improvements for ~latex~ layer of Spacemacs.
 - [[file:+emacs/orgp/][orgp]]: Additions/improvements for ~org~ layer of Spacemacs.
 - [[file:+email/notmuchp/][notmuchp]]: Additions/improvements for ~notmuch~ layer of Spacemacs.
-- [[file:+lang/pythonp][pythonp]]: Additions/improvements for the ~python~ layer of Spacemacs
+- [[file:+lang/pythonp][pythonp]]: Work with Python in a style similar to [[http:ess.r-project.org][ESS]] and other additions/improvements for the ~python~ layer of Spacemacs
 - [[file:+intl/umlauts/][umlauts]]: Make better use of umlauts when using a German keyboard layout.
 - [[file:+web-services/web-search/][web-search]]: Quick access to web search and Google translate (alternative to
   ~search-engine~ layer of Spacemacs).
-** Older layers
+** Older layers (unmaintained)
 - [[file:+lang/elpy][elpy]]: Work with Python in a style similar to [[http:ess.r-project.org][ESS]] (alternative to ~python~
-  layer of Spacemacs).
+  layer of Spacemacs). Superseded by [[file:+lang/pythonp][pythonp]].
