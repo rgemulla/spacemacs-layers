@@ -6,7 +6,7 @@
 ;;
 ;;; Code:
 
-(defun umlauts//remap-on (map &optional not-ue)
+(defun umlauts//remap-on (map &optional not-ue control)
   "Turn mapping of öäÖÄ to []{} on in the provided translation MAP.
 
 If NOT-UE is nil, also remap ü to \\."
@@ -14,8 +14,16 @@ If NOT-UE is nil, also remap ü to \\."
   (define-key map "Ö" "{")
   (define-key map "ä" "]")
   (define-key map "Ä" "}")
+  (when control
+    (define-key map (kbd "C-ö") #'umlauts//insert-oe)
+    (define-key map (kbd "C-Ö") #'umlauts//insert-OE)
+    (define-key map (kbd "C-ä") #'umlauts//insert-ae)
+    (define-key map (kbd "C-Ä") #'umlauts//insert-AE))
   (unless not-ue
-    (define-key map "ü" "\\")))
+    (define-key map "ü" "\\")
+    (when control
+      (define-key map (kbd "C-ü") #'umlauts//insert-ue)
+      (define-key map (kbd "C-Ü") #'umlauts//insert-UE))))
 
 (defun umlauts//remap-off (map)
   "Turn mapping of öäÖÄü to []{}\\ off in the provided translation MAP."
@@ -24,7 +32,13 @@ If NOT-UE is nil, also remap ü to \\."
   (define-key map "ä" nil)
   (define-key map "Ä" nil)
   (define-key map "ü" nil)
-  (define-key map "Ü" nil))
+  (define-key map "Ü" nil)
+  (define-key map (kbd "C-ö") nil)
+  (define-key map (kbd "C-Ö") nil)
+  (define-key map (kbd "C-ä") nil)
+  (define-key map (kbd "C-Ä") nil)
+  (define-key map (kbd "C-ü") nil)
+  (define-key map (kbd "C-Ü") nil))
 
 (defun umlauts//insert-oe ()
   (interactive)
@@ -76,7 +90,7 @@ If NOT-UE is nil, also remap ü to \\."
   (apply orig-fun char outer inner nil))
 
 (define-minor-mode global-umlauts-minor-mode
-  "Remap öäÖÄü to []{}\\."
+  "Remap öäÖÄü to []{}\\ everywhere."
   :init-value nil
   :global t
   :lighter " Ä"
@@ -117,3 +131,13 @@ If NOT-UE is nil, also remap ü to \\."
     (global-unset-key (kbd "C-ä"))
     (global-unset-key (kbd "C-ü"))
     (global-unset-key (kbd "C-Ü"))))
+
+(define-minor-mode umlauts-minor-mode
+  "Remap öäÖÄü to []{}\\ in the current buffer (to the extent possible)"
+  :init-value nil
+  :lighter " ä"
+  ;; TODO can we do better than just insert state?
+  (if umlauts-minor-mode
+      (progn
+        (umlauts//remap-on evil-insert-state-local-map nil t))
+    (umlauts//remap-off evil-insert-state-local-map)))

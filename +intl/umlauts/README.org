@@ -13,12 +13,17 @@ The layer provides functionality to remap =öäÖÄü= to =[]{}\=.
 1. When =umlauts-remap-when-not-mapped= is set, =öäÖÄ= are mapped to =[]{}=
    whenever the former are unbound (e.g., in Evil's normal mode). This
    functionality is enabled by default.
-2. This layer provides a minor mode called =global-umlaut-minor-mode=, which
-   globally remaps =öäÖÄü= to =[]{}\=. When the mode is active, umlauts can
-   still be typed by also pressing the control key (e.g., =C-ö= produces
-   character =ö=). The =global-umlauts-minor-mode= is disabled by default and
-   can be toggled via =SPC tÄ= or =SPC t}=.
+2. Provides a minor mode called =global-umlaut-minor-mode=, which globally
+   remaps =öäÖÄü= to =[]{}\=. When the mode is active, umlauts can still be
+   typed by also pressing the control key (e.g., =C-ö= produces character =ö=).
+   The =global-umlauts-minor-mode= is disabled by default and can be toggled via
+   =SPC tÄ= or =SPC t}=.
+3. Provides a minor mode called =umlaut-minor-mode=, which locally remaps
+   =öäÖÄü= to =[]{}\=. When the mode is active, umlauts can still be typed by
+   also pressing the control key (e.g., =C-ö= produces character =ö=). The
+   =umlauts-minor-mode= is disabled by default and can be toggled via =SPC tä=
+   or =SPC t]=. Local remapping currently only affects insert state.
 
 Layer configuration variables:
-| =umlauts-remap-when-not-mapped= | Remap =öäÖÄ= to =[]{}= whereever they are unbound (default: =t=)                             |
+| =umlauts-remap-when-not-mapped= | Remap =öäÖÄ= to =[]{}= whereever they are unbound (default: =t=)                               |
 | =umlauts-remap-initally=        | Globally enable the umlauts minor mode to remap =öäÖÄü= to =[]{}\= everywhere (default: =nil=) |
