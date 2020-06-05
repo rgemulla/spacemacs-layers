@@ -144,3 +144,8 @@
              (setf (nth 3 entry) nil))
            entry)
          TeX-command-list)))
+
+(defun latexp/find-master ()
+  "Open the TeX-master file."
+  (interactive)
+  (find-file (TeX-master-file t)))

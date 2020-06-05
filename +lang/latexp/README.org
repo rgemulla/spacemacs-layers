@@ -14,6 +14,7 @@ Additions/improvements for ~latex~ layer of Spacemacs.
 All commands that insert environments modify the current environment when
 prefixed with =SPC u=.
 | *latex*               | =,ge= / =,gE= | goto next/previous compilation error                  |
+|                       | =,gm=         | goto TeX-master file                                  |
 |                       | =,em=         | toggle  between =$...$= and =\[...\]= math delimiters |
 |                       | =,e=          | environment prefix                                    |
 |                       | =,e]=         | close current environment                             |

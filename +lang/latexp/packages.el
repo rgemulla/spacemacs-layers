@@ -20,23 +20,24 @@
     (define-key spacemacs-latex-mode-map "e" nil) ;; env
     (spacemacs/declare-prefix-for-mode 'latex-mode "me" "environment")
     (spacemacs/set-leader-keys-for-major-mode 'latex-mode
-      "e]" 'LaTeX-close-environment
-      "ea" 'latexp/LaTeX-align*
-      "eA" 'latexp/LaTeX-align
-      "ec" 'latexp/LaTeX-center
-      "ee" 'LaTeX-environment
-      "ef" 'latexp/LaTeX-frame
-      "eF" 'latexp/LaTeX-figure
-      "ei" 'latexp/LaTeX-itemize
-      "eI" 'latexp/LaTeX-enumerate
-      "em" 'latexp/LaTeX-toggle-math
-      "eq" 'latexp/LaTeX-equation*
-      "eQ" 'latexp/LaTeX-equation
-      "er" 'latexp/LaTeX-array
-      "et" 'latexp/LaTeX-tabular
-      "eT" 'latexp/LaTeX-table
-      "ge" 'TeX-next-error
-      "gE" 'TeX-previous-error
+      "e]" #'LaTeX-close-environment
+      "ea" #'latexp/LaTeX-align*
+      "eA" #'latexp/LaTeX-align
+      "ec" #'latexp/LaTeX-center
+      "ee" #'LaTeX-environment
+      "ef" #'latexp/LaTeX-frame
+      "eF" #'latexp/LaTeX-figure
+      "ei" #'latexp/LaTeX-itemize
+      "eI" #'latexp/LaTeX-enumerate
+      "em" #'latexp/LaTeX-toggle-math
+      "eq" #'latexp/LaTeX-equation*
+      "eQ" #'latexp/LaTeX-equation
+      "er" #'latexp/LaTeX-array
+      "et" #'latexp/LaTeX-tabular
+      "eT" #'latexp/LaTeX-table
+      "ge" #'TeX-next-error
+      "gE" #'TeX-previous-error
+      "gm" #'latexp/find-master
       )
 
     ;; set error function
