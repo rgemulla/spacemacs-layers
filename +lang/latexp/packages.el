@@ -9,8 +9,7 @@
 (defconst latexp-packages
   '(
     auctex
-    (evil-latex-textobjects :location (recipe :fetcher github :repo "hpdeifel/evil-latex-textobjects"))
-    ))
+    evil-tex))
 
 (defun latexp/pre-init-auctex ()
   (spacemacs|use-package-add-hook tex
@@ -73,9 +72,9 @@
       (define-key reftex-select-label-mode-map (kbd "C-u") 'evil-scroll-up))
     ))
 
-(defun latexp/init-evil-latex-textobjects ()
-  (use-package evil-latex-textobjects
+(defun latexp/init-evil-tex ()
+  (use-package evil-tex
     :after tex
-    :commands turn-on-evil-latex-textobjects-mode
+    :commands evil-tex-mode
     :init
-    (add-hook 'LaTeX-mode-hook 'turn-on-evil-latex-textobjects-mode)))
+    (add-hook 'LaTeX-mode-hook #'evil-tex-mode)))
