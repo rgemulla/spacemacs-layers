@@ -38,9 +38,17 @@
       "http://maps.google.com/maps?q=%s"
       :keybinding "m")
 
+    (defengine werstreamtes
+      "http://www.werstreamt.es/filme-serien/?q=%s&action_results=suchen"
+      :keybinding "s")
+
     (defengine wikipedia
       "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
       :keybinding "w")
+
+    (defengine wikipedia-de
+      "http://www.wikipedia.org/search-redirect.php?language=de&go=Go&search=%s"
+      :keybinding "W")
 
     (defengine youtube
       "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
