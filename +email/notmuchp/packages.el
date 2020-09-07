@@ -123,7 +123,18 @@
         :modes notmuch-message-mode)
       (spacemacs|add-company-backends ;; tried first
         :backends notmuch-company
-        :modes notmuch-message-mode))))
+        :modes notmuch-message-mode))
+
+    ;; add access to unthreaded mode on oO
+    (evil-define-key 'evilified notmuch-hello-mode-map "o" #'notmuch-unthreaded)
+    (evil-define-key 'evilified notmuch-tree-mode-map "o" #'notmuch-unthreaded)
+    (evil-define-key 'evilified notmuch-search-mode-map "o" #'notmuch-unthreaded)
+    (evil-define-key 'evilified notmuch-show-mode-map "o" #'notmuch-unthreaded)
+
+    (evil-define-key 'evilified notmuch-tree-mode-map "O" #'notmuch-unthreaded-from-tree-current-query)
+    (evil-define-key 'evilified notmuch-search-mode-map "O" #'notmuch-unthreaded-from-search-current-query)
+    (evil-define-key 'evilified notmuch-show-mode-map "O" #'notmuch-unthreaded-from-show-current-query)
+    ))
 
 (defun notmuchp/init-el-patch ()
   (use-package el-patch))
