@@ -55,7 +55,7 @@
       "ve" 'org-show-entry
       "vo" 'org-overview
       "vr" 'org-reveal
-      "vR" 'org-reveal-with-siblings
+      "vv" 'org-reveal-with-siblings
       )
 
     ;; toggle diary in org-read-date

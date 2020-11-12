@@ -61,7 +61,7 @@ In the keybindings given below, =,= refers to the major mode leader key.
 |               | =,ve=                    | reveal the body of the current entry                                 |
 |               | =,vo=                    | fold all top-level headlines                                         |
 |               | =,vr=                    | reveal the current entry, its parents, and the next sibling headline |
-|               | =,vR=                    | reveal the current entry, its parents, and all its siblings          |
+|               | =,vv=                    | reveal the current entry, its parents, and all its siblings          |
 | *org-babel*   | =,b=                     | prefix to access all org-babel commands                              |
 |               | =,bb=                    | execute current src block                                            |
 |               | =,bB=                    | execute all src blocks in buffer                                     |
