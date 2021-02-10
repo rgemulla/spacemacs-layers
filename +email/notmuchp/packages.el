@@ -129,11 +129,13 @@
     (evil-define-key 'evilified notmuch-hello-mode-map "o" #'notmuch-unthreaded)
     (evil-define-key 'evilified notmuch-tree-mode-map "o" #'notmuch-unthreaded)
     (evil-define-key 'evilified notmuch-search-mode-map "o" #'notmuch-unthreaded)
-    (evil-define-key 'evilified notmuch-show-mode-map "o" #'notmuch-unthreaded)
+    ;; disabled to not overwrite "o" for folding
+    ;; (evil-define-key 'evilified notmuch-show-mode-map "o" #'notmuch-unthreaded)
 
     (evil-define-key 'evilified notmuch-tree-mode-map "O" #'notmuch-unthreaded-from-tree-current-query)
     (evil-define-key 'evilified notmuch-search-mode-map "O" #'notmuch-unthreaded-from-search-current-query)
-    (evil-define-key 'evilified notmuch-show-mode-map "O" #'notmuch-unthreaded-from-show-current-query)
+    ;; disabled to not overwrite "O" for folding
+    ;; (evil-define-key 'evilified notmuch-show-mode-map "O" #'notmuch-unthreaded-from-show-current-query)
     ))
 
 (defun notmuchp/init-el-patch ()
