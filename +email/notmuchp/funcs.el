@@ -206,8 +206,13 @@ citation in a reply often contains the name).
                     (buffer-substring-no-properties (match-beginning 0) (match-end 0))
                     "[ \t\n\r\"']+" "[\t\n\r\"']+"))
 
-        ;; if "name" is actually an e-mail address, search for name in rest of
-        ;; email
+        ;; if "name" is actually an e-mail address, see if there is a user-defined
+        ;; function to resolve it
+        (when (and (string-match-p "@" name) notmuchp/email-address-to-name-function)
+          (setq name (or (funcall notmuchp/email-address-to-name-function name) name)))
+
+        ;; if it's still an e-mail address, try search to search for name in
+        ;; rest of email
         (save-excursion
           (save-match-data
             (when (string-match-p "@" name)
@@ -216,11 +221,6 @@ citation in a reply often contains the name).
                                                "> writes:")
                                        nil t)
                 (setq name (match-string 1))))))
-
-        ;; if it's still an e-mail address, try
-        ;;  (nil by default)
-        (when (and (string-match-p "@" name) notmuchp/email-address-to-name-function)
-          (setq name (or (funcall notmuchp/email-address-to-name-function name) name)))
 
         ;; handle names given opposite order via comma
         (unless (string-match-p "@" name)
