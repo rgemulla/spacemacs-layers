@@ -20,6 +20,7 @@ Additions/improvements for [[https://notmuchmail.org/][notmuch]] layer of [[http
 ** Keybindings
 In the keybindings given below, =,= refers to the major mode leader key.
 | *notmuch-show-mode*    | =,pp=       | open attachment (part) using external application     |
+|                        | =,py=       | store attachment to temporary file and yank filename  |
 |                        | =,A=        | store org links to all attachments of current message |
 |                        | =ga= / =gJ= | move point to next attachment                         |
 |                        | =gK=        | move point to previous attachment                     |

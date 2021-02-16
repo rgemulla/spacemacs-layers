@@ -242,7 +242,7 @@ citation in a reply often contains the name).
                        (t (car words)))))))
     result))
 
-(defun notmuchp//view-parts-externally-method (handle &optional in-emacs)
+(defun notmuchp//view-parts-externally-method (handle &optional in-emacs no-open)
   (let* ((filename (mm-handle-filename handle))
          (temporary-file-directory
           (if (file-directory-p "/mnt/c/Windows/Temp")
@@ -252,7 +252,9 @@ citation in a reply often contains the name).
          (file (concat directory "/" filename)))
     (mm-save-part-to-file handle file)
     (set-file-modes file #o666)
-    (org-open-file file in-emacs)))
+    (unless no-open
+      (org-open-file file in-emacs))
+    file))
 
 
 (defun notmuchp/view-part-externally (&optional no-force-system)
@@ -290,6 +292,37 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
           (setq done t)))
       point)))
 
+(defun notmuchp/store-part-and-yank-filename ()
+  """Store part to temporary file and yank its filename."""
+  (interactive)
+  (let ((file (notmuch-show-apply-to-current-part-handle
+               (lambda (handle)
+                 (notmuchp//view-parts-externally-method
+                  handle nil t)))))
+    (kill-new file)))
+
+(defun notmuchp//next-attachment-position (count)
+  (let (point done)
+    (save-excursion
+      (while (not done)
+        (setq point (point))
+        (if (condition-case nil (forward-button count) (error nil))
+            (let ((part (get-text-property (point) :notmuch-part)))
+              (if (and part
+                       (plist-get part :filename)
+                       ;; Commented out sind some clients use inline disposition
+                       ;; for attachments, and we should accept that too
+                       ;; (string= (plist-get part ;; :content-disposition) "attachment")
+                       )
+                  (progn
+                    (setq point (point))
+                    (setq done t))
+                (when (= point (point)) ;; we did not move
+                  (setq point nil)
+                  (setq done t))))
+          (setq point nil)
+          (setq done t)))
+      point)))
 
 (defun notmuchp/goto-next-attachment ()
   "Move point forwards to the next attachment."

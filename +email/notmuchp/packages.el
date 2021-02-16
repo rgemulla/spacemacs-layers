@@ -70,8 +70,9 @@
        ("b" notmuchp/counsel-bcc-address "add BCC recipient"))))
 
     ;; view parts externally
-    (spacemacs/set-leader-keys-for-major-mode
-      'notmuch-show-mode "pp" #'notmuchp/view-part-externally)
+    (spacemacs/set-leader-keys-for-major-mode 'notmuch-show-mode
+      "pp" #'notmuchp/view-part-externally
+      "py" #'notmuchp/store-part-and-yank-filename)
 
     ;; navigate to attachments
     (evil-declare-key 'evilified notmuch-show-mode-map
