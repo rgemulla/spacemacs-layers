@@ -217,6 +217,11 @@ citation in a reply often contains the name).
                                        nil t)
                 (setq name (match-string 1))))))
 
+        ;; if it's still an e-mail address, try
+        ;;  (nil by default)
+        (when (and (string-match-p "@" name) notmuchp/email-address-to-name-function)
+          (setq name (or (funcall notmuchp/email-address-to-name-function name) name)))
+
         ;; handle names given opposite order via comma
         (unless (string-match-p "@" name)
           (setq name (string-join (reverse (split-string name "," t "[ \t\n\r]+")) " "))
