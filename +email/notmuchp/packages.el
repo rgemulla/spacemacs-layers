@@ -65,6 +65,7 @@
       ("i" "insert"
        ("i" notmuchp/counsel-address "insert address")
        ("I" notmuchp/counsel-addresses "insert addresses")
+       ("f" notmuchp/counsel-from-address "change sender")
        ("t" notmuchp/counsel-to-address "add TO recipient")
        ("c" notmuchp/counsel-cc-address "add CC recipient")
        ("b" notmuchp/counsel-bcc-address "add BCC recipient"))))

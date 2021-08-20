@@ -5,7 +5,7 @@ Additions/improvements for [[https://notmuchmail.org/][notmuch]] layer of [[http
 - Quickly attach a file or a set of files from kill ring (via =,A=)
 - Support for org-mode links to attachments (use =org-store-link= when point is
   on attachment or use =,A= to store links to all attachments)
-- Append or insert e-mail addresses and recipients using [[https://github.com/abo-abo/swiper][ivy]] (via =,i=)
+- Append or insert e-mail addresses and sender/recipients using [[https://github.com/abo-abo/swiper][ivy]] (via =,i=)
 - Functionality to use recipient names in [[https://github.com/joaotavora/yasnippet][yasnippets]] (example: =Dear ${1:`(notmuchp/get-recipient-names nil " and ")`,=}
 - Quick navigation to attachments (via =ga=)
 - Open attachments using external application or respecting configured
@@ -37,6 +37,7 @@ In the keybindings given below, =,= refers to the major mode leader key.
 |                        | =,p=        | notmuch-draft-postpone                                |
 |                        | =,ii=       | Append/insert e-mail address using =ivy=              |
 |                        | =,iI=       | Append/insert e-mail addresses using =ivy=            |
+|                        | =,if=       | Change sender                                         |
 |                        | =,it=       | Add TO recipient using =ivy=                          |
 |                        | =,ic=       | Add CC recipient using =ivy=                          |
 |                        | =,ib=       | Add BCC recipient using =ivy=                         |

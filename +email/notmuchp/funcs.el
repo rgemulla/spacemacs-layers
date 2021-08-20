@@ -151,6 +151,12 @@ lines (e.g., to/cc/bcc) or simply inserts it otherwise. "
         (insert " "))
       (insert address))))
 
+(defun notmuchp/counsel-from-address ()
+  "Change the email address in the FROM header."
+  (interactive)
+  (save-excursion
+    (message-replace-header "From" (notmuch-mua-prompt-for-sender))))
+
 (defun notmuchp/counsel-to-address (&optional initial-input)
   "Insert an email address to the TO header using Ivy."
   (interactive)
