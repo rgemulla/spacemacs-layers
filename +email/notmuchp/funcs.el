@@ -35,7 +35,8 @@ current search results AND that are tagged with the given tag."
     (lambda (buffer)
       (with-current-buffer buffer
         (and (eq major-mode 'notmuch-message-mode)
-             (not (string-prefix-p "*sent" (buffer-name))))))
+             (not (string-prefix-p "*sent" (buffer-name)))
+             (not (string= "*company-documentation*" (buffer-name))))))
     (buffer-list))))
 
 (defun notmuchp//kill-emacs-query-function-compose ()
