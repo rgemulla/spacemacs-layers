@@ -98,7 +98,7 @@ Needs to be run as last (or at least late) hook."
       (if (get-text-property (point) 'mouse-face)
           (progn
             (remove-text-properties (point) (+ 1 (point)) '(mouse-face t))
-            (add-text-properties (point) (+ 1 (point)) (list 'mouse-face (face-at-point t)))
+            (add-text-properties (point) (+ 1 (point)) (list 'mouse-face (get-text-property (point) 'face)))
             (forward-char))
         (forward-line)))))
 
