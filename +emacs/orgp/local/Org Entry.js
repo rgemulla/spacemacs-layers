@@ -8,7 +8,7 @@
     "maxVersion":"",
     "priority":200,
     "inRepository":false,
-    "lastUpdated":"2018-05-18 22:27:00"
+    "lastUpdated":"2021-10-19 15:13:00"
 }
 
 // Quickly create a top-level org-mode entries (with archive folder set to
@@ -46,7 +46,7 @@ function doExport() {
         if (item.attachments.length) {
             Zotero.write(" :ATTACH:\n");
             Zotero.write(":PROPERTIES:\n");
-            Zotero.write(":ATTACH_DIR: ~/Zotero/storage/");
+            Zotero.write(":DIR: ~/Zotero/storage/");
             folder = item.attachments[0].uri.split('/').pop()
             Zotero.write(folder);
             Zotero.write("\n");
