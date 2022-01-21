@@ -313,6 +313,31 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
                   handle nil t)))))
     (kill-new file)))
 
+(defun notmuchp/store-all-attachment-files-and-yank-filenames ()
+  """Store all attachments to temporary files and yank their filenames."""
+  (interactive)
+  (save-excursion
+    (let ((count 0) result point file id sep)
+      (setq id (notmuch-show-get-message-id))
+      (goto-char (point-min))
+      (setq point (notmuchp//next-attachment-position 1))
+      (while point
+        (goto-char point)
+        (setq point nil)
+        (when (string= id (notmuch-show-get-message-id))
+          (setq file (notmuchp/store-part-and-yank-filename))
+          (unless (member
+                   (file-name-nondirectory file)
+                   '("signature.asc" "smime.p7s"))
+            (setq result (concat result sep file))
+            (setq sep "\n")
+            (setq count (+ count 1))))
+        (setq point (notmuchp//next-attachment-position 1)))
+      (unless result
+        (user-error "No attachments founds"))
+      (kill-new result)
+      (message "Stored %d files and yanked their filenames" count))))
+
 (defun notmuchp//next-attachment-position (count)
   (let (point done)
     (save-excursion

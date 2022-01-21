@@ -19,25 +19,26 @@ Additions/improvements for [[https://notmuchmail.org/][notmuch]] layer of [[http
 - Various additional key bindings
 ** Keybindings
 In the keybindings given below, =,= refers to the major mode leader key.
-| *notmuch-show-mode*    | =,pp=       | open attachment (part) using external application     |
-|                        | =,py=       | store attachment to temporary file and yank filename  |
-|                        | =,A=        | store org links to all attachments of current message |
-|                        | =ga= / =gJ= | move point to next attachment                         |
-|                        | =gK=        | move point to previous attachment                     |
-| *notmuch-search-mode*  | =X=         | abort current search (results so far are kept)        |
-| *notmuch-tree-mode*    | =L=         | filter current results                                |
-|                        | =t=         | filter current results by tag                         |
-|                        | =X=         | abort current search (results so far are kept)        |
-| *notmuch-message-mode* | =,,=        | notmuch-mua-send-and-exit                             |
-|                        | =,d=        | message-dont-send                                     |
-|                        | =,k=        | message-kill-buffer                                   |
-|                        | =,a=        | mml-attach-file                                       |
-|                        | =,A=        | quick attach files (filename(s) from kill ring)       |
-|                        | =,s=        | notmuch-draft-save                                    |
-|                        | =,p=        | notmuch-draft-postpone                                |
-|                        | =,ii=       | Append/insert e-mail address using =ivy=              |
-|                        | =,iI=       | Append/insert e-mail addresses using =ivy=            |
-|                        | =,if=       | Change sender                                         |
-|                        | =,it=       | Add TO recipient using =ivy=                          |
-|                        | =,ic=       | Add CC recipient using =ivy=                          |
-|                        | =,ib=       | Add BCC recipient using =ivy=                         |
+| *notmuch-show-mode*    | =,pp=       | open attachment (part) using external application                                                                   |
+|                        | =,py=       | store attachment to temporary file and yank filename (works with quick attach; see below)                           |
+|                        | =,Y=        | store all attachments of current message to temporary files and yank filenames (works with quick attach; see below) |
+|                        | =,A=        | store org links to all attachments of current message                                                               |
+|                        | =ga= / =gJ= | move point to next attachment                                                                                       |
+|                        | =gK=        | move point to previous attachment                                                                                   |
+| *notmuch-search-mode*  | =X=         | abort current search (results so far are kept)                                                                      |
+| *notmuch-tree-mode*    | =L=         | filter current results                                                                                              |
+|                        | =t=         | filter current results by tag                                                                                       |
+|                        | =X=         | abort current search (results so far are kept)                                                                      |
+| *notmuch-message-mode* | =,,=        | notmuch-mua-send-and-exit                                                                                           |
+|                        | =,d=        | message-dont-send                                                                                                   |
+|                        | =,k=        | message-kill-buffer                                                                                                 |
+|                        | =,a=        | mml-attach-file                                                                                                     |
+|                        | =,A=        | quick attach files (filename(s) from kill ring)                                                                     |
+|                        | =,s=        | notmuch-draft-save                                                                                                  |
+|                        | =,p=        | notmuch-draft-postpone                                                                                              |
+|                        | =,ii=       | Append/insert e-mail address using =ivy=                                                                            |
+|                        | =,iI=       | Append/insert e-mail addresses using =ivy=                                                                          |
+|                        | =,if=       | Change sender                                                                                                       |
+|                        | =,it=       | Add TO recipient using =ivy=                                                                                        |
+|                        | =,ic=       | Add CC recipient using =ivy=                                                                                        |
+|                        | =,ib=       | Add BCC recipient using =ivy=                                                                                       |

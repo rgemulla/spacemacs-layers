@@ -93,8 +93,9 @@
       (add-to-list 'org-link-parameters data t))
 
     ;; quickly yank all attachments
-    (spacemacs/set-leader-keys-for-major-mode
-      'notmuch-show-mode "A" #'notmuchp/store-all-attachment-links)
+    (spacemacs/set-leader-keys-for-major-mode 'notmuch-show-mode
+      "A" #'notmuchp/store-all-attachment-links
+      "Y" #'notmuchp/store-all-attachment-files-and-yank-filenames)
 
     ;; set notmuch window purpose
     (with-eval-after-load 'window-purpose
