@@ -10,6 +10,7 @@
   '(
     el-patch
     notmuch
+    ol-notmuch
     org
     ))
 
@@ -17,10 +18,15 @@
   ;; nothing to do
   )
 
+(defun notmuchp/init-ol-notmuch ()
+  )
+
 (defun notmuchp/pre-init-notmuch ()
   (spacemacs|use-package-add-hook notmuch
     :post-init
     :post-config
+    (use-package ol-notmuch)
+
     ;; add filtering of emails in tree model
     (define-key notmuch-tree-mode-map "L" #'notmuchp/tree-filter)
     (define-key notmuch-tree-mode-map "t" #'notmuchp/tree-filter-by-tag)
