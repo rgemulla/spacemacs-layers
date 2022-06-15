@@ -7,9 +7,7 @@
 ;;; Code:
 
 (defconst latexp-packages
-  '(
-    auctex
-    evil-tex))
+  '(auctex))
 
 (defun latexp/pre-init-auctex ()
   (spacemacs|use-package-add-hook tex
@@ -71,10 +69,3 @@
       (define-key reftex-select-label-mode-map (kbd "C-d") 'evil-scroll-down)
       (define-key reftex-select-label-mode-map (kbd "C-u") 'evil-scroll-up))
     ))
-
-(defun latexp/init-evil-tex ()
-  (use-package evil-tex
-    :after tex
-    :commands evil-tex-mode
-    :init
-    (add-hook 'LaTeX-mode-hook #'evil-tex-mode)))
