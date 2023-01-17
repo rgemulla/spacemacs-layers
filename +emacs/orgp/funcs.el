@@ -71,9 +71,13 @@ argument."
 
 (defun orgp/current-time-stamp (&optional inactive without-time time zone)
   "Format the current time (or the specified time) as an org timestamp."
-  (let* ((format (if without-time (car org-time-stamp-formats) (cdr org-time-stamp-formats))))
-    (when inactive
-      (setq format (concat "[" (substring format 1 -1) "]")))
+  (let* ((format (if without-time
+                     (car org-time-stamp-formats)
+                   (cdr org-time-stamp-formats))))
+    (setq format (string-trim format "<\\|\\[" ">\\|\\]"))
+    (if inactive
+        (setq format (concat "[" format "]"))
+      (setq format (concat "<" format ">")))
     (format-time-string format time zone)))
 
 (defun orgp/org-agenda-capture-time-stamp (&optional inactive)
