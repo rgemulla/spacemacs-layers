@@ -258,7 +258,9 @@ citation in a reply often contains the name).
   (let* ((filename (mm-handle-filename handle))
          (temporary-file-directory
           (if (file-directory-p "/mnt/c/Windows/Temp")
-              "/mnt/c/Windows/Temp/" ;; to allow opening via Windows apps
+              (if (fboundp #'rgmacs//windows-temp-directory)
+                  (rgmacs//windows-temp-directory)
+                "/mnt/c/Windows/Temp/") ;; to allow opening via Windows apps
             temporary-file-directory))
          (directory (make-temp-file "mm-part-" t))
          (file (concat directory "/" filename)))
