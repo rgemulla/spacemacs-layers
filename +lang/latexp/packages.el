@@ -17,6 +17,7 @@
     (define-key spacemacs-latex-mode-map "e" nil) ;; env
     (spacemacs/declare-prefix-for-mode 'latex-mode "me" "environment")
     (spacemacs/set-leader-keys-for-major-mode 'latex-mode
+      "c" #'latex/build
       "e]" #'LaTeX-close-environment
       "ea" #'latexp/LaTeX-align*
       "eA" #'latexp/LaTeX-align
@@ -38,7 +39,7 @@
       )
 
     ;; set error function
-    (add-hook 'LaTeX-mode-hook
+    (add-hook 'latex-mode-hook
               (lambda ()
                 (setq next-error-function #'TeX-next-error)))
 
