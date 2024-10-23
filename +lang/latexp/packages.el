@@ -18,6 +18,7 @@
     (dolist (mode (list 'latex-mode 'LaTeX-mode))
       (spacemacs/declare-prefix-for-mode mode "me" "environment")
       (spacemacs/set-leader-keys-for-major-mode mode
+        "au" #'TeX-command-run-all
         "c" #'latex/build
         "e]" #'LaTeX-close-environment
         "ea" #'latexp/LaTeX-align*
