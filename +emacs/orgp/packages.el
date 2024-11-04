@@ -8,7 +8,7 @@
 
 (defconst orgp-packages
   '(
-    org
+    (org :location elpa)
     calfw
     calfw-org
     org-agenda-property
