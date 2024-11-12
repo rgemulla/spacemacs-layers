@@ -16,12 +16,17 @@ with timestamp, than all other items without timestamps."
   (let* ((time-a (get-text-property 1 'time-of-day a))
          (time-b (get-text-property 1 'time-of-day b))
          (is-todo-a (get-text-property 1 'todo-state a))
-         (is-todo-b (get-text-property 1 'todo-state b)))
+         (is-todo-b (get-text-property 1 'todo-state b))
+         (is-done-a (string= is-todo-a "DONE"))
+         (is-done-b (string= is-todo-b "DONE")))
     (let ((result (cond
                    ((and time-a time-b) nil)            ;; both timestamps -> equal
                    ((and is-todo-a time-b) 1)           ;; a todo, b timestamp -> up
                    ((and time-a is-todo-b) -1)
-                   ((and is-todo-a is-todo-b)            ;; both todo -> compare states
+                   ((and is-done-a is-done-b) nil)      ;; both TODOs done -> equal
+                   ((and is-done-a is-todo-b) 1)        ;; one TODOs done -> down
+                   ((and is-todo-a is-done-b) -1)
+                   ((and is-todo-a is-todo-b)           ;; both TODOs -> compare
                     (org-cmp-todo-state a b))
                    ((and is-todo-a (not is-todo-b)) 1)  ;; a todo, b not -> up
                    ((and (not is-todo-a) is-todo-b) -1)
@@ -132,16 +137,16 @@ Needs to be run as last (or at least late) hook."
             (let* ((language (nth 0 block-info))
                    (name (nth 4 block-info))
                    (default-file-name
-                     (concat
-                      (or name
-                          (file-name-sans-extension
-                           (file-name-nondirectory (buffer-file-name)))
-                          "export")
-                      "."
-                      (or
-                       (cdr (assoc language org-babel-tangle-lang-exts))
-                       language
-                       "block"))))
+                    (concat
+                     (or name
+                         (file-name-sans-extension
+                          (file-name-nondirectory (buffer-file-name)))
+                         "export")
+                     "."
+                     (or
+                      (cdr (assoc language org-babel-tangle-lang-exts))
+                      language
+                      "block"))))
               (setq file-name
                     (read-file-name "Export to" nil nil nil default-file-name))))
           (org-babel-tangle '(4) file-name)
@@ -151,7 +156,7 @@ Needs to be run as last (or at least late) hook."
 (defun orgp/org-babel-tangle-subtree ()
   (interactive)
   (save-window-excursion
-    (save-excursion 
+    (save-excursion
       (save-restriction
         (org-narrow-to-subtree)
         (org-babel-tangle)))))
@@ -188,17 +193,17 @@ Needs to be run as last (or at least late) hook."
   "Remove time grid lines in org agenda when there is an overlapping appointment"
   (if (member 'remove-match (car org-agenda-time-grid))
       (cl-flet ((extract-window
-                 (line)
-                 (let ((start (get-text-property 1 'time-of-day line))
-                       (dur (get-text-property 1 'duration line)))
-                   (cond
-                    ((and start dur)
-                     (cons start
-                           (orpg/org-time-from-minutes
-                            (truncate
-                             (+ dur (orgp/org-time-to-minutes start))))))
-                    (start start)
-                    (t nil)))))
+                  (line)
+                  (let ((start (get-text-property 1 'time-of-day line))
+                        (dur (get-text-property 1 'duration line)))
+                    (cond
+                     ((and start dur)
+                      (cons start
+                            (orpg/org-time-from-minutes
+                             (truncate
+                              (+ dur (orgp/org-time-to-minutes start))))))
+                     (start start)
+                     (t nil)))))
         (let* ((windows (delq nil (mapcar #'extract-window list)))
                (org-agenda-time-grid
                 (list
@@ -223,13 +228,13 @@ Needs to be run as last (or at least late) hook."
 ;; TODO may be nice to say whether to use script or execute one by one (session)
 ;; TODO should really be an ob-bat.el file
 (defun org-babel-execute:bat (body params)
-	"Execute a block of bat commands with Babel."
+  "Execute a block of bat commands with Babel."
   (let ((in-file (org-babel-temp-file "ob-bat-" ".bat")))
     (with-temp-file in-file
       (insert body))
     (org-babel-eval
      (concat "cmd.exe"
-	           " /C " (org-babel-process-file-name in-file)
+             " /C " (org-babel-process-file-name in-file)
              " 2>&1" ;; redirect stderr ouput
              )
      "")))
@@ -254,11 +259,11 @@ also open the created file (using `org-open-file')."
         (let* ((temp-directory (make-temp-file "org-export-" t))
                (filename (file-name-nondirectory (org-export-output-file-name ".html" t)))
                (fullname (concat temp-directory "/" filename))
-	       (org-export-coding-system org-html-coding-system)
+               (org-export-coding-system org-html-coding-system)
                (what
                 (if (org-region-active-p)
                     "region"
-	          (org-narrow-to-subtree)
+                  (org-narrow-to-subtree)
                   (beginning-of-buffer)
                   (string-trim (thing-at-point 'line) "[ \\t\\n\\r\\*]+"))))
           (org-export-to-file 'html fullname nil t)
