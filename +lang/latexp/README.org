@@ -8,6 +8,7 @@ Additions/improvements for ~latex~ layer of Spacemacs.
   to make ~auctex~ always select the default viewer
 - Basic VIM-style navigation in =reftex-toc-mode= and =reftex-select-label-mode=
 - Integrates [[https://github.com/iyefrat/evil-tex][evil-tex]] to add LaTeX-specific text objects
+- Applies custom face to LaTeX commands in math environments (=latexp/font-latex-sedate-math-face=)
 - Additional keybindings
 
 ** Keybindings

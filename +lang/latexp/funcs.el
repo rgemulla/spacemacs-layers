@@ -21,9 +21,9 @@
            (LaTeX-modify-environment ,environment)
          (LaTeX-environment-menu ,environment)
          (save-mark-and-excursion
-          (forward-line)
-          (LaTeX-mark-environment)
-          (call-interactively 'indent-region))))))
+           (forward-line)
+           (LaTeX-mark-environment)
+           (call-interactively 'indent-region))))))
 
 (latexp/LaTeX-environment "align")
 (latexp/LaTeX-environment "align*")
@@ -149,3 +149,63 @@
   "Open the TeX-master file."
   (interactive)
   (find-file (TeX-master-file t)))
+
+(defun latexp//font-latex-match-simple-command (limit)
+  (let ((result (font-latex-match-simple-command limit)))
+    (when result
+      (if (assoc (match-string 0) tex--prettify-symbols-alist)
+          (progn
+            (goto-char (match-end 0))
+            (latexp//font-latex-match-simple-command limit))
+        result))))
+
+(defvar-local latexp//font-latex-match-math-end 0)
+(defun latexp/font-latex-match-math-and-simple-command (limit)
+  (when (or (= (point) 1) (< limit latexp//font-latex-match-dollar-math-end))
+    (setq latexp//font-latex-match-math-end 0))
+  (let ((result
+         (if (< (point) latexp//font-latex-match-math-end)
+             (latexp//font-latex-match-simple-command limit)
+           (when (font-latex-match-math-env limit)
+             (goto-char (match-beginning 1))
+             (setq latexp//font-latex-match-math-end (match-end 1))
+             (latexp//font-latex-match-simple-command limit)))))
+    (when result
+      (if (< (match-beginning 0) latexp//font-latex-match-math-end)
+          result
+        (goto-char latexp//font-latex-match-math-end)
+        (latexp/font-latex-match-math-and-simple-command limit)))))
+
+(defvar-local latexp//font-latex-match-mathII-end 0)
+(defun latexp/font-latex-match-mathII-and-simple-command (limit)
+  (when (or (= (point) 1) (< limit latexp//font-latex-match-dollar-math-end))
+    (setq latexp//font-latex-match-mathII-end 0))
+  (let ((result
+         (if (< (point) latexp//font-latex-match-mathII-end)
+             (latexp//font-latex-match-simple-command limit)
+           (when (font-latex-match-math-envII limit)
+             (goto-char (match-beginning 1))
+             (setq latexp//font-latex-match-mathII-end (match-end 1))
+             (latexp//font-latex-match-simple-command limit)))))
+    (when result
+      (if (< (match-beginning 0) latexp//font-latex-match-mathII-end)
+          result
+        (goto-char latexp//font-latex-match-mathII-end)
+        (latexp/font-latex-match-mathII-and-simple-command limit)))))
+
+(defvar-local latexp//font-latex-match-dollar-math-end 0)
+(defun latexp/font-latex-match-dollar-math-and-simple-command (limit)
+  (when (or (= (point) 1) (< limit latexp//font-latex-match-dollar-math-end))
+    (setq latexp//font-latex-match-dollar-math-end 0))
+  (let ((result
+         (if (< (point) latexp//font-latex-match-dollar-math-end)
+             (latexp//font-latex-match-simple-command limit)
+           (when (font-latex-match-dollar-math limit)
+             (goto-char (match-beginning 0))
+             (setq latexp//font-latex-match-dollar-math-end (match-end 0))
+             (latexp//font-latex-match-simple-command limit)))))
+    (when result
+      (if (< (match-beginning 0) latexp//font-latex-match-dollar-math-end)
+          result
+        (goto-char latexp//font-latex-match-dollar-math-end)
+        (latexp/font-latex-match-dollar-math-and-simple-command limit)))))

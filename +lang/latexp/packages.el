@@ -70,4 +70,10 @@
       (define-key reftex-select-label-mode-map (kbd "C-k") 'reftex-select-previous-heading)
       (define-key reftex-select-label-mode-map (kbd "C-d") 'evil-scroll-down)
       (define-key reftex-select-label-mode-map (kbd "C-u") 'evil-scroll-up))
+
+    ;; fontify commands in math mode
+    (with-eval-after-load 'font-latex
+      (add-to-list 'font-latex-keywords-2 '(latexp/font-latex-match-math-and-simple-command (0 'latexp/font-latex-sedate-math-face prepend)) t)
+      (add-to-list 'font-latex-keywords-2 '(latexp/font-latex-match-mathII-and-simple-command (0 'latexp/font-latex-sedate-math-face prepend)) t)
+      (add-to-list 'font-latex-keywords-2 '(latexp/font-latex-match-dollar-math-and-simple-command (0 'latexp/font-latex-sedate-math-face prepend)) t))
     ))
