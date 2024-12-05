@@ -15,36 +15,34 @@
     ;; additional key bindings
     (define-key spacemacs-latex-mode-map "c" nil) ;; close env
     (define-key spacemacs-latex-mode-map "e" nil) ;; env
-    (dolist (mode (list 'latex-mode 'LaTeX-mode))
-      (spacemacs/declare-prefix-for-mode mode "me" "environment")
-      (spacemacs/set-leader-keys-for-major-mode mode
-        "au" #'TeX-command-run-all
-        "c" #'latex/build
-        "e]" #'LaTeX-close-environment
-        "ea" #'latexp/LaTeX-align*
-        "eA" #'latexp/LaTeX-align
-        "ec" #'latexp/LaTeX-center
-        "ee" #'LaTeX-environment
-        "ef" #'latexp/LaTeX-frame
-        "eF" #'latexp/LaTeX-figure
-        "ei" #'latexp/LaTeX-itemize
-        "eI" #'latexp/LaTeX-enumerate
-        "em" #'latexp/LaTeX-toggle-math
-        "eq" #'latexp/LaTeX-equation*
-        "eQ" #'latexp/LaTeX-equation
-        "er" #'latexp/LaTeX-array
-        "et" #'latexp/LaTeX-tabular
-        "eT" #'latexp/LaTeX-table
-        "ge" #'TeX-next-error
-        "gE" #'TeX-previous-error
-        "gm" #'latexp/find-master
-        )
-
-      ;; set error function
-      (add-hook mode
-                (lambda ()
-                  (setq next-error-function #'TeX-next-error)))
+    (spacemacs/declare-prefix-for-mode 'latex-mode "me" "environment")
+    (spacemacs/set-leader-keys-for-major-mode 'latex-mode
+      "au" #'TeX-command-run-all
+      "c" #'latex/build
+      "e]" #'LaTeX-close-environment
+      "ea" #'latexp/LaTeX-align*
+      "eA" #'latexp/LaTeX-align
+      "ec" #'latexp/LaTeX-center
+      "ee" #'LaTeX-environment
+      "ef" #'latexp/LaTeX-frame
+      "eF" #'latexp/LaTeX-figure
+      "ei" #'latexp/LaTeX-itemize
+      "eI" #'latexp/LaTeX-enumerate
+      "em" #'latexp/LaTeX-toggle-math
+      "eq" #'latexp/LaTeX-equation*
+      "eQ" #'latexp/LaTeX-equation
+      "er" #'latexp/LaTeX-array
+      "et" #'latexp/LaTeX-tabular
+      "eT" #'latexp/LaTeX-table
+      "ge" #'TeX-next-error
+      "gE" #'TeX-previous-error
+      "gm" #'latexp/find-master
       )
+
+    ;; set error function
+    (add-hook 'latex-mode
+              (lambda ()
+                (setq next-error-function #'TeX-next-error)))
 
     ;; disable fill in some environments
     (with-eval-after-load 'latex
