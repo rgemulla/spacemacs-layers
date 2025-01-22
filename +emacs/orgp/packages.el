@@ -35,6 +35,9 @@
     (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "fr" 'org-refile-goto-last-stored)
     (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode "fc" 'org-capture-goto-last-stored)
 
+    ;; copy subtree without properties
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode "y" #'orgp/org-copy-subtree-without-ids)
+
     ;; yank/paste tables
     (spacemacs/declare-prefix-for-mode 'org-mode "mty" "yank")
     (spacemacs/set-leader-keys-for-major-mode 'org-mode "tyy" #'orgp/org-table-yank)

@@ -339,3 +339,17 @@ If format is `nil', try to determine it. See `org-table-import.'"
   "Paste table in kill ring interpreting it as TSV."
   (interactive)
   (orgp/org-table-paste '(16)))
+
+(defun orgp/org-copy-subtree-without-ids (&optional n cut force-store-markers nosubtrees)
+  (interactive "p")
+  (let ((inhibit-message t)
+        message-log-max)
+    (org-copy-subtree n cut force-store-markers nosubtrees))
+  (with-temp-buffer
+    (let ((inhibit-message t)
+          message-log-max)
+      (org-mode)
+      (insert (pop kill-ring))
+      (org-delete-property-globally "ID")
+      (kill-ring-save (point-min) (point-max)))
+    (message "Copied: Subtree(s) without IDs with %d characters" (buffer-size))))

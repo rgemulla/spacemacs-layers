@@ -24,7 +24,8 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
   - Functionality to tangle all src blocks in a subtree to a file
   - Let ~org-babel~ execute =bat= code blocks (using =cmdproxy.exe=)
 - Functionality to export the current subtree to a temporary HTML file for
-  inclusion elsewhere (see =orgp/orgp/org-subtree-htmlize-to-temp-file=)
+  inclusion elsewhere (see =orgp/org-subtree-htmlize-to-temp-file=)
+- Functionality to yank the current subtree without ID properties
 - Functionality to yank/paste table at point in various formats (org, csv, tsv)
 - More useful return key for Evil
   - in insert mode, use =evil-org-return=
@@ -32,11 +33,11 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
     =evil-ret=
 - Add support for ~callto~ links
 - Integration with [[https://www.zotero.org/][Zotero]]
-   - Support for links to Zotero items
-   - Export an org-mode link from Zotero (see comments in [[file:local/Org%20Link.js][Org Link.js]])
-   - Export an org-mode item from Zotero (see comments in [[file:local/Org%20Entry.js][Org Entry.js]]),
-     including a link to the Zotero item and a suitable setting of the
-     attachment folder
+  - Support for links to Zotero items
+  - Export an org-mode link from Zotero (see comments in [[file:local/Org%20Link.js][Org Link.js]])
+  - Export an org-mode item from Zotero (see comments in [[file:local/Org%20Entry.js][Org Entry.js]]),
+    including a link to the Zotero item and a suitable setting of the
+    attachment folder
 - Modifies [[https://github.com/alphapapa/org-sticky-header][org-sticky-header]] to show full path unfontified in header line
   (enable with layer variable =org-enable-sticky-header=)
 - Additional keybindings
@@ -45,35 +46,37 @@ Additions/improvements for ~org~ layer of [[http:spacemacs.org][Spacemacs]].
   - Quicker timestamp changes in agenda view
 ** Keybindings
 In the keybindings given below, =,= refers to the major mode leader key.
-|               | =SPC aofa= / =,fa=       | search through agenda files with ~helm-org-rifle~                    |
-|               | =SPC aofA= / =,fA=       | search through agenda and archive files with ~helm-org-rifle~        |
-|               | =,jr=                    | search through current buffer with ~helm-org-rifle~                  |
-| *navigation*  | =SPC aofr= / =,fr=       | goto last refiled entry                                              |
-|               | =SPC aofc= / =,fc=       | goto last captured entry                                             |
-|               | =SPC aoq=                | query agenda using ~org-ql~                                          |
-| *table*       | =,tyy=                   | yank table at point as ORG                                           |
-|               | =,tyc=                   | yank table at point as CSV                                           |
-|               | =,tyt=                   | yank table at point as TSV                                           |
-|               | =,tPP=                   | paste table (automatically determine format)                         |
-|               | =,tPc=                   | paste table from CSV                                                 |
-|               | =,tPt=                   | paste table from TSV                                                 |
-| *visiblity*   | =,vc=                    | reveal the children of the current entry                             |
-|               | =,ve=                    | reveal the body of the current entry                                 |
-|               | =,vo=                    | fold all top-level headlines                                         |
-|               | =,vr=                    | reveal the current entry, its parents, and the next sibling headline |
-|               | =,vv=                    | reveal the current entry, its parents, and all its siblings          |
-| *org-babel*   | =,b=                     | prefix to access all org-babel commands                              |
-|               | =,bb=                    | execute current src block                                            |
-|               | =,bB=                    | execute all src blocks in buffer                                     |
-|               | =,btt=                   | tangle file                                                          |
-|               | =,bts=                   | tangle subtree                                                       |
-|               | =,btb=                   | tangle current block                                                 |
-|               | =,bty=                   | copy current block to kill ring                                      |
-| *Agenda*      | =S-<left>= / =S-<right>= | change forward/backward timestamp by day                             |
-|               | =C-<left>= / =C-<right>= | change forward/backward timestamp by hour                            |
-|               | =M-<left>= / =M-<right>= | change forward/backward timestamp by minute                          |
-| *Date prompt* | =!=                      | Toggle diary view for selected day                                   |
-| *Other*       | =,TI=                    | toggle org-indent mode                                               |
+|               | =SPC aofa= / =,fa=       | search through agenda files with ~helm-org-rifle~                     |
+|               | =SPC aofA= / =,fA=       | search through agenda and archive files with ~helm-org-rifle~         |
+|               | =,jr=                    | search through current buffer with ~helm-org-rifle~                   |
+| *navigation*  | =SPC aofr= / =,fr=       | goto last refiled entry                                               |
+|               | =SPC aofc= / =,fc=       | goto last captured entry                                              |
+|               | =SPC aoq=                | query agenda using ~org-ql~                                           |
+| *subtrees*    | =,y=                     | copy current subtree without ID properties                            |
+|               | =,et=                    | export subtree to temporary HTML file and copy file name to kill ring |
+| *table*       | =,tyy=                   | yank table at point as ORG                                            |
+|               | =,tyc=                   | yank table at point as CSV                                            |
+|               | =,tyt=                   | yank table at point as TSV                                            |
+|               | =,tPP=                   | paste table (automatically determine format)                          |
+|               | =,tPc=                   | paste table from CSV                                                  |
+|               | =,tPt=                   | paste table from TSV                                                  |
+| *visiblity*   | =,vc=                    | reveal the children of the current entry                              |
+|               | =,ve=                    | reveal the body of the current entry                                  |
+|               | =,vo=                    | fold all top-level headlines                                          |
+|               | =,vr=                    | reveal the current entry, its parents, and the next sibling headline  |
+|               | =,vv=                    | reveal the current entry, its parents, and all its siblings           |
+| *org-babel*   | =,b=                     | prefix to access all org-babel commands                               |
+|               | =,bb=                    | execute current src block                                             |
+|               | =,bB=                    | execute all src blocks in buffer                                      |
+|               | =,btt=                   | tangle file                                                           |
+|               | =,bts=                   | tangle subtree                                                        |
+|               | =,btb=                   | tangle current block                                                  |
+|               | =,bty=                   | copy current block to kill ring                                       |
+| *Agenda*      | =S-<left>= / =S-<right>= | change forward/backward timestamp by day                              |
+|               | =C-<left>= / =C-<right>= | change forward/backward timestamp by hour                             |
+|               | =M-<left>= / =M-<right>= | change forward/backward timestamp by minute                           |
+| *Date prompt* | =!=                      | Toggle diary view for selected day                                    |
+| *Other*       | =,TI=                    | toggle org-indent mode                                                |
 
 ** Customizations for agenda view
 Disabled by default. Example usage:
