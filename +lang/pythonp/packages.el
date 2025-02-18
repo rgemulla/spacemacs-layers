@@ -17,6 +17,23 @@
     (add-hook 'inferior-python-mode-hook 'elpy-shell--enable-output-filter)
     (elpy-shell--defun-step-go pythonp/elpy-shell-send-symbol-and-step)
 
+    ;; add jupytext support
+    (setq elpy-shell-cell-boundary-regexp
+          (concat "^\\(?:"
+                  "##.*" "\\|"
+                  "#\\s-*<.+>" "\\|" ;; Jupyter cell
+                  "#\\s-*%%" "\\|"   ;; plain jupytext cell
+                  "#\\s-*%%\\s-.*" "\\|" ;; full jupytext cell
+                  "#\\s-*\\(?:In\\|Out\\)\\[.*\\]:"
+                  "\\)\\s-*$"))
+    (setq elpy-shell-codecell-beginning-regexp
+          (concat "^\\(?:"
+                  "##.*" "\\|"
+                  "#\\s-*<codecell>" "\\|"  ;; Jupyter codecell
+                  "#\\s-*%%" "\\|"          ;; plain jupytext codecell
+                  "#\\s-*%% [^[].*" "\\|"    ;; jupytext codecell but no "[" (as in [markdown])
+                  "#\\s-*In\\[.*\\]:"
+                  "\\)\\s-*$"))
     ;; faster send
     (advice-add #'python-shell-buffer-substring :around #'pythonp//no-python-mode-hook-advice)
 

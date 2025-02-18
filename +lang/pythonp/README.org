@@ -8,8 +8,8 @@ Additions/improvements for ~python~ layer of Spacemacs.
 ** Sending code fragments to the shell
 
 Provides keybindings to send a Python statement, function definition, a class
-definition, a top-level statement, a group of Python statements, a cell, a
-region, or a buffer to the Python shell.
+definition, a top-level statement, a group of Python statements, a cell (e.g.,
+Jupyter notebook or [[https://github.com/mwouts/jupytext][jupytext]] cells), a region, or a buffer to the Python shell.
 
 Each evaluation function has four variants, one for each combination of: whether
 or not the point should move after sending ("step"), and whether or not the
