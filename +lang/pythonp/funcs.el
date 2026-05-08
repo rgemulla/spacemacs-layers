@@ -109,7 +109,7 @@ transparently add a pre regex, a post regex, a set of
 forbidden-to-skip chars, and/or a set of filename extensions to
 the search."
   (let ((base-cmd
-                 (cdr (assoc-string tool spacemacs--counsel-commands))))
+         (cdr (assoc-string tool spacemacs--counsel-commands))))
     (lambda (string &optional _pred &rest _unused)
       "Grep in the current directory for STRING."
       ;; `ivy-more-chars' returns non-nil when more chars are needed,
@@ -146,7 +146,7 @@ the search."
                          (concat pre-regex
                                  "\\("
                                  (setq ivy--old-re ;; used for highlight
-                                 (pythonp//ivy--regex-fuzzy-restricted string forbidden-chars))
+                                       (pythonp//ivy--regex-fuzzy-restricted string forbidden-chars))
                                  "\\)"
                                  post-regex))))
             (setq spacemacs--counsel-search-cmd (format base-cmd args regex))
@@ -173,7 +173,7 @@ and/or a set of filename extensions to the search."
                       (throw 'tool tool)))
                   (throw 'tool "grep")))
           (default-directory
-            (or initial-directory (read-directory-name "Start from directory: ")))
+           (or initial-directory (read-directory-name "Start from directory: ")))
           (prompt (or prompt "%s from[%s]:")))
     (ivy-read
      (format prompt
@@ -218,3 +218,10 @@ and/or a set of filename extensions to the search."
      "(: \t"
      '("py" "ipy")
      " (%s in [%s]) Function: ")))
+
+(defun pythonp/format-buffer()
+  "Apply a number of formatting operations to the current buffer"
+  (interactive)
+  (spacemacs/python-remove-unused-imports)
+  (lsp-organize-imports)
+  (ruff-format-buffer))

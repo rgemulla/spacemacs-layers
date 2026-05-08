@@ -80,6 +80,7 @@
       "sB" 'elpy-shell-send-buffer-and-step-and-go
       "si" 'elpy-shell-switch-to-shell
       "sI" 'elpy-shell-switch-to-shell-in-current-window
+      "rf" 'pythonp/format-buffer
       "'" 'elpy-shell-switch-to-shell)
     (evil-declare-key 'normal python-mode-map (kbd "<C-return>")
       #'elpy-shell-send-statement-and-step)
