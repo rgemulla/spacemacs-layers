@@ -76,7 +76,7 @@ indentation levels."
     (elpy-shell--with-maybe-echo
      (python-shell-send-string symbol))
     (goto-char (cdr bounds))
-    (re-search-forward "[^ 	\n]")
+    (re-search-forward "[^      \n]")
     (goto-char (- (point) 1))))
 
 ;; -- search project for definitions -------------------------------------------
@@ -222,6 +222,7 @@ and/or a set of filename extensions to the search."
 (defun pythonp/format-buffer()
   "Apply a number of formatting operations to the current buffer"
   (interactive)
+  (save-buffer)
   (spacemacs/python-remove-unused-imports)
   (lsp-organize-imports)
   (ruff-format-buffer))
