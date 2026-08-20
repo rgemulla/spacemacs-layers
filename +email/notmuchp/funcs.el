@@ -143,12 +143,47 @@ lines (e.g., to/cc/bcc) or simply inserts it otherwise. "
     (let ((address (consult--read
                     notmuch-address-completions
                     :prompt "Address: "
+                    :annotate #'notmuchp//fontify-email-address
                     :sort nil
                     :require-match t
                     :history '(:input notmuchp//counsel-address-history)
                     :initial initial-input)))
       (notmuchp//counsel-address-action address)))
    (t (error))))
+
+(defun notmuchp//fontify-email-address (address)
+  """Fontify the given email address by adding text properties"
+  ;; split the string
+  (cond
+   ((string-match "\\(.*\\)\\(<\\)\\(.*@.*\\)\\(>\\)\s*" address)
+    (add-text-properties
+     (match-beginning 1)
+     (match-end 1)
+     '(face message-header-to)
+     address)
+    (add-text-properties
+     (match-beginning 2)
+     (match-end 2)
+     '(face message-header-other)
+     address)
+    (add-text-properties
+     (match-beginning 3)
+     (match-end 3)
+     '(face italic)
+     address)
+    (add-text-properties
+     (match-beginning 4)
+     (match-end 4)
+     '(face message-header-other)
+     address))
+   ;; (t (add-text-properties
+   ;;     0
+   ;;     (length address)
+   ;;     '(face italic)
+   ;;     address))
+   )
+  (list address nil nil))
+
 
 (defun notmuchp//counsel-address-action (address)
   "When on a address header line, append the address. Else insert at point."
