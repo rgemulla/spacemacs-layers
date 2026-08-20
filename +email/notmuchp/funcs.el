@@ -123,6 +123,7 @@ current search results AND that are tagged with the given tag."
 
 ;; counsel function for notmuch address history
 (defvar notmuchp//counsel-address-history nil)
+(defvar notmuchp//consult-address-history nil)
 
 (defun notmuchp/counsel-address (&optional initial-input)
   "Insert an email address from `notmuch-address-completions' using Ivy.
@@ -143,10 +144,10 @@ lines (e.g., to/cc/bcc) or simply inserts it otherwise. "
     (let ((address (consult--read
                     notmuch-address-completions
                     :prompt "Address: "
+                    :category 'email-address
                     :annotate #'notmuchp//fontify-email-address
-                    :sort nil
                     :require-match t
-                    :history '(:input notmuchp//counsel-address-history)
+                    :history 'notmuchp//consult-address-history
                     :initial initial-input)))
       (notmuchp//counsel-address-action address)))
    (t (error))))
