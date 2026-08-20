@@ -123,7 +123,6 @@ current search results AND that are tagged with the given tag."
 
 ;; counsel function for notmuch address history
 (defvar notmuchp//counsel-address-history nil)
-(defvar notmuchp//consult-address-history nil)
 
 (defun notmuchp/counsel-address (&optional initial-input)
   "Insert an email address from `notmuch-address-completions' using Ivy.
