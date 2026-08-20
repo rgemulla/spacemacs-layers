@@ -17,3 +17,6 @@
 (defvar notmuchp/email-address-to-name-function nil
   "Function that takes an email address and produces a name. Can
 be used to improve name resolution by this layer.")
+
+(defvar notmuchp/completion-backend 'ivy
+  "Backend used for completion: ivy, consult")

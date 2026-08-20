@@ -14,7 +14,7 @@ current search results AND the additional query string provided."
   (interactive (list (notmuch-read-query "Filter tree: ")))
   (let ((grouped-query (notmuch-group-disjunctive-query-string query))
         (grouped-original-query (notmuch-group-disjunctive-query-string
-                                  (notmuch-tree-get-query))))
+                                 (notmuch-tree-get-query))))
     (notmuch-tree (if (string= grouped-original-query "*")
                       grouped-query
                     (concat grouped-original-query " and " grouped-query)))))
@@ -25,7 +25,7 @@ current search results AND the additional query string provided."
 Runs a new tree matching only messages that match both the
 current search results AND that are tagged with the given tag."
   (interactive
-    (list (notmuch-select-tag-with-completion "Filter by tag: " (notmuch-tree-get-query))))
+   (list (notmuch-select-tag-with-completion "Filter by tag: " (notmuch-tree-get-query))))
   (notmuch-tree (concat (notmuch-tree-get-query) " and tag:" tag) ))
 
 (defun notmuchp//compose-count ()
@@ -60,29 +60,29 @@ current search results AND that are tagged with the given tag."
   (let (action-map buffer-name-map)
     (dolist (saved-search notmuch-saved-searches)
       (let* ((saved-search (notmuch-hello-saved-search-to-plist saved-search))
-            (key (plist-get saved-search :key)))
+             (key (plist-get saved-search :key)))
         (when key
           (let ((name (plist-get saved-search :name))
                 (query (plist-get saved-search :query))
                 (oldest-first
-                (case (plist-get saved-search :sort-order)
-                  (newest-first nil)
-                  (oldest-first t)
-                  (otherwise (default-value 'notmuch-search-oldest-first)))))
+                 (case (plist-get saved-search :sort-order)
+                   (newest-first nil)
+                   (oldest-first t)
+                   (otherwise (default-value 'notmuch-search-oldest-first)))))
             (push (list key name
                         (if (eq (plist-get saved-search :search-type) 'tree)
                             `(lambda ()
-                                (if (get-buffer (concat "*notmuch-tree-" ,query "*"))
-                                    (progn
-                                      (pop-to-buffer (concat "*notmuch-tree-" ,query "*"))
-                                      (notmuch-refresh-this-buffer))
-                                  (notmuch-tree ',query)))
+                               (if (get-buffer (concat "*notmuch-tree-" ,query "*"))
+                                   (progn
+                                     (pop-to-buffer (concat "*notmuch-tree-" ,query "*"))
+                                     (notmuch-refresh-this-buffer))
+                                 (notmuch-tree ',query)))
                           `(lambda ()
-                              (if (get-buffer (notmuch-search-buffer-title ',query))
-                                  (progn
-                                    (pop-to-buffer (notmuch-search-buffer-title ',query))
-                                    (notmuch-refresh-this-buffer))
-                                (notmuch-search ',query ',oldest-first)))))
+                             (if (get-buffer (notmuch-search-buffer-title ',query))
+                                 (progn
+                                   (pop-to-buffer (notmuch-search-buffer-title ',query))
+                                   (notmuch-refresh-this-buffer))
+                               (notmuch-search ',query ',oldest-first)))))
                   action-map)))))
     (setq action-map (nreverse action-map))
 
@@ -114,7 +114,7 @@ current search results AND that are tagged with the given tag."
     (dolist (file files)
       (save-excursion
         (let* ((type (or (mm-default-file-encoding file) "application/octet-stream"))
-                (disposition (mml-content-disposition type file)))
+               (disposition (mml-content-disposition type file)))
           (end-of-buffer)
           (mml-attach-file file type nil disposition)
           (message "Attached file %s (%s, %s)" file type disposition))))
@@ -130,12 +130,25 @@ current search results AND that are tagged with the given tag."
 The default action appends the e-mail adress when on a header
 lines (e.g., to/cc/bcc) or simply inserts it otherwise. "
   (interactive)
-  (ivy-read "Address Search: "
-            notmuch-address-completions
-            :initial-input initial-input
-            :history notmuchp//counsel-address-history
-            :action '(1 ("a" notmuchp//counsel-address-action "Append or insert"))
-            :caller 'notmuchp/counsel-address))
+
+  (cond
+   ((eq notmuchp/completion-backend 'ivy)
+    (ivy-read "Address Search: "
+              notmuch-address-completions
+              :initial-input initial-input
+              :history notmuchp//counsel-address-history
+              :action '(1 ("a" notmuchp//counsel-address-action "Append or insert"))
+              :caller 'notmuchp/counsel-address))
+   ((eq notmuchp/completion-backend 'consult)
+    (let ((address (consult--read
+                    notmuch-address-completions
+                    :prompt "Address: "
+                    :sort nil
+                    :require-match t
+                    :history '(:input notmuchp//counsel-address-history)
+                    :initial initial-input)))
+      (notmuchp//counsel-address-action address)))
+   (t (error))))
 
 (defun notmuchp//counsel-address-action (address)
   "When on a address header line, append the address. Else insert at point."
