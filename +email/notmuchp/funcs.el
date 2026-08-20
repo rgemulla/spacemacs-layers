@@ -143,9 +143,7 @@ lines (e.g., to/cc/bcc) or simply inserts it otherwise. "
     (let ((address (consult--read
                     notmuch-address-completions
                     :prompt "Address: "
-                    :category 'email-address
                     :annotate #'notmuchp//fontify-email-address
-                    :require-match t
                     :history 'notmuchp//consult-address-history
                     :initial initial-input)))
       (notmuchp//counsel-address-action address)))
