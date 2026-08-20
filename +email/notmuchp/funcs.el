@@ -160,12 +160,12 @@ lines (e.g., to/cc/bcc) or simply inserts it otherwise. "
     (add-text-properties
      (match-beginning 1)
      (match-end 1)
-     '(face message-header-to)
+     '(face notmuch-search-matching-authors)
      address)
     (add-text-properties
      (match-beginning 2)
      (match-end 2)
-     '(face message-header-other)
+     '(face notmuch-search-non-matching-authors)
      address)
     (add-text-properties
      (match-beginning 3)
@@ -175,7 +175,7 @@ lines (e.g., to/cc/bcc) or simply inserts it otherwise. "
     (add-text-properties
      (match-beginning 4)
      (match-end 4)
-     '(face message-header-other)
+     '(face notmuch-search-non-matching-authors)
      address))
    ;; (t (add-text-properties
    ;;     0
