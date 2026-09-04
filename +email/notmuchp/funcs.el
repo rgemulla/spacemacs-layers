@@ -359,7 +359,8 @@ If NO-FORCE-SYSTEM is non-nil, open file via `org-open-file', i.e., respect `org
                (lambda (handle)
                  (notmuchp//view-parts-externally-method
                   handle nil t)))))
-    (kill-new file)))
+    (kill-new file)
+    file))
 
 (defun notmuchp/store-all-attachment-files-and-yank-filenames ()
   """Store all attachments to temporary files and yank their filenames."""
